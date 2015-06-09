@@ -160,7 +160,36 @@ public class Tournoi {
 	}
 	
 	
+	public void resoudreMatchGagant( Match match, Joueur gagnant ) {
+		
+		Joueur joueur1 = match.getJoueur1();
+		Joueur joueur2 = match.getJoueur2();
+		
+		if( gagnant != joueur1 && gagnant != joueur2 ) {
+			
+		}
+		
+		Joueur perdant = ( joueur1 == gagnant ) ? joueur2 : joueur1;
+		
+		gagnant.incrementerNbPoints( Match.POINTS_GAGNANT );
+		perdant.incrementerNbPoints( Match.POINTS_PERDANT );
+		
+		gagnant.gagne();
+		perdant.perd();
+				
+	}
 	
+	
+	public void resoudreMatchNull( Match match ) {
+		
+		for( Joueur joueur : match.getJoueurs() ) {
+			
+			joueur.incrementerNbPoints( Match.POINTS_MATCH_NULL );
+			joueur.perd();
+			
+		}	
+		
+	}
 	
 	
 	
