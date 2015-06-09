@@ -8,7 +8,6 @@ public class Joueur implements Comparable<Joueur> {
 	private enum Etat {
 		Gagnant,
 		Perdant,
-		EnMatch;
 	}
 	
 	private Etat etat;
@@ -30,8 +29,21 @@ public class Joueur implements Comparable<Joueur> {
 	}
 	
 	
-	public void aPerdu() {
+	public void gagne() {
+		this.etat = Etat.Gagnant;
+	}
+	
+	public void perd() {
 		this.etat = Etat.Perdant;
+	}
+	
+	
+	public boolean aGagne() {
+		return this.etat == Etat.Gagnant;
+	}
+	
+	public boolean aPerdu() {
+		return this.etat == Etat.Perdant;
 	}
 	
 	
