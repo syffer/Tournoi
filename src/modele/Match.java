@@ -13,7 +13,7 @@ public class Match {
 	
 	private Joueur joueur1;
 	private Joueur joueur2;
-		
+	
 	
 	public Match( Joueur joueur1, Joueur joueur2 ) {
 		this.joueur1 = joueur1;
@@ -22,29 +22,7 @@ public class Match {
 	
 	
 	
-	/*
-	public void matchGagnant( Joueur gagnant ) {
-		
-		Joueur perdant = ( this.joueur1 == gagnant ) ? this.joueur2 : this.joueur1;
-		
-		gagnant.incrementerNbPoints( Match.POINTS_GAGNANT );
-		perdant.incrementerNbPoints( Match.POINTS_PERDANT );
-		
-		gagnant.aGagne();
-		perdant.aPerdu();
-		
-	}
 	
-	public void matchNull() {
-		
-		this.joueur1.incrementerNbPoints( Match.POINTS_MATCH_NULL );
-		this.joueur2.incrementerNbPoints( Match.POINTS_MATCH_NULL );
-	
-		this.joueur1.aPerdu();
-		this.joueur2.aPerdu();
-		
-	}
-	*/
 	
 	
 	public List<Joueur> getJoueurs() {
@@ -65,9 +43,16 @@ public class Match {
 	}
 
 
+	public Joueur getAutreJoueur( Joueur joueur ) throws MatchException {
+		
+		if( joueur != this.joueur1 && joueur != this.joueur2 ) throw new MatchException("Ce joueur ne fait pas partie de ce match.");
+		
+		return ( joueur == this.joueur1 ) ? this.joueur2 : this.joueur1;
+	}
+	
 
 	public String toString() {
-		return this.joueur1.toString() + " VS " + this.joueur2.toString();
+		return this.joueur1.getNom() + " VS " + this.joueur2.getNom();
 	}
 	
 	

@@ -105,11 +105,12 @@ public class Tournoi {
 			Match match = new Match( joueurGagnant, joueurPerdant );
 			this.matchs.add(match);
 		}
+		/*
 		else if( this.joueursGagnants.size() > 0 ) {
 			this.joueursPerdants.add( this.joueursGagnants.get(0) );
 			this.joueursGagnants.remove(0);
 		}
-		
+		*/
 	}
 	
 	public void annulerMatchs() {
@@ -160,35 +161,41 @@ public class Tournoi {
 	}
 	
 	
-	public void resoudreMatchGagant( Match match, Joueur gagnant ) {
-		
-		Joueur joueur1 = match.getJoueur1();
-		Joueur joueur2 = match.getJoueur2();
-		
-		if( gagnant != joueur1 && gagnant != joueur2 ) {
+	private void resoudreMatch( Match match, Joueur gagnant, int nbPointsGagnant, int nbPointsPerdant ) throws MatchException {
 			
-		}
+		Joueur perdant = match.getAutreJoueur(gagnant);
 		
-		Joueur perdant = ( joueur1 == gagnant ) ? joueur2 : joueur1;
-		
-		gagnant.incrementerNbPoints( Match.POINTS_GAGNANT );
-		perdant.incrementerNbPoints( Match.POINTS_PERDANT );
+		gagnant.incrementerNbPoints(nbPointsGagnant);
+		perdant.incrementerNbPoints(nbPointsPerdant);
 		
 		gagnant.gagne();
 		perdant.perd();
-				
+		
+		this.supprimerMatch(match);
+		
+	}
+	
+	public void resoudreMatchNormal( Match match, Joueur gagnant ) throws MatchException {
+		this.resoudreMatch( match, gagnant, Match.POINTS_GAGNANT, Match.POINTS_PERDANT );
 	}
 	
 	
+	public void resoudreMatchParAbandon( Match match, Joueur joueurAbandonne ) throws MatchException {
+		Joueur gagnant = match.getAutreJoueur(joueurAbandonne);
+		this.resoudreMatch( match, gagnant, Match.POINTS_GAGNANT_PAR_ABANDON, Match.POINTS_PERDANT_PAR_ABANDON );
+	}
+	
+		
 	public void resoudreMatchNull( Match match ) {
 		
 		for( Joueur joueur : match.getJoueurs() ) {
 			
 			joueur.incrementerNbPoints( Match.POINTS_MATCH_NULL );
 			joueur.perd();
-			
+			this.joueursPerdants.add(joueur);
 		}	
 		
+		this.supprimerMatch(match);
 	}
 	
 	
@@ -211,10 +218,10 @@ public class Tournoi {
 				
 				System.out.println( tournoi.matchs );
 				
-				tournoi.annulerMatchs();
+				
+				
 				
 				System.out.println( tournoi.matchs );
-				
 				
 			} catch (JoueurDejaExistantException e) {
 				// TODO Auto-generated catch block
