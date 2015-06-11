@@ -19,11 +19,7 @@ public class Match {
 		this.joueur1 = joueur1;
 		this.joueur2 = joueur2;
 	}
-	
-	
-	
-	
-	
+		
 	
 	public List<Joueur> getJoueurs() {
 		ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
@@ -48,6 +44,11 @@ public class Match {
 		if( joueur != this.joueur1 && joueur != this.joueur2 ) throw new MatchException("Ce joueur ne fait pas partie de ce match.");
 		
 		return ( joueur == this.joueur1 ) ? this.joueur2 : this.joueur1;
+	}
+	
+	
+	public boolean joueAuMatch( Joueur joueur ) {
+		return this.joueur1 == joueur || this.joueur2 == joueur;
 	}
 	
 

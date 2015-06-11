@@ -47,7 +47,6 @@ public class Joueur implements Comparable<Joueur> {
 	}
 	
 	
-	
 	public String getNom() {
 		return this.nom;
 	}

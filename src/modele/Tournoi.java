@@ -1,13 +1,8 @@
 package modele;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.TreeSet;
 
 public class Tournoi {
 	
@@ -44,11 +39,13 @@ public class Tournoi {
 	
 	public void supprimerJoueur( Joueur joueur ) {
 		
+		this.annulerMatchs(joueur);
+		
 		this.tableDesRencontres.supprimerJoueur(joueur);
 		
 		this.joueursGagnants.remove(joueur);
 		this.joueursPerdants.remove(joueur);
-		
+				
 	}
 	
 	
@@ -71,7 +68,7 @@ public class Tournoi {
 			Joueur adversaire = adversairesPotentiels.get(indiceAdversairePotentiel);
 			listejoueurs.remove(adversaire);
 			
-			
+					
 			Match match = new Match( joueur, adversaire );
 			this.matchs.add(match);
 			
@@ -112,6 +109,28 @@ public class Tournoi {
 		}
 		*/
 	}
+	
+	public void annulerMatchs( Joueur joueur ) {
+		
+		for( Iterator<Match> iterateur = this.matchs.iterator(); iterateur.hasNext(); ) {
+			
+			Match match = iterateur.next();
+			
+			if( ! match.joueAuMatch(joueur) ) continue;
+			
+			for( Joueur j : match.getJoueurs() ) {
+				
+				if( j.aGagne() ) this.joueursGagnants.add(j);
+				else this.joueursPerdants.add(j);
+				
+			}	
+			
+			iterateur.remove();
+			
+		}
+		
+	}
+	
 	
 	public void annulerMatchs() {
 		
@@ -206,7 +225,9 @@ public class Tournoi {
 			
 			Tournoi tournoi = new Tournoi();
 						
-			String[] noms = { "vall", "yann", "vincent", "antoine", "corentin", "cyril", "virgile", "ludo", "quentin", "maxime", "benjamin", "mathieu" };
+			String[] noms = { "vall", "yann", "vincent", "antoine", "corentin", "cyril", "virgile", "quentin", "maxime", "benjamin", "mathieu" };
+			
+			Joueur ludo = new Joueur("ludo");
 			
 			try {
 				
@@ -214,16 +235,35 @@ public class Tournoi {
 					tournoi.ajouterJoueur( new Joueur(nom) );
 				}
 				
+				tournoi.ajouterJoueur(ludo);
+				
 				tournoi.genererMatchs();
 				
 				System.out.println( tournoi.matchs );
+				System.out.println( tournoi.joueursGagnants );
+				System.out.println( tournoi.joueursPerdants );
+				System.out.println();
 				
-				
+				tournoi.supprimerJoueur(ludo);
+				//tournoi.supprimerMatch( tournoi.matchs.get(0) );
+				Match match = tournoi.matchs.get(0);
+				tournoi.resoudreMatchNormal( match, match.getJoueur1() );
 				
 				
 				System.out.println( tournoi.matchs );
+				System.out.println( tournoi.joueursGagnants );
+				System.out.println( tournoi.joueursPerdants );
+				
+				tournoi.genererMatchs();
+				
+				System.out.println( tournoi.matchs );
+				System.out.println( tournoi.joueursGagnants );
+				System.out.println( tournoi.joueursPerdants );
 				
 			} catch (JoueurDejaExistantException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MatchException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
