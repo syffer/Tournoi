@@ -119,7 +119,8 @@ public class Vue extends JFrame {
 		this.add(panneauJoueurs);
 		
 		
-		this.tableauJoueurs = new JTable();	
+		this.tableauJoueurs = new JTable( new TableModelJoueur() );	
+		this.tableauJoueurs.setAutoCreateRowSorter(true);	// rendre le tableau triable
 		//this.tableauJoueurs.setPreferredSize( new Dimension(300, 400) ); 	// ( largeur , hauteur )
 		//this.tableauJoueurs.setSize( new Dimension(300, 400) );
 		JScrollPane scrollPane = new JScrollPane( this.tableauJoueurs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
