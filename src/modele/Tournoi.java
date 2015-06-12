@@ -3,8 +3,9 @@ package modele;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
 
-public class Tournoi {
+public class Tournoi extends Observable {
 	
 
 	private TableDesRencontres tableDesRencontres;
@@ -26,6 +27,13 @@ public class Tournoi {
 		this.matchs = new ArrayList<Match>();
 		
 		this.aleatoire = new Aleatoire();
+		
+		this.initialiser();
+	}
+	
+	private void initialiser() {
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	
@@ -39,6 +47,8 @@ public class Tournoi {
 		
 		this.joueursPerdants.add(nouveauJoueur);
 		
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	public void supprimerJoueur( Joueur joueur ) {
@@ -49,9 +59,15 @@ public class Tournoi {
 		
 		this.joueursGagnants.remove(joueur);
 		this.joueursPerdants.remove(joueur);
-				
+		
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
+	public List<Joueur> getJoueurs() {
+		
+		return this.tableDesRencontres.getJoueurs();		
+	}
 	
 	
 	private void genererMatchs( List<Joueur> listejoueurs ) {
@@ -71,8 +87,7 @@ public class Tournoi {
 			int indiceAdversairePotentiel = this.aleatoire.getNombreAleatoire( nbAdversaires - 1 );
 			Joueur adversaire = adversairesPotentiels.get(indiceAdversairePotentiel);
 			listejoueurs.remove(adversaire);
-			
-					
+								
 			Match match = new Match( joueur, adversaire );
 			this.matchs.add(match);
 			
@@ -112,6 +127,9 @@ public class Tournoi {
 			this.joueursGagnants.remove(0);
 		}
 		*/
+		
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	public void annulerMatchs( Joueur joueur ) {
@@ -127,12 +145,15 @@ public class Tournoi {
 				if( j.aGagne() ) this.joueursGagnants.add(j);
 				else this.joueursPerdants.add(j);
 				
+				j.setEnMatch(false);
 			}	
 			
 			iterateur.remove();
 			
 		}
 		
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	
@@ -147,12 +168,15 @@ public class Tournoi {
 				if( joueur.aGagne() ) this.joueursGagnants.add(joueur);
 				else this.joueursPerdants.add(joueur);
 				
+				joueur.setEnMatch(false);
 			}	
 			
 			iterateur.remove();
 			
 		}
-				
+		
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	
@@ -168,6 +192,9 @@ public class Tournoi {
 		
 		Match match = new Match( joueur1, joueur2 );
 		this.matchs.add(match);
+		
+		this.setChanged();
+		this.notifyObservers();
 	}
 		
 	public void supprimerMatch( Match match ) {
@@ -177,10 +204,13 @@ public class Tournoi {
 			if( joueur.aGagne() ) this.joueursGagnants.add(joueur);
 			else this.joueursPerdants.add(joueur);
 			
+			joueur.setEnMatch(false);
 		}	
 		
 		this.matchs.remove(match);
 		
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	
@@ -196,6 +226,8 @@ public class Tournoi {
 		
 		this.supprimerMatch(match);
 		
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	public void resoudreMatchNormal( Match match, Joueur gagnant ) throws MatchException {
@@ -219,8 +251,15 @@ public class Tournoi {
 		}	
 		
 		this.supprimerMatch(match);
+		
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
+	
+	public List<Match> getMatchs() {
+		return this.matchs;
+	}
 	
 	
 	

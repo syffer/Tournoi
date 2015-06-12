@@ -10,6 +10,8 @@ import java.awt.GridLayout;
 
 import internationalisation.Constantes;
 
+import javafx.scene.control.TableSelectionModel;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -22,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
@@ -121,6 +124,7 @@ public class Vue extends JFrame {
 		
 		this.tableauJoueurs = new JTable( new TableModelJoueur() );	
 		this.tableauJoueurs.setAutoCreateRowSorter(true);	// rendre le tableau triable
+		this.tableauJoueurs.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );	// on ne peut sélectionner qu'une et une seule ligne à la fois
 		//this.tableauJoueurs.setPreferredSize( new Dimension(300, 400) ); 	// ( largeur , hauteur )
 		//this.tableauJoueurs.setSize( new Dimension(300, 400) );
 		JScrollPane scrollPane = new JScrollPane( this.tableauJoueurs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
@@ -191,7 +195,8 @@ public class Vue extends JFrame {
 		
 		
 		
-		this.listeMatchs = new JList<Match>();
+		this.listeMatchs = new JList<Match>( new ListModelMatch() );
+		this.listeMatchs.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
 		//this.listeMatchs.setPreferredSize( new Dimension(200, 500) );
 		//this.listeMatchs.setSize( new Dimension(200, 500) );
 		JScrollPane scrollPane = new JScrollPane( this.listeMatchs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
@@ -236,7 +241,7 @@ public class Vue extends JFrame {
 	
 	
 	
-	
+	/*
 	public static class Test {
 		public static void main( String[] args ) {
 			
@@ -245,5 +250,6 @@ public class Vue extends JFrame {
 			
 		}
 	}
+	*/
 	
 }

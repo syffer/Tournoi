@@ -58,6 +58,11 @@ public class TableDesRencontres {
 	}
 	
 	
+	public List<Joueur> getJoueurs() {
+		return new ArrayList<Joueur>( this.matriceDesRencontres.keySet() );
+	}
+	
+	
 	public List<Joueur> getAdversairesPotentiel( Joueur joueur, List<Joueur> adversairesPossibles ) {
 		
 		// pas de ligne pour le joueur dans la table des rencontres.

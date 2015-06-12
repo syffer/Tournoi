@@ -3,6 +3,7 @@ package controleur;
 import internationalisation.Constantes;
 
 import java.awt.event.ActionEvent;
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -12,7 +13,9 @@ import javax.swing.JOptionPane;
 
 import modele.Joueur;
 import modele.JoueurDejaExistantException;
+import modele.Match;
 import modele.Tournoi;
+import vue.ListModelMatch;
 import vue.TableModelJoueur;
 import vue.Vue;
 
@@ -55,12 +58,17 @@ public class Controleur {
 			// TODO Auto-generated method stub
 			
 			List<Joueur> joueurs = modele.getJoueurs();
-			
+			Collections.sort( joueurs, Collections.reverseOrder() );
+						
 			TableModelJoueur modelTableau = (TableModelJoueur) vue.tableauJoueurs.getModel();
 			
 			modelTableau.setJoueurs(joueurs);
 			
-			System.out.println("UPDATE OK");
+			
+			List<Match> matchs = modele.getMatchs();
+			ListModelMatch modelListe = (ListModelMatch) vue.listeMatchs.getModel();
+			modelListe.setMatchs(matchs);
+			
 		}
 		
 		

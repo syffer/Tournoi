@@ -11,12 +11,14 @@ public class Joueur implements Comparable<Joueur> {
 	}
 	
 	private Etat etat;
+	private boolean enMatch;
 	
 	public Joueur( String nom, int nbPoints ) {
 		this.nom = nom;
 		this.nbPoints = nbPoints;
 		
 		this.etat = Etat.Perdant;
+		this.enMatch = false;
 	}
 	
 	public Joueur( String nom ) {
@@ -46,6 +48,14 @@ public class Joueur implements Comparable<Joueur> {
 		return this.etat == Etat.Perdant;
 	}
 	
+	
+	public boolean estEnMatch() {
+		return this.enMatch;
+	}
+	
+	public void setEnMatch( boolean enMatch ) {
+		this.enMatch = enMatch;
+	}
 	
 	public String getNom() {
 		return this.nom;
