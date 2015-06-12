@@ -29,6 +29,10 @@ public class Tournoi {
 	}
 	
 	
+	public void ajouterJoueur( String nomJoueur ) throws JoueurDejaExistantException {
+		this.ajouterJoueur( new Joueur(nomJoueur) );
+	}
+	
 	public void ajouterJoueur( Joueur nouveauJoueur ) throws JoueurDejaExistantException {
 		
 		this.tableDesRencontres.ajouterJoueur(nouveauJoueur);

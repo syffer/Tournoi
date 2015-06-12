@@ -19,6 +19,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -73,10 +74,10 @@ public class Vue extends JFrame {
 		
 		
 		this.setLayout( new FlowLayout() );		// de gauche à droite
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setLocationRelativeTo(null);	// on place la fenetre au centre de l'écran
-		this.pack();		
-		
+		this.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
+		this.pack();
+		this.setLocationRelativeTo(null);	// on place la fenetre au centre de l'écran ( à faire après le JFrame.pack() )
+			
 	}
 
 	
@@ -119,10 +120,11 @@ public class Vue extends JFrame {
 		
 		
 		this.tableauJoueurs = new JTable();	
-		this.tableauJoueurs.setPreferredSize( new Dimension(300, 400) ); 	// ( largeur , hauteur )
-		this.tableauJoueurs.setSize( new Dimension(300, 400) );
+		//this.tableauJoueurs.setPreferredSize( new Dimension(300, 400) ); 	// ( largeur , hauteur )
+		//this.tableauJoueurs.setSize( new Dimension(300, 400) );
+		JScrollPane scrollPane = new JScrollPane( this.tableauJoueurs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
 		this.donnerContrainte( contrainte, 0, 0, 1, 1, 100, 100 );
-		panneauJoueurs.add( this.tableauJoueurs, contrainte );
+		panneauJoueurs.add( scrollPane, contrainte );
 		
 		
 		JPanel panneauAjoutJoueur = new JPanel();
@@ -172,25 +174,27 @@ public class Vue extends JFrame {
 		panneauMatchs.setBorder( titre );		// faire apparaitre le contour
 		
 		//panneauMatchs.setLayout( new BoxLayout(panneauMatchs, BoxLayout.Y_AXIS) );
-		
-		panneauMatchs.setLayout( new BorderLayout() );
+		panneauMatchs.setLayout( new FlowLayout() );
+		//panneauMatchs.setPreferredSize( new Dimension(400, 200) );
+		//panneauMatchs.setSize( new Dimension(400, 200) );
 		this.add(panneauMatchs);
 		
 		
 		JPanel panneauListeMatchs = new JPanel();
-		panneauMatchs.add( panneauListeMatchs, BorderLayout.WEST );
+		panneauMatchs.add(panneauListeMatchs);
 		
 		
 		JPanel panneauBoutonsMatchs = new JPanel();
 		panneauBoutonsMatchs.setLayout( new GridLayout(6, 1, 0, 10) );	// grille de 6 lignes et 1 colonne
-		panneauMatchs.add( panneauBoutonsMatchs, BorderLayout.EAST );
+		panneauMatchs.add(panneauBoutonsMatchs);
 		
 		
 		
 		this.listeMatchs = new JList<Match>();
-		this.listeMatchs.setPreferredSize( new Dimension(200, 500) );
-		this.listeMatchs.setSize( new Dimension(200, 500) );
-		panneauListeMatchs.add( this.listeMatchs );
+		//this.listeMatchs.setPreferredSize( new Dimension(200, 500) );
+		//this.listeMatchs.setSize( new Dimension(200, 500) );
+		JScrollPane scrollPane = new JScrollPane( this.listeMatchs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
+		panneauListeMatchs.add(scrollPane);
 		
 		this.boutonJoueur1Gagne = new JButton("J1 gagne");
 		panneauBoutonsMatchs.add( this.boutonJoueur1Gagne );
