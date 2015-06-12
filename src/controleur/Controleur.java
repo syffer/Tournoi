@@ -37,6 +37,8 @@ public class Controleur {
 		ActionGenererMatchs actionGenererMatchs = new ActionGenererMatchs();
 		ActionAnnulerMatchs actionAnnulerMatchs = new ActionAnnulerMatchs();
 		
+		ActionSupprimerMatch actionSupprimerMatch = new ActionSupprimerMatch();
+		
 		this.vue.boutonAjoutJoueur.setAction(actionAjouterJoueur);
 		this.vue.boutonSupprimerJoueur.setAction(actionSupprimerJoueur);
 		
@@ -44,8 +46,12 @@ public class Controleur {
 		this.vue.boutonGenererMatchs.setAction(actionGenererMatchs);
 		this.vue.boutonAnnulerLesMatchs.setAction(actionAnnulerMatchs);
 		
+		this.vue.boutonAnnulerMatch.setAction(actionSupprimerMatch);
 
 		this.modele.addObserver(update);
+		this.modele.addObserver(actionAnnulerMatchs);
+				
+		this.modele.initialiser();
 		this.vue.setVisible(true);
 		
 	}
@@ -81,7 +87,7 @@ public class Controleur {
 		public ActionAjouterJoueur() {
 			super( Constantes.getString(Constantes.AJOUTER_UN_JOUEUR) );
 			
-			this.putValue( NAME,  Constantes.getString(Constantes.AJOUTER_UN_JOUEUR) );
+			this.putValue( NAME, Constantes.getString(Constantes.AJOUTER_UN_JOUEUR) );
 			
 		}
 		
@@ -112,7 +118,7 @@ public class Controleur {
 		public ActionSupprimerJoueur() {
 			super( Constantes.getString(Constantes.SUPPRIMER_UN_JOUEUR) );
 			
-			this.putValue( NAME,  Constantes.getString(Constantes.SUPPRIMER_UN_JOUEUR) );
+			this.putValue( NAME, Constantes.getString(Constantes.SUPPRIMER_UN_JOUEUR) );
 			
 		}
 		
@@ -131,7 +137,7 @@ public class Controleur {
 		public ActionCreerMatch() {
 			super( Constantes.getString(Constantes.CREER_UN_MATCH) );
 			
-			this.putValue( NAME,  Constantes.getString(Constantes.CREER_UN_MATCH) );
+			this.putValue( NAME, Constantes.getString(Constantes.CREER_UN_MATCH) );
 			
 		}
 		
@@ -142,14 +148,14 @@ public class Controleur {
 		
 	}
 	
-	public class ActionGenererMatchs extends AbstractAction {
+	public class ActionGenererMatchs extends AbstractAction implements Observer {
 		
 		private static final long serialVersionUID = -1076399474003965663L;
 
 		public ActionGenererMatchs() {
 			super( Constantes.getString(Constantes.GENERER_LES_MATCHS) );
 			
-			this.putValue( NAME,  Constantes.getString(Constantes.GENERER_LES_MATCHS) );
+			this.putValue( NAME, Constantes.getString(Constantes.GENERER_LES_MATCHS) );
 			
 		}
 		
@@ -157,19 +163,24 @@ public class Controleur {
 		public void actionPerformed( ActionEvent event ) {
 			modele.genererMatchs();
 		}
+
+		@Override
+		public void update(Observable arg0, Object arg1) {
+					
+		}
 		
 	}
 
 
 
-	public class ActionAnnulerMatchs extends AbstractAction {
+	public class ActionAnnulerMatchs extends AbstractAction implements Observer {
 		
 		private static final long serialVersionUID = 5351141276130893274L;
 
 		public ActionAnnulerMatchs() {
 			super( Constantes.getString(Constantes.ANNULER_LES_MATCHS) );
 			
-			this.putValue( NAME,  Constantes.getString(Constantes.ANNULER_LES_MATCHS) );
+			this.putValue( NAME, Constantes.getString(Constantes.ANNULER_LES_MATCHS) );
 			
 		}
 		
@@ -177,8 +188,39 @@ public class Controleur {
 		public void actionPerformed( ActionEvent event ) {
 			modele.annulerMatchs();	
 		}
+
+		@Override
+		public void update( Observable observable, Object args ) {
+			
+			this.setEnabled( ! modele.getMatchs().isEmpty() );
+			
+		}
 	
 	}
+
+
 	
+
+	public class ActionSupprimerMatch extends AbstractAction implements Observer {
+		
+		private static final long serialVersionUID = -3586680284444075521L;
+
+		public ActionSupprimerMatch() {
+			super( Constantes.getString(Constantes.SUPPRIMER_LE_MATCH) );
+			
+			this.putValue( NAME, Constantes.getString(Constantes.SUPPRIMER_LE_MATCH) );
+		}
+		
+		@Override
+		public void actionPerformed( ActionEvent event ) {
+			
+		}
+
+		@Override
+		public void update( Observable observable, Object args ) {
+			//this.setEnabled( ! vue.listeMatchs.isSelectionEmpty() );
+		}
+	
+	}
 	
 }

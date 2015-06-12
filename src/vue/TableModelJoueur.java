@@ -25,6 +25,10 @@ public class TableModelJoueur extends AbstractTableModel {
 		this.fireTableDataChanged();
 	}
 	
+	public Joueur getJoueur( int index ) {
+		return this.joueurs.get(index);
+	}
+	
 	
 	@Override
 	public int getColumnCount() {
@@ -33,7 +37,7 @@ public class TableModelJoueur extends AbstractTableModel {
 	}
 	
 	@Override
-	public String getColumnName(int columnIndex) {
+	public String getColumnName( int columnIndex ) {
 		return this.titresColonnes[ columnIndex ];
 	}
 	
@@ -45,7 +49,7 @@ public class TableModelJoueur extends AbstractTableModel {
 	}
 
 	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
+	public Object getValueAt( int rowIndex, int columnIndex ) {
 		
 		switch (columnIndex) {
 	

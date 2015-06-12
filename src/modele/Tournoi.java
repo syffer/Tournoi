@@ -28,10 +28,9 @@ public class Tournoi extends Observable {
 		
 		this.aleatoire = new Aleatoire();
 		
-		this.initialiser();
 	}
 	
-	private void initialiser() {
+	public void initialiser() {
 		this.setChanged();
 		this.notifyObservers();
 	}
@@ -68,7 +67,7 @@ public class Tournoi extends Observable {
 		
 		return this.tableDesRencontres.getJoueurs();		
 	}
-	
+		
 	
 	private void genererMatchs( List<Joueur> listejoueurs ) {
 		
