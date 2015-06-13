@@ -9,6 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.AbstractAction;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -95,6 +96,8 @@ public class Controleur {
 			ListModelMatch modelListe = (ListModelMatch) vue.listeMatchs.getModel();
 			modelListe.setMatchs(matchs);
 			
+			modele.setMatchSelectionne(false);
+			vue.listeMatchs.setSelectedIndex(-1);
 		}
 		
 		
@@ -138,10 +141,11 @@ public class Controleur {
 			
 			if ( event.getValueIsAdjusting() ) return;
 				
-			ListSelectionModel lsm = (ListSelectionModel) vue.listeMatchs.getModel();
-			modele.setMatchSelectionne( ! lsm.isSelectionEmpty() );
+			JList lsm = (JList) event.getSource();
+			boolean matchSelectionne = ! lsm.isSelectionEmpty();
 			
-			//System.out.println( lsm.isSelectionEmpty() );
+			modele.setMatchSelectionne(matchSelectionne);
+			
 		}
 		
 	}
@@ -313,7 +317,7 @@ public class Controleur {
 		@Override
 		public void actionPerformed( ActionEvent event ) {
 			
-			Match matchSelectionne = vue.listeMatchs.getSelectedValue();
+			Match matchSelectionne = vue.listeMatchs.getSelectedValue();		
 			Joueur gagnant = ( this.concerneJoueur1 ) ? matchSelectionne.getJoueur1() : matchSelectionne.getJoueur2();
 			
 			try {
@@ -368,7 +372,7 @@ public class Controleur {
 		@Override
 		public void actionPerformed( ActionEvent event ) {
 			
-			Match matchSelectionne = vue.listeMatchs.getSelectedValue();
+			Match matchSelectionne = vue.listeMatchs.getSelectedValue();			
 			Joueur abandonne = ( this.concerneJoueur1 ) ? matchSelectionne.getJoueur1() : matchSelectionne.getJoueur2();
 			
 			try {
@@ -386,7 +390,7 @@ public class Controleur {
 			
 			String nomBouton = null;
 			if( modele.isMatchSelectionne() ) {
-				
+								
 				Match match = vue.listeMatchs.getSelectedValue();
 				Joueur joueur = ( this.concerneJoueur1 ) ? match.getJoueur1() : match.getJoueur2();
 				nomBouton = joueur.getNom() + " " + Constantes.getString(Constantes.ABANDONNE);
@@ -418,7 +422,10 @@ public class Controleur {
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			System.out.println("PAS IMPLEMENTE!!!");
+			
+			Match match = vue.listeMatchs.getSelectedValue();
+			modele.resoudreMatchNull(match);
+			
 		}
 
 		@Override
@@ -445,6 +452,9 @@ public class Controleur {
 		
 		@Override
 		public void actionPerformed( ActionEvent event ) {
+			
+			Match match = vue.listeMatchs.getSelectedValue();
+			modele.supprimerMatch(match);
 			
 		}
 

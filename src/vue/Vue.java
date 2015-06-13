@@ -60,7 +60,7 @@ public class Vue extends JFrame {
 	public JButton boutonMatchNull;
 	public JButton boutonAnnulerMatch;
 	
-	private static int LARGEUR_PANNEAU = 450;
+	private static int LARGEUR_PANNEAU = 600;
 	private static int HAUTEUR_PANNEAU = 250;
 	
 	public Vue() {

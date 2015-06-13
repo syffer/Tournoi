@@ -260,10 +260,9 @@ public class Tournoi extends Observable {
 		gagnant.gagne();
 		perdant.perd();
 		
+		// effectue un notify()
 		this.supprimerMatch(match);
 		
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	public void resoudreMatchNormal( Match match, Joueur gagnant ) throws MatchException {
@@ -283,10 +282,12 @@ public class Tournoi extends Observable {
 			
 			joueur.incrementerNbPoints( Match.POINTS_MATCH_NULL );
 			joueur.perd();
-			this.joueursPerdants.add(joueur);
+			
 		}	
 		
 		this.supprimerMatch(match);
+		
+		//this.afficher();
 		
 		this.setChanged();
 		this.notifyObservers();
@@ -295,6 +296,14 @@ public class Tournoi extends Observable {
 	
 	public List<Match> getMatchs() {
 		return this.matchs;
+	}
+	
+	
+	private void afficher() {
+		System.out.println();
+		System.out.println( this.matchs );
+		System.out.println( this.joueursGagnants );
+		System.out.println( this.joueursPerdants );
 	}
 	
 	
