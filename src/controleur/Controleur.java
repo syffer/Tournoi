@@ -9,7 +9,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.AbstractAction;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -96,8 +95,8 @@ public class Controleur {
 			ListModelMatch modelListe = (ListModelMatch) vue.listeMatchs.getModel();
 			modelListe.setMatchs(matchs);
 			
-			modele.setMatchSelectionne(false);
 			vue.listeMatchs.setSelectedIndex(-1);
+			vue.listeMatchs.setSelectedIndices( new int[0] );	// on ne sélectionne rien dans la nouvelle liste
 		}
 		
 		
@@ -108,8 +107,6 @@ public class Controleur {
 	
 	public class ActionSelectionnerTableauJoueurs implements ListSelectionListener {
 		
-		private static final long serialVersionUID = -3072150480428568L;
-
 		public ActionSelectionnerTableauJoueurs() {
 			
 		}
@@ -129,9 +126,7 @@ public class Controleur {
 	}
 	
 	public class ActionSelectionListeMatch implements ListSelectionListener {
-		
-		private static final long serialVersionUID = -3072150120428568L;
-		
+				
 		public ActionSelectionListeMatch() {
 			
 		}
@@ -140,9 +135,8 @@ public class Controleur {
 		public void valueChanged( ListSelectionEvent event ) {
 			
 			if ( event.getValueIsAdjusting() ) return;
-				
-			JList lsm = (JList) event.getSource();
-			boolean matchSelectionne = ! lsm.isSelectionEmpty();
+			
+			boolean matchSelectionne = ! vue.listeMatchs.isSelectionEmpty();
 			
 			modele.setMatchSelectionne(matchSelectionne);
 			
