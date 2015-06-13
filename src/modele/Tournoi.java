@@ -3,9 +3,8 @@ package modele;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Observable;
 
-public class Tournoi extends Observable {
+public class Tournoi {
 	
 
 	private TableDesRencontres tableDesRencontres;
@@ -15,10 +14,7 @@ public class Tournoi extends Observable {
 	private List<Match> matchs;
 	
 	private Aleatoire aleatoire;
-	
-	private boolean joueurSelectionne;
-	private boolean matchSelectionne;
-	
+		
 	public Tournoi() {
 		
 		this.tableDesRencontres = new TableDesRencontres();
@@ -29,39 +25,9 @@ public class Tournoi extends Observable {
 		
 		this.aleatoire = new Aleatoire();
 		
-		this.joueurSelectionne = false;
-		this.matchSelectionne = false;
-	}
-	
-	public void initialiser() {
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	
-	public boolean isJoueurSelectionne() {
-		return this.joueurSelectionne;
-	}
-	
-	
-	public boolean isMatchSelectionne() {
-		return this.matchSelectionne;
-	}
-	
-	public void setJoueurSelectionne( boolean joueurSelectionne ) {
-		this.joueurSelectionne = joueurSelectionne;
-	
-		this.setChanged();
-		this.notifyObservers( false );
-	}
-	
-	public void setMatchSelectionne( boolean matchSelectionne ) {
-		this.matchSelectionne = matchSelectionne;
-		
-		this.setChanged();
-		this.notifyObservers( false );
-	}
-		
 	
 	
 	public void ajouterJoueur( String nomJoueur ) throws JoueurDejaExistantException {
@@ -74,8 +40,6 @@ public class Tournoi extends Observable {
 		
 		this.joueursPerdants.add(nouveauJoueur);
 		
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	public void supprimerJoueur( Joueur joueur ) {
@@ -87,9 +51,11 @@ public class Tournoi extends Observable {
 		this.joueursGagnants.remove(joueur);
 		this.joueursPerdants.remove(joueur);
 		
-		this.setChanged();
-		this.notifyObservers();
 	}
+	
+	
+	
+	
 	
 	public List<Joueur> getJoueurs() {	
 		return this.tableDesRencontres.getJoueurs();		
@@ -164,8 +130,6 @@ public class Tournoi extends Observable {
 		}
 		*/
 		
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	public void annulerMatchs( Joueur joueur ) {
@@ -188,8 +152,6 @@ public class Tournoi extends Observable {
 			
 		}
 		
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	
@@ -211,8 +173,6 @@ public class Tournoi extends Observable {
 			
 		}
 		
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	
@@ -229,8 +189,6 @@ public class Tournoi extends Observable {
 		Match match = new Match( joueur1, joueur2 );
 		this.matchs.add(match);
 		
-		this.setChanged();
-		this.notifyObservers();
 	}
 		
 	public void supprimerMatch( Match match ) {
@@ -245,9 +203,14 @@ public class Tournoi extends Observable {
 		
 		this.matchs.remove(match);
 		
-		this.setChanged();
-		this.notifyObservers();
 	}
+	
+	public List<Match> getMatchs() {
+		return this.matchs;
+	}
+	
+	
+	
 	
 	
 	private void resoudreMatch( Match match, Joueur gagnant, int nbPointsGagnant, int nbPointsPerdant ) throws MatchException {
@@ -260,7 +223,6 @@ public class Tournoi extends Observable {
 		gagnant.gagne();
 		perdant.perd();
 		
-		// effectue un notify()
 		this.supprimerMatch(match);
 		
 	}
@@ -288,15 +250,10 @@ public class Tournoi extends Observable {
 		this.supprimerMatch(match);
 		
 		//this.afficher();
-		
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	
-	public List<Match> getMatchs() {
-		return this.matchs;
-	}
+	
 	
 	/*
 	private void afficher() {

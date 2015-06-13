@@ -18,21 +18,20 @@ import modele.Joueur;
 import modele.JoueurDejaExistantException;
 import modele.Match;
 import modele.MatchException;
-import modele.Tournoi;
+import modele.Modele;
 import vue.ListModelMatch;
 import vue.TableModelJoueur;
 import vue.Vue;
 
 public class Controleur {
 
-	private Tournoi modele;
+	private Modele modele;
 	private Vue vue;
-	
-	
-	public Controleur( Tournoi tournoi ) {
 		
-		this.modele = tournoi;
-		this.vue = new Vue();
+	public Controleur( Modele modele, Vue vue ) {
+		
+		this.modele = modele;
+		this.vue = vue;
 		
 		Update update = new Update();
 		
@@ -75,6 +74,11 @@ public class Controleur {
 		this.vue.setVisible(true);
 		
 	}
+	
+	public Controleur( Modele modele ) {
+		this( modele, new Vue() );
+	}
+	
 	
 	
 	public class Update implements Observer {
@@ -237,7 +241,8 @@ public class Controleur {
 
 		@Override
 		public void update(Observable arg0, Object arg1) {
-			this.setEnabled( modele.isJoueursDisponibles() );
+			//this.setEnabled( modele.isJoueursDisponibles() );
+			this.setEnabled(false);		//--------------------------------------------------------- ancre
 		}
 		
 	}

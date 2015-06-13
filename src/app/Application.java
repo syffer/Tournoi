@@ -1,7 +1,7 @@
 package app;
 
 import controleur.Controleur;
-import modele.Tournoi;
+import modele.Modele;
 
 public class Application {
 
@@ -11,9 +11,9 @@ public class Application {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Tournoi tournoi = new Tournoi();
+		Modele modele = new Modele();
 		
-		new Controleur(tournoi);
+		new Controleur(modele);
 		
 	}
 

@@ -40,6 +40,7 @@ public class Vue extends JFrame {
 	public JMenuItem menuAnnuler;
 	public JMenuItem menuRefaire;
 	
+	
 	// le panneau des joueurs
 	public JTable tableauJoueurs;
 	public JTextField champAjoutJoueur;
