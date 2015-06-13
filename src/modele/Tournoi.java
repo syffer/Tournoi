@@ -16,7 +16,8 @@ public class Tournoi extends Observable {
 	
 	private Aleatoire aleatoire;
 	
-	
+	private boolean joueurSelectionne;
+	private boolean matchSelectionne;
 	
 	public Tournoi() {
 		
@@ -28,12 +29,39 @@ public class Tournoi extends Observable {
 		
 		this.aleatoire = new Aleatoire();
 		
+		this.joueurSelectionne = false;
+		this.matchSelectionne = false;
 	}
 	
 	public void initialiser() {
 		this.setChanged();
 		this.notifyObservers();
 	}
+	
+	
+	public boolean isJoueurSelectionne() {
+		return this.joueurSelectionne;
+	}
+	
+	
+	public boolean isMatchSelectionne() {
+		return this.matchSelectionne;
+	}
+	
+	public void setJoueurSelectionne( boolean joueurSelectionne ) {
+		this.joueurSelectionne = joueurSelectionne;
+	
+		this.setChanged();
+		this.notifyObservers( false );
+	}
+	
+	public void setMatchSelectionne( boolean matchSelectionne ) {
+		this.matchSelectionne = matchSelectionne;
+		
+		this.setChanged();
+		this.notifyObservers( false );
+	}
+		
 	
 	
 	public void ajouterJoueur( String nomJoueur ) throws JoueurDejaExistantException {
@@ -63,11 +91,20 @@ public class Tournoi extends Observable {
 		this.notifyObservers();
 	}
 	
-	public List<Joueur> getJoueurs() {
-		
+	public List<Joueur> getJoueurs() {	
 		return this.tableDesRencontres.getJoueurs();		
 	}
-		
+	
+	
+	public List<Joueur> getJoueursDisponibles() {
+		ArrayList<Joueur> joueurs = new ArrayList<Joueur>( this.joueursGagnants );
+		joueurs.addAll( this.joueursPerdants );
+		return joueurs;
+	}
+	
+	public boolean isJoueursDisponibles() {
+		return this.joueursGagnants.size() + this.joueursPerdants.size() >= 2;
+	}
 	
 	private void genererMatchs( List<Joueur> listejoueurs ) {
 		

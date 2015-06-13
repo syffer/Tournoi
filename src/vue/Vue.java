@@ -150,8 +150,7 @@ public class Vue extends JFrame {
 		
 		this.boutonAjoutJoueur = new JButton( Constantes.getString(Constantes.AJOUTER_UN_JOUEUR) );
 		panneauAjoutJoueur.add( this.boutonAjoutJoueur );
-			
-		
+				
 	}
 	
 	

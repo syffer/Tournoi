@@ -14,7 +14,7 @@ public class Application {
 		Tournoi tournoi = new Tournoi();
 		
 		new Controleur(tournoi);
-				
+		
 	}
 
 }
