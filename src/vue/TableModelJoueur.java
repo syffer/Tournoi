@@ -1,5 +1,7 @@
 package vue;
 
+import internationalisation.Constantes;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,7 @@ public class TableModelJoueur extends AbstractTableModel {
 
 	private static final long serialVersionUID = -3888414836915932619L;
 	
-
-	private final String[] titresColonnes = { "NOMS", "POINTS", "ETAT" };
+	private final String[] titresColonnes = { Constantes.getString(Constantes.TITRE_TABLEAU_COLONNE_NOM), Constantes.getString(Constantes.TITRE_TABLEAU_COLONNE_POINTS), Constantes.getString(Constantes.TITRE_TABLEAU_COLONNE_ETAT) };
 	private List<Joueur> joueurs;
 	
 	public TableModelJoueur() {

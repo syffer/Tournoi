@@ -298,14 +298,14 @@ public class Tournoi extends Observable {
 		return this.matchs;
 	}
 	
-	
+	/*
 	private void afficher() {
 		System.out.println();
 		System.out.println( this.matchs );
 		System.out.println( this.joueursGagnants );
 		System.out.println( this.joueursPerdants );
 	}
-	
+	*/
 	
 	
 	public static class Test {

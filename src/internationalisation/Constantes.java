@@ -12,6 +12,7 @@ public class Constantes {
 	public static final String TITRE_MENU_EDITION = "TITRE_MENU_EDITION";
 	public static final String TITRE_TABLEAU_COLONNE_NOM = "TITRE_TABLEAU_COLONNE_NOM";
 	public static final String TITRE_TABLEAU_COLONNE_POINTS = "TITRE_TABLEAU_COLONNE_POINTS";
+	public static final String TITRE_TABLEAU_COLONNE_ETAT = "TITRE_TABLEAU_COLONNE_ETAT";
 	
 	public static final String CREER_UN_MATCH = "CREER_UN_MATCH";
 	public static final String GENERER_LES_MATCHS = "GENERER_LES_MATCHS";
@@ -33,7 +34,7 @@ public class Constantes {
 	public static final String SUPPRIMER_LE_MATCH = "SUPPRIMER_LE_MATCH";
 	
 	public static final String MESSAGE_JOUEUR_EXISTE_DEJA = "MESSAGE_JOUEUR_EXISTE_DEJA";
-	
+	public static final String MESSAGE_CONFIRMATION_SUPPRESSION_JOUEUR = "MESSAGE_CONFIRMATION_SUPPRESSION_JOUEUR";
 	
 	public static final Locale LOCALE = Locale.getDefault();
 	

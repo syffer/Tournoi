@@ -197,7 +197,7 @@ public class Controleur {
 			if( ligneSelectionnee == -1 ) return;	// pas de ligne sélectionnée
 
 			// on demande confirmation
-			int reponse = JOptionPane.showConfirmDialog( vue, "Would you like green eggs and ham?", "An Inane Question", JOptionPane.YES_NO_OPTION );
+			int reponse = JOptionPane.showConfirmDialog( vue, Constantes.getString(Constantes.MESSAGE_CONFIRMATION_SUPPRESSION_JOUEUR), "An Inane Question", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE );
 			if( reponse != 0 ) return;
 			
 			TableModelJoueur modelTableau = (TableModelJoueur) vue.tableauJoueurs.getModel();
