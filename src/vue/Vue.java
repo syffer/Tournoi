@@ -14,9 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -34,9 +32,7 @@ public class Vue extends JFrame {
 	private static final long serialVersionUID = -219340788187650081L;
 	
 	// la barre de menu.
-	public JMenuItem menuNouveauFichier;
-	public JMenuItem menuOuvrirFichier;
-	public JMenuItem menuSauvegarder;
+	
 	
 	
 	
@@ -67,13 +63,9 @@ public class Vue extends JFrame {
 		super( Constantes.getString(Constantes.TITRE_FENETRE) );
 		
 		this.ajouterBarreDesMenus();
-		
 		this.ajouterPanneauJoueurs();
-		
 		this.ajouterPanneauIntermediaire();
-		
 		this.ajouterPanneauMatchs();
-		
 		
 		this.setLayout( new FlowLayout() );		// de gauche à droite
 		this.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
@@ -85,26 +77,8 @@ public class Vue extends JFrame {
 	
 	private void ajouterBarreDesMenus() {
 		
-		JMenu menuFichier = new JMenu( Constantes.getString(Constantes.TITRE_MENU_FICHIER) );
-		this.menuNouveauFichier = new JMenuItem( Constantes.getString(Constantes.NOUVEAU_TOURNOI) );
-		this.menuOuvrirFichier = new JMenuItem( Constantes.getString(Constantes.CHARGER_TOURNOI) );
-		this.menuSauvegarder = new JMenuItem( Constantes.getString(Constantes.SAUVEGARDER_TOURNOI) );
-		menuFichier.add( this.menuNouveauFichier );
-		menuFichier.add( this.menuOuvrirFichier );
-		menuFichier.add( this.menuSauvegarder );
-		
-		/*
-		JMenu menuEditer = new JMenu( Constantes.getString(Constantes.TITRE_MENU_EDITION) );
-		this.menuAnnuler = new JMenuItem( Constantes.getString(Constantes.UNDO) );
-		this.menuRefaire = new JMenuItem( Constantes.getString(Constantes.REDO) );
-		menuEditer.add( this.menuAnnuler );
-		menuEditer.add( this.menuRefaire );
-		*/
-		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.add(menuFichier);
-		//menuBar.add(menuEditer);
-		this.setJMenuBar(menuBar);
+		this.setJMenuBar(menuBar);		
 		
 	}
 		

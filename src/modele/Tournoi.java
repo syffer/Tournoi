@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Tournoi implements Cloneable {
 	
-
 	private TableDesRencontres tableDesRencontres;
 	
 	private List<Joueur> joueursGagnants;
@@ -62,7 +61,6 @@ public class Tournoi implements Cloneable {
 			throw new InternalError("clonage impossible");
 		}
 	}
-	
 	
 	
 	public void ajouterJoueur( String nomJoueur ) throws JoueurDejaExistantException {

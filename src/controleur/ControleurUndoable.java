@@ -14,22 +14,24 @@ import vue.VueUndoable;
 import modele.ModeleUndoManager;
 import modele.ModeleUndoable;
 
-public class ControleurUndoable extends Controleur {
+public class ControleurUndoable extends ControleurSerializable {
 
-	public ControleurUndoable( ModeleUndoable modeleUndoable ) {
-		super( modeleUndoable, new VueUndoable() );
-		
+	public ControleurUndoable( ModeleUndoable modeleUndoable, VueUndoable vueUndoable ) {
+		super( modeleUndoable, vueUndoable );
 		
 		ActionUndo actionUndo = new ActionUndo();
 		ActionRedo actionRedo = new ActionRedo();
-		
-		VueUndoable vueUndoable = (VueUndoable) this.vue;
-		
+				
 		vueUndoable.menuAnnuler.setAction(actionUndo);
 		vueUndoable.menuRefaire.setAction(actionRedo);
 		
 		modeleUndoable.getModeleUndoManager().initialiser();
 	}
+	
+	public ControleurUndoable( ModeleUndoable modeleUndoable ) {
+		this( modeleUndoable, new VueUndoable() );
+	}
+	
 	
 	
 	public class ActionUndo extends AbstractAction implements Observer {

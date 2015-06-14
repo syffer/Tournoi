@@ -1,8 +1,6 @@
 package app;
 
-import controleur.Controleur;
 import controleur.ControleurUndoable;
-import modele.Modele;
 import modele.ModeleUndoable;
 
 public class Application {

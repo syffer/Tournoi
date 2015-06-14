@@ -5,7 +5,9 @@ import java.util.Hashtable;
 import javax.swing.undo.StateEdit;
 import javax.swing.undo.StateEditable;
 
-public class ModeleUndoable extends Modele implements StateEditable {
+public class ModeleUndoable extends ModeleSerializable implements StateEditable {
+	
+	private static final long serialVersionUID = 996735530260433305L;
 
 	private ModeleUndoManager undoManager;
 	
@@ -36,10 +38,20 @@ public class ModeleUndoable extends Modele implements StateEditable {
 	}
 	
 	
-	public ModeleUndoManager getModeleUndoManager() {
+	public ModeleUndoManager getModeleUndoManager() {	
 		return this.undoManager;
 	}
 	
+	
+	public void reinitialiserTournoi() {
+		
+		super.reinitialiserTournoi();
+		
+		this.undoManager.vider();
+		
+	}
+	
+		
 	public void ajouterJoueur( String nomJoueur ) throws JoueurDejaExistantException {
 		this.ajouterJoueur( new Joueur(nomJoueur) );
 	}

@@ -56,4 +56,12 @@ public class ModeleUndoManager extends Observable {
 		this.notifyObservers();
 	}
 	
+	public void vider() {
+		
+		this.undoManager.discardAllEdits();
+		
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
 }

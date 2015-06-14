@@ -83,29 +83,47 @@ public class TableDesRencontres implements Cloneable {
 		// pas de ligne pour le joueur dans la table des rencontres.
 		//if( ! this.matriceDesRencontres.containsKey(joueur) ) throw new TableDesRencontresException("Le joueur n'existe pas dans la table des rencontres (il ne possède pas de ligne qui lui est associée).");
 		
+		// on récupère la ligne concernant le joueur
 		Map<Joueur, Integer> ligneJoueur = this.matriceDesRencontres.get(joueur);
 		
 		
 		List<Joueur> adversairesPotentiels = new ArrayList<Joueur>();
 		
-		if( ligneJoueur.isEmpty() ) return adversairesPotentiels;
+		if( ligneJoueur.isEmpty() ) {
+			System.out.println("PAS ICI");
+			return adversairesPotentiels;
+		}
 		
-		Integer nbRencontresMin = ligneJoueur.values().iterator().next();
+		Integer nbRencontresMin = ligneJoueur.values().iterator().next(); 	// permet de récupérer la 1ère valeur
+		
+		System.out.println( "---------------- joueur : " + joueur );
+		
 		
 		for( Joueur adversaire : adversairesPossibles ) {
 			
-			if( ! ligneJoueur.containsKey(adversaire) ) continue;
-			
-			Integer nbRencontres = ligneJoueur.get(adversaire);
-			
-			if( nbRencontresMin == null || nbRencontres < nbRencontresMin ) {
-				nbRencontresMin = nbRencontres;
-				adversairesPotentiels.removeAll(adversairesPotentiels);
+			// aucune colonne concernant cet adversaire 
+			if( ! ligneJoueur.containsKey(adversaire) ) {
+				System.out.println(" ne contient pas : " + adversaire);
+				continue;
 			}
 			
-			if( nbRencontresMin == nbRencontres ) adversairesPotentiels.add(adversaire);	
+			Integer nbRencontres = ligneJoueur.get(adversaire);
+			System.out.println(" LE MIN ACTUEL : " + nbRencontresMin );
+			
+			if( nbRencontres < nbRencontresMin ) {
+				System.out.println("IL Y A PLUS PETIT : " + nbRencontres );
+				nbRencontresMin = nbRencontres;	
+				adversairesPotentiels.removeAll(adversairesPotentiels);		// on supprime les anciens adversaires potentiels
+			}
+			
+			if( nbRencontresMin == nbRencontres ) {
+				System.out.println("Nouvel adversaire : " + adversaire );
+				adversairesPotentiels.add(adversaire);	
+			}
 			
 		}
+		
+		System.out.println( joueur + " " + joueur.aGagne() + " " + adversairesPossibles + " " + adversairesPotentiels );
 		
 		return adversairesPotentiels;
 		

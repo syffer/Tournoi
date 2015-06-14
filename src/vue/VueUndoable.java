@@ -6,7 +6,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class VueUndoable extends Vue {
+public class VueUndoable extends VueSerializable {
 	
 	private static final long serialVersionUID = -5326637994371445805L;
 
