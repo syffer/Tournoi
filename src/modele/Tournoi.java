@@ -258,6 +258,8 @@ public class Tournoi implements Cloneable {
 		gagnant.gagne();
 		perdant.perd();
 		
+		this.tableDesRencontres.rencontreJoueurs( gagnant, perdant );
+		
 		this.supprimerMatch(match);
 		
 	}
@@ -274,13 +276,17 @@ public class Tournoi implements Cloneable {
 	
 		
 	public void resoudreMatchNull( Match match ) {
+			
+		Joueur joueur1 = match.getJoueur1();
+		Joueur joueur2 = match.getJoueur2();
 		
-		for( Joueur joueur : match.getJoueurs() ) {
-			
-			joueur.incrementerNbPoints( Match.POINTS_MATCH_NULL );
-			joueur.perd();
-			
-		}	
+		joueur1.incrementerNbPoints( Match.POINTS_MATCH_NULL );
+		joueur2.incrementerNbPoints( Match.POINTS_MATCH_NULL );
+		
+		joueur1.perd();
+		joueur2.perd();
+		
+		this.tableDesRencontres.rencontreJoueurs( joueur1, joueur2 );
 		
 		this.supprimerMatch(match);
 		
