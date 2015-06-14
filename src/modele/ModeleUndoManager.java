@@ -15,6 +15,11 @@ public class ModeleUndoManager extends Observable {
 		
 	}
 	
+	public void initialiser() {
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
 	public void undo() {
 
 		this.undoManager.undo();

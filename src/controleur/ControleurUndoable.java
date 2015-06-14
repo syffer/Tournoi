@@ -8,7 +8,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.KeyStroke;
 
 import vue.VueUndoable;

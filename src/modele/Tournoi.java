@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Tournoi {
+public class Tournoi implements Cloneable {
 	
 
 	private TableDesRencontres tableDesRencontres;
@@ -27,6 +27,24 @@ public class Tournoi {
 		
 	}
 	
+	
+	
+	@Override
+	public Object clone() {
+		
+		try {
+			
+			Tournoi tournoi = (Tournoi) super.clone();
+			
+			
+			
+			return tournoi;
+			
+		}
+		catch( CloneNotSupportedException e ) {
+			throw new InternalError("clonage impossible");
+		}
+	}
 	
 	
 	

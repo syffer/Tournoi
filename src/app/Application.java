@@ -1,7 +1,9 @@
 package app;
 
 import controleur.Controleur;
+import controleur.ControleurUndoable;
 import modele.Modele;
+import modele.ModeleUndoable;
 
 public class Application {
 
@@ -11,9 +13,9 @@ public class Application {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Modele modele = new Modele();
+		ModeleUndoable modele = new ModeleUndoable();
 		
-		new Controleur(modele);
+		new ControleurUndoable(modele);
 		
 	}
 

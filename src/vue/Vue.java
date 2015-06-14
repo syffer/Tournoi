@@ -37,8 +37,7 @@ public class Vue extends JFrame {
 	public JMenuItem menuNouveauFichier;
 	public JMenuItem menuOuvrirFichier;
 	public JMenuItem menuSauvegarder;
-	public JMenuItem menuAnnuler;
-	public JMenuItem menuRefaire;
+	
 	
 	
 	// le panneau des joueurs
@@ -94,15 +93,17 @@ public class Vue extends JFrame {
 		menuFichier.add( this.menuOuvrirFichier );
 		menuFichier.add( this.menuSauvegarder );
 		
+		/*
 		JMenu menuEditer = new JMenu( Constantes.getString(Constantes.TITRE_MENU_EDITION) );
 		this.menuAnnuler = new JMenuItem( Constantes.getString(Constantes.UNDO) );
 		this.menuRefaire = new JMenuItem( Constantes.getString(Constantes.REDO) );
 		menuEditer.add( this.menuAnnuler );
 		menuEditer.add( this.menuRefaire );
+		*/
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(menuFichier);
-		menuBar.add(menuEditer);
+		//menuBar.add(menuEditer);
 		this.setJMenuBar(menuBar);
 		
 	}

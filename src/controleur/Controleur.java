@@ -25,8 +25,8 @@ import vue.Vue;
 
 public class Controleur {
 
-	private Modele modele;
-	private Vue vue;
+	protected Modele modele;
+	protected Vue vue;
 		
 	public Controleur( Modele modele, Vue vue ) {
 		
@@ -67,16 +67,15 @@ public class Controleur {
 		this.vue.boutonMatchNull.setAction(actionMatchNull);
 		this.vue.boutonAnnulerMatch.setAction(actionSupprimerMatch);
 		
-		
-		this.modele.addObserver(update);		
+		this.modele.addObserver(update);
+			
 		this.modele.initialiser();
-		
 		this.vue.setVisible(true);
 		
 	}
 	
 	public Controleur( Modele modele ) {
-		this( modele, new Vue() );
+		this( modele, new Vue() );	
 	}
 	
 	
@@ -101,6 +100,7 @@ public class Controleur {
 			
 			vue.listeMatchs.setSelectedIndex(-1);
 			vue.listeMatchs.setSelectedIndices( new int[0] );	// on ne sélectionne rien dans la nouvelle liste
+			
 		}
 		
 		

@@ -5,7 +5,7 @@ import java.util.Observable;
 
 public class Modele extends Observable {
 
-	private Tournoi tournoi;
+	protected Tournoi tournoi;
 	
 	private boolean joueurSelectionne;
 	private boolean matchSelectionne;
@@ -58,7 +58,7 @@ public class Modele extends Observable {
 	
 	public void ajouterJoueur( Joueur joueur ) throws JoueurDejaExistantException {
 		this.tournoi.ajouterJoueur(joueur);
-		
+				
 		this.setChanged();
 		this.notifyObservers();		
 	}
