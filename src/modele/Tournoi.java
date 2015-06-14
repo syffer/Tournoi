@@ -1,11 +1,17 @@
 package modele;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Tournoi implements Cloneable {
+public class Tournoi implements Cloneable, Serializable {
 	
+	private static final long serialVersionUID = 1034215432029688768L;
+
 	private TableDesRencontres tableDesRencontres;
 	
 	private List<Joueur> joueursGagnants;
@@ -46,7 +52,6 @@ public class Tournoi implements Cloneable {
 				tournoi.joueursPerdants.add( perdant.clone() );
 			}
 			
-			
 			tournoi.matchs = new ArrayList<Match>( this.matchs.size() );
 			for( Match match : this.matchs ) {
 				tournoi.matchs.add( match.clone() );
@@ -62,7 +67,17 @@ public class Tournoi implements Cloneable {
 		}
 	}
 	
+	/*
+	private void writeObject( ObjectOutputStream out ) throws IOException {
+		
+	}
 	
+	private void readObject( ObjectInputStream in ) throws IOException, ClassNotFoundException {
+		
+	}
+	*/
+	
+		
 	public void ajouterJoueur( String nomJoueur ) throws JoueurDejaExistantException {
 		this.ajouterJoueur( new Joueur(nomJoueur) );
 	}

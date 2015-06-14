@@ -5,6 +5,7 @@ import internationalisation.Constantes;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
@@ -51,6 +52,13 @@ public class ControleurSerializable extends Controleur {
 		@Override
 		public void actionPerformed( ActionEvent event ) {
 			ModeleSerializable modeleSerializable = (ModeleSerializable) modele;
+			
+			if( modeleSerializable.isModifie() ) {
+				
+				
+				
+			}
+			
 			modeleSerializable.reinitialiserTournoi();
 		}
 		
@@ -103,21 +111,24 @@ public class ControleurSerializable extends Controleur {
 		@Override
 		public void actionPerformed( ActionEvent event ) {
 			
-			
 			try {
 				
 				VueSerializable vueSerializable = (VueSerializable) vue;
-				File fichierSauvegarde = vueSerializable.getFichierSauvegarde();
+				File fichierDeSauvegarde = vueSerializable.getFichierSauvegarde();
 				
-				System.out.println( fichierSauvegarde.getPath() );
-				
+				ModeleSerializable modeleSerializable = (ModeleSerializable) modele;
+				modeleSerializable.sauvegarderTournoi(fichierDeSauvegarde);
+								
 			} 
 			catch( ChoixAnnulerException e ) {
 				// on ne fait rien si l'utilisateur a annulé.
+				
+			} catch (IOException e) {
+				
+				
+				
 			}
-			
-			
-			
+						
 		}
 		
 	}

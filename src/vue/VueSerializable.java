@@ -21,7 +21,7 @@ public class VueSerializable extends Vue {
 	public JMenuItem menuNouveauFichier;
 	public JMenuItem menuOuvrirFichier;
 	public JMenuItem menuSauvegarder;
-	
+	public JMenuItem menuSauvegarderSous;
 	
 	public VueSerializable() {
 		super();
@@ -38,7 +38,7 @@ public class VueSerializable extends Vue {
 		this.fileChooserOpen = new JFileChooser();
 		this.fileChooserSave = new JFileChooser();
 		
-		FileFilter filter = new FileNameExtensionFilter( "Tournoi file", "tournoi" );
+		FileFilter filter = new FileNameExtensionFilter( Constantes.getString(Constantes.MESSAGE_FICHIER_TOURNOI), "tournoi" );
 		
 		this.fileChooserOpen.setFileFilter(filter);
 		this.fileChooserSave.setFileFilter(filter);
@@ -51,9 +51,11 @@ public class VueSerializable extends Vue {
 		this.menuNouveauFichier = new JMenuItem( Constantes.getString(Constantes.NOUVEAU_TOURNOI) );
 		this.menuOuvrirFichier = new JMenuItem( Constantes.getString(Constantes.CHARGER_TOURNOI) );
 		this.menuSauvegarder = new JMenuItem( Constantes.getString(Constantes.SAUVEGARDER_TOURNOI) );
+		this.menuSauvegarderSous = new JMenuItem( Constantes.getString(Constantes.SAUVEGARDER_TOURNOI_SOUS) );
 		menuFichier.add( this.menuNouveauFichier );
 		menuFichier.add( this.menuOuvrirFichier );
 		menuFichier.add( this.menuSauvegarder );
+		menuFichier.add( this.menuSauvegarderSous );
 		
 		JMenuBar menuBar = this.getJMenuBar();
 		menuBar.add(menuFichier);

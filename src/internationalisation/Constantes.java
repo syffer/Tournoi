@@ -20,10 +20,14 @@ public class Constantes {
 	
 	public static final String AJOUTER_UN_JOUEUR = "AJOUTER_UN_JOUEUR";
 	public static final String SUPPRIMER_UN_JOUEUR = "SUPPRIMER_UN_JOUEUR";
+	public static final String MESSAGE_JOUEUR_EXISTE_DEJA = "MESSAGE_JOUEUR_EXISTE_DEJA";
+	public static final String MESSAGE_CONFIRMATION_SUPPRESSION_JOUEUR = "MESSAGE_CONFIRMATION_SUPPRESSION_JOUEUR";
 	
 	public static final String NOUVEAU_TOURNOI = "NOUVEAU_TOURNOI";
 	public static final String CHARGER_TOURNOI = "CHARGER_TOURNOI";
 	public static final String SAUVEGARDER_TOURNOI = "SAUVEGARDER_TOURNOI";
+	public static final String SAUVEGARDER_TOURNOI_SOUS = "SAUVEGARDER_TOURNOI_SOUS";
+	public static final String MESSAGE_FICHIER_TOURNOI = "MESSAGE_FICHIER_TOURNOI";
 	
 	public static final String UNDO = "UNDO";
 	public static final String REDO = "REDO";
@@ -32,9 +36,7 @@ public class Constantes {
 	public static final String ABANDONNE = "ABANDONNE";
 	public static final String MATCH_NULL = "MATCH_NULL";
 	public static final String SUPPRIMER_LE_MATCH = "SUPPRIMER_LE_MATCH";
-	
-	public static final String MESSAGE_JOUEUR_EXISTE_DEJA = "MESSAGE_JOUEUR_EXISTE_DEJA";
-	public static final String MESSAGE_CONFIRMATION_SUPPRESSION_JOUEUR = "MESSAGE_CONFIRMATION_SUPPRESSION_JOUEUR";
+		
 	
 	public static final Locale LOCALE = Locale.getDefault();
 	
