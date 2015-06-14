@@ -3,7 +3,7 @@ package modele;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Match {
+public class Match implements Cloneable {
 	
 	public static final int POINTS_GAGNANT = 3;
 	public static final int POINTS_PERDANT = 1;
@@ -54,11 +54,30 @@ public class Match {
 		return this.joueur1 == joueur || this.joueur2 == joueur;
 	}
 	
-
+	
+	
+	
+	@Override
 	public String toString() {
 		return this.joueur1.getNom() + " VS " + this.joueur2.getNom();
 	}
 	
-	
+	@Override
+	public Match clone() {
+		
+		try {
+			
+			Match match = (Match) super.clone();
+			match.joueur1 = (Joueur) this.joueur1.clone();
+			match.joueur2 = (Joueur) this.joueur2.clone();
+			
+			return match;
+			
+		}
+		catch( CloneNotSupportedException e ) {
+			throw new InternalError("clonage impossible");
+		}
+		
+	}
 	
 }

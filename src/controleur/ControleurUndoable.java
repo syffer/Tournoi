@@ -46,7 +46,7 @@ public class ControleurUndoable extends Controleur {
 			this.undoManager.addObserver(this);
 			
 			this.putValue( AbstractAction.NAME, Constantes.getString(Constantes.UNDO) );
-			this.putValue( AbstractAction.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK) ); 	// Ctrl + S
+			this.putValue( AbstractAction.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK) ); 	// Ctrl + Z
 		}
 		
 		@Override
@@ -76,7 +76,7 @@ public class ControleurUndoable extends Controleur {
 			this.undoManager.addObserver(this);		
 									
 			this.putValue( AbstractAction.NAME, Constantes.getString(Constantes.REDO) );
-			this.putValue( AbstractAction.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_DOWN_MASK) ); 	// Ctrl + Y
+			this.putValue( AbstractAction.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_E, KeyEvent.CTRL_DOWN_MASK) ); 	// Ctrl + E
 		}
 		
 		@Override

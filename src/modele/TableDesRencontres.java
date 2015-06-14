@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class TableDesRencontres {
+public class TableDesRencontres implements Cloneable {
 
 	private Map< Joueur, Map<Joueur, Integer> > matriceDesRencontres;
 	
@@ -56,6 +56,21 @@ public class TableDesRencontres {
 		}
 				
 	}
+	
+	
+	public void rencontreJoueurs( Joueur joueur1, Joueur joueur2 ) {
+		
+		int nbRencontreDuJoueur1 = this.matriceDesRencontres.get(joueur1).get(joueur2);
+		int nbRencontreDuJoueur2 = this.matriceDesRencontres.get(joueur2).get(joueur1);
+		
+		nbRencontreDuJoueur1++;
+		nbRencontreDuJoueur2++;
+		
+		this.matriceDesRencontres.get(joueur1).put( joueur2, nbRencontreDuJoueur1 );
+		this.matriceDesRencontres.get(joueur2).put( joueur1, nbRencontreDuJoueur2 );
+		
+	}
+	
 	
 	
 	public List<Joueur> getJoueurs() {
@@ -120,6 +135,41 @@ public class TableDesRencontres {
 	}
 	
 	
+	
+	@Override
+	public TableDesRencontres clone() {
+		
+		try {
+			
+			TableDesRencontres tableDesRencontres = (TableDesRencontres) super.clone();
+			
+			tableDesRencontres.matriceDesRencontres = new HashMap< Joueur, Map<Joueur,Integer> >( this.matriceDesRencontres.size() );
+			
+			for( Joueur joueur : this.matriceDesRencontres.keySet() ) {
+				
+				Map<Joueur, Integer> ligneJoueur = this.matriceDesRencontres.get(joueur);
+				
+				Map<Joueur, Integer> copieLigne = new HashMap<Joueur, Integer>( ligneJoueur.size() );
+				for( Joueur adversaire : ligneJoueur.keySet() ) {
+					
+					Joueur copieAdversaire = adversaire.clone();
+					Integer copieEntier = new Integer( ligneJoueur.get(adversaire) );
+					copieLigne.put( copieAdversaire, copieEntier );	
+					
+				}
+				
+				tableDesRencontres.matriceDesRencontres.put( joueur.clone(), copieLigne );
+				
+			}
+			
+			return tableDesRencontres;
+			
+		}
+		catch( CloneNotSupportedException e ) {
+			throw new InternalError("clonage impossible");
+		}
+		
+	}
 	
 
 }

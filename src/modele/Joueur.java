@@ -1,6 +1,6 @@
 package modele;
 
-public class Joueur implements Comparable<Joueur> {
+public class Joueur implements Comparable<Joueur>, Cloneable {
 	
 	private String nom;
 	private int nbPoints;
@@ -110,5 +110,20 @@ public class Joueur implements Comparable<Joueur> {
 		
 	}
 	
+	
+	@Override
+	public Joueur clone() {
+		
+		try {
+			
+			Joueur joueur = (Joueur) super.clone();
+			
+			return joueur;	
+		}
+		catch( CloneNotSupportedException e ) {
+			throw new InternalError("clonage impossible");
+		}
+		
+	}
 	
 }

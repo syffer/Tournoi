@@ -30,14 +30,31 @@ public class Tournoi implements Cloneable {
 	
 	
 	@Override
-	public Object clone() {
+	public Tournoi clone() {
 		
 		try {
 			
 			Tournoi tournoi = (Tournoi) super.clone();
 			
 			
+			tournoi.joueursGagnants = new ArrayList<Joueur>( this.joueursGagnants.size() );
+			for( Joueur gagnant : this.joueursGagnants ) {
+				tournoi.joueursGagnants.add( gagnant.clone() );
+			}
 			
+			tournoi.joueursPerdants = new ArrayList<Joueur>( this.joueursPerdants.size() );
+			for( Joueur perdant : this.joueursPerdants ) {
+				tournoi.joueursPerdants.add( perdant.clone() );
+			}
+			
+			
+			tournoi.matchs = new ArrayList<Match>( this.matchs.size() );
+			for( Match match : this.matchs ) {
+				tournoi.matchs.add( match.clone() );
+			}
+			
+			tournoi.tableDesRencontres = this.tableDesRencontres.clone();
+						
 			return tournoi;
 			
 		}
