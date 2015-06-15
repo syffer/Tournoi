@@ -68,10 +68,10 @@ public class Controleur {
 		this.vue.boutonAnnulerMatch.setAction(actionSupprimerMatch);
 		
 		this.modele.addObserver(update);
-			
+		
 		this.modele.initialiser();
 		this.vue.setVisible(true);
-		
+	
 	}
 	
 	public Controleur( Modele modele ) {

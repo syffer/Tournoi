@@ -29,7 +29,7 @@ public class ControleurUndoable extends ControleurSerializable {
 	}
 	
 	public ControleurUndoable( ModeleUndoable modeleUndoable ) {
-		this( modeleUndoable, new VueUndoable() );
+		this( modeleUndoable, new VueUndoable() );		
 	}
 	
 	

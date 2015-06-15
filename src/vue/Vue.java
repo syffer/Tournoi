@@ -71,7 +71,8 @@ public class Vue extends JFrame {
 		this.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
 		this.pack();
 		this.setLocationRelativeTo(null);	// on place la fenetre au centre de l'écran ( à faire après le JFrame.pack() )
-		this.setMinimumSize( this.getSize() );	// la taille minimale de la fenêtre est la taille actuelle
+		//this.setMinimumSize( this.getSize() );	// la taille minimale de la fenêtre est la taille actuelle
+		this.setResizable(false);
 	}
 
 	

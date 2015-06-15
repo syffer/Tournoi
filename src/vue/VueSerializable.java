@@ -16,7 +16,7 @@ public class VueSerializable extends Vue {
 	private static final long serialVersionUID = 7863749255941519681L;
 
 	public JFileChooser fileChooserOpen;
-	public JFileChooser fileChooserSave;
+	public JFileChooserConfirm fileChooserSave;
 	
 	public JMenuItem menuNouveauFichier;
 	public JMenuItem menuOuvrirFichier;
@@ -36,12 +36,15 @@ public class VueSerializable extends Vue {
 	private void ajouterFenettreSelectionFichier() {
 		
 		this.fileChooserOpen = new JFileChooser();
-		this.fileChooserSave = new JFileChooser();
+		this.fileChooserSave = new JFileChooserConfirm();
 		
-		FileFilter filter = new FileNameExtensionFilter( Constantes.getString(Constantes.MESSAGE_FICHIER_TOURNOI), "tournoi" );
+		FileFilter filter = new FileNameExtensionFilter( Constantes.getString(Constantes.MESSAGE_FICHIER_TOURNOI), "tournoi", "TOURNOI" );
 		
 		this.fileChooserOpen.setFileFilter(filter);
 		this.fileChooserSave.setFileFilter(filter);
+		
+		this.fileChooserOpen.setLocale( Constantes.LOCALE );
+		this.fileChooserSave.setLocale( Constantes.LOCALE );
 		
 	}
 	
@@ -72,8 +75,9 @@ public class VueSerializable extends Vue {
 		if( resultat != JFileChooser.APPROVE_OPTION ) throw new ChoixAnnulerException("changement annulé");
 		
 		File fichier = this.fileChooserOpen.getSelectedFile();
-		
+				
 		return fichier;
+		
 	}
 	
 	
@@ -85,7 +89,14 @@ public class VueSerializable extends Vue {
 		
 		File fichier = this.fileChooserSave.getSelectedFile();
 		
+		// on ajoute l'extention ".tournoi" si elle n'y est pas
+		String cheminFichier = fichier.getAbsolutePath();
+		if( ! cheminFichier.endsWith(".tournoi") && ! cheminFichier.endsWith(".TOURNOI") ) {
+			fichier = new File( fichier.getAbsoluteFile() + ".tournoi" );
+		}
+				
 		return fichier;
+		
 	}
 	
 	
