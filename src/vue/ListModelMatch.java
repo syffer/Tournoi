@@ -16,6 +16,7 @@ public class ListModelMatch extends AbstractListModel<Match> {
 	
 	public ListModelMatch() {
 		this.matchs = new ArrayList<Match>();
+		
 	}
 	
 	public void setMatchs( List<Match> matchs ) {

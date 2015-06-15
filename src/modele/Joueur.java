@@ -109,12 +109,6 @@ public class Joueur implements Comparable<Joueur>, Cloneable, Serializable {
 		 */
 		
 		return this.getNom().compareTo( joueur.getNom() );
-		
-		/*
-		if( this.nbPoints == joueur.getNbPoints() ) return 0;
-		else if( this.nbPoints > joueur.getNbPoints() ) return 1;
-		else return -1;
-		*/
 	}
 	
 	

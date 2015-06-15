@@ -173,7 +173,6 @@ public class Controleur {
 			try {
 				modele.ajouterJoueur(nomJoueur);	// lance une exception si le joueur existe déjà
 				vue.champAjoutJoueur.setText("");
-				
 			} 
 			catch( JoueurDejaExistantException e ) {
 				String message = Constantes.getString( Constantes.MESSAGE_JOUEUR_EXISTE_DEJA ) + " : " + nomJoueur;

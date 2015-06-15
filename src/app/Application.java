@@ -1,6 +1,7 @@
 package app;
 
 import controleur.ControleurUndoable;
+import modele.Joueur;
 import modele.ModeleUndoable;
 
 public class Application {
@@ -14,6 +15,11 @@ public class Application {
 		ModeleUndoable modele = new ModeleUndoable();
 		
 		new ControleurUndoable(modele);
+		
+		Joueur joueur = new Joueur("e");
+		Joueur j2 = new Joueur("e");
+		
+		System.out.println( joueur + " " + j2 );
 		
 	}
 

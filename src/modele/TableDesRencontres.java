@@ -75,6 +75,12 @@ public class TableDesRencontres implements Cloneable, Serializable {
 	}
 	
 	
+	public int getNbRencontres( Joueur joueur1, Joueur joueur2 ) {
+		
+		return this.matriceDesRencontres.get(joueur1).get(joueur2).intValue();
+	}
+	
+	
 	
 	public List<Joueur> getJoueurs() {
 		return new ArrayList<Joueur>( this.matriceDesRencontres.keySet() );
@@ -92,69 +98,33 @@ public class TableDesRencontres implements Cloneable, Serializable {
 		
 		List<Joueur> adversairesPotentiels = new ArrayList<Joueur>();
 		
-		if( ligneJoueur.isEmpty() ) {
-			System.out.println("PAS ICI");
-			return adversairesPotentiels;
-		}
+		if( ligneJoueur.isEmpty() )	return adversairesPotentiels;
+		
 		
 		Integer nbRencontresMin = null; //ligneJoueur.values().iterator().next(); 	// permet de récupérer la 1ère valeur
 		
-		System.out.println( "---------------- joueur : " + joueur );
 		
 		
 		for( Joueur adversaire : adversairesPossibles ) {
-			
-			System.out.println( "ADVERSAIRE : " + adversaire.getNom() );
-			
+						
 			// aucune colonne concernant cet adversaire 
 			if( ! ligneJoueur.containsKey(adversaire) ) {
-				System.out.println(" ne contient pas : " + adversaire);
 				continue;
 			}
 			
 			Integer nbRencontres = ligneJoueur.get(adversaire);
-			System.out.println(" LE MIN ACTUEL : " + nbRencontresMin );
 			
 			if( nbRencontresMin == null || nbRencontres < nbRencontresMin ) {
-				System.out.println("IL Y A PLUS PETIT : " + nbRencontres );
 				nbRencontresMin = nbRencontres;	
 				adversairesPotentiels.removeAll(adversairesPotentiels);		// on supprime les anciens adversaires potentiels
 			}
 			
-			if( nbRencontresMin == nbRencontres ) {
-				System.out.println("Nouvel adversaire : " + adversaire );
-				adversairesPotentiels.add(adversaire);	
-			}
+			if( nbRencontresMin == nbRencontres ) adversairesPotentiels.add(adversaire);	
 			
 		}
-		
-		System.out.println( joueur + " " + joueur.aGagne() + " " + adversairesPossibles + " " + adversairesPotentiels );
-		
+				
 		return adversairesPotentiels;
 		
-		/*
-		Map< Integer, List<Joueur> > listeAdversaires = new HashMap< Integer, List<Joueur> >();
-		
-		Map<Joueur, Integer> ligneJoueur = this.matriceDesRencontres.get(joueur);
-				
-		for( Joueur adversaire : adversairesPossibles ) {
-			
-			if( ! ligneJoueur.containsKey(adversaire) ) continue;
-			
-			Integer nbRencontres = ligneJoueur.get(adversaire);
-			
-			if( ! listeAdversaires.containsKey(nbRencontres) ) listeAdversaires.put( nbRencontres, new ArrayList<Joueur>() );
-			List<Joueur> adversaires = listeAdversaires.get(nbRencontres);
-			adversaires.add(adversaire);
-			
-		}
-		
-		if( listeAdversaires.isEmpty() ) return new ArrayList<Joueur>();
-		
-		Integer nbRencontresMin = Collections.min( listeAdversaires.keySet() );
-		
-		return listeAdversaires.get(nbRencontresMin);
-		*/
 	}
 	
 	

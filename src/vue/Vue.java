@@ -163,7 +163,7 @@ public class Vue extends JFrame {
 		panneauListeMatchs.setLayout( new BorderLayout(0, 0) );
 		this.donnerContrainte( contrainte, 0, 0, 1, 1, 50, 100 );
 		panneauMatchs.add( panneauListeMatchs, contrainte );
-				
+		
 		JPanel panneauBoutonsMatchs = new JPanel();
 		panneauBoutonsMatchs.setLayout( new GridLayout(6, 1, 0, 10) );	// grille de 6 lignes et 1 colonne
 		this.donnerContrainte( contrainte, 2, 0, 1, 1, 20, 100 );
@@ -172,7 +172,11 @@ public class Vue extends JFrame {
 		
 		
 		this.listeMatchs = new JList<Match>( new ListModelMatch() );
-		this.listeMatchs.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+		this.listeMatchs.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );	// selection multiple impossible
+		/*
+		DefaultListCellRenderer renderer =  (DefaultListCellRenderer) this.listeMatchs.getCellRenderer();  // centrer les éléments
+		renderer.setHorizontalAlignment( JLabel.CENTER );  
+		*/
 		JScrollPane scrollPane = new JScrollPane( this.listeMatchs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
 		panneauListeMatchs.add( scrollPane, BorderLayout.CENTER );
 		
