@@ -70,9 +70,19 @@ public class Tournoi implements Cloneable, Serializable {
 	
 	private void writeObject( ObjectOutputStream out ) throws IOException {
 		
+		out.writeObject( this.tableDesRencontres );
+		out.writeObject( this.joueursGagnants );
+		out.writeObject( this.joueursPerdants );
+		out.writeObject( this.matchs );
+		
 	}
 	
 	private void readObject( ObjectInputStream in ) throws IOException, ClassNotFoundException {
+		
+		this.tableDesRencontres = (TableDesRencontres) in.readObject();
+		this.joueursGagnants = (List<Joueur>) in.readObject();
+		this.joueursPerdants = (List<Joueur>) in.readObject();
+		this.matchs = (List<Match>) in.readObject();
 		
 	}
 	

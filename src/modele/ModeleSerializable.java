@@ -47,37 +47,55 @@ public class ModeleSerializable extends Modele implements Serializable {
 	
 	public void chargerTournoi( File fichier ) throws IOException, ClassNotFoundException {
 		
-		FileInputStream fis = new FileInputStream(fichier);
-		ObjectInputStream in = new ObjectInputStream(fis);
+		FileInputStream fis = null;
+		ObjectInputStream in = null;
 		
-		Tournoi tournoi = (Tournoi) in.readObject();
+		try {
+			
+			fis = new FileInputStream(fichier);
+			in = new ObjectInputStream(fis);
+			
+			Tournoi tournoi = (Tournoi) in.readObject();
+			
+			this.tournoi = tournoi;
+			this.modifie = false;
+			this.fichierDeSauvegarde = fichier;
+			
+			this.setChanged();
+			this.notifyObservers();
+			
+		}
+		finally {
+			in.close();
+			fis.close();
+		}
 		
-		in.close();
-		fis.close();
-		
-		this.tournoi = tournoi;
-		this.modifie = false;
-		this.fichierDeSauvegarde = fichier;
-		
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	public void sauvegarderTournoi( File fichier ) throws IOException {
 		
-		FileOutputStream fos = new FileOutputStream(fichier);
-		ObjectOutputStream out = new ObjectOutputStream(fos);
-				
-		out.writeObject( this.tournoi );
+		FileOutputStream fos = null;
+		ObjectOutputStream out = null;
 		
-		out.close();
-		fos.close();		
+		try {
+			
+			fos = new FileOutputStream(fichier);
+			out = new ObjectOutputStream(fos);
+					
+			out.writeObject( this.tournoi );
+			
+			this.modifie = false;
+			this.fichierDeSauvegarde = fichier;
+					
+			this.setChanged();
+			this.notifyObservers();
+			
+		}
+		finally {
+			out.close();
+			fos.close();
+		}
 		
-		this.modifie = false;
-		this.fichierDeSauvegarde = fichier;
-				
-		this.setChanged();
-		this.notifyObservers();
 	}
 	
 	public void sauvegarderTournoi() throws ModeleSerializableException, IOException {

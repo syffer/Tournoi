@@ -1,6 +1,10 @@
 package modele;
 
-public class Joueur implements Comparable<Joueur>, Cloneable {
+import java.io.Serializable;
+
+public class Joueur implements Comparable<Joueur>, Cloneable, Serializable {
+	
+	private static final long serialVersionUID = 6879263410820631136L;
 	
 	private String nom;
 	private int nbPoints;

@@ -170,16 +170,6 @@ public class ControleurSerializable extends Controleur {
 				// on ne fait rien
 			}
 			
-			/*
-			ModeleSerializable modeleSerializable = (ModeleSerializable) modele;
-			
-			if( modeleSerializable.possedeUnFichierDeSauvegarde() ) {
-				
-			}
-			else {
-				
-			}
-			*/		
 		}
 
 		@Override
@@ -213,23 +203,7 @@ public class ControleurSerializable extends Controleur {
 				// on ne fait rien
 			}
 			
-			/*
-			try {
-				
-				VueSerializable vueSerializable = (VueSerializable) vue;
-				File fichierDeSauvegarde = vueSerializable.getFichierSauvegarde();
-				
-				ModeleSerializable modeleSerializable = (ModeleSerializable) modele;
-				modeleSerializable.sauvegarderTournoi(fichierDeSauvegarde);
-								
-			} 
-			catch( ChoixAnnulerException e ) {
-				// on ne fait rien si l'utilisateur a annulé.
-				
-			} catch (IOException e) {
-								
-			}
-			*/		
+			
 		}
 		
 	}
@@ -287,7 +261,7 @@ public class ControleurSerializable extends Controleur {
 		}
 		catch( IOException e ) {
 			// erreur d'écriture.
-			
+			e.printStackTrace();
 		}
 		
 	}

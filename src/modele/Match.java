@@ -1,9 +1,12 @@
 package modele;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Match implements Cloneable {
+public class Match implements Cloneable, Serializable {
+	
+	private static final long serialVersionUID = -1929689348083618910L;
 	
 	public static final int POINTS_GAGNANT = 3;
 	public static final int POINTS_PERDANT = 1;

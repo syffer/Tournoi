@@ -1,15 +1,17 @@
 package modele;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
-public class TableDesRencontres implements Cloneable {
-
-	private Map< Joueur, Map<Joueur, Integer> > matriceDesRencontres;
+public class TableDesRencontres implements Cloneable, Serializable {
 	
+	private static final long serialVersionUID = 7677186960372700538L;
+	
+	private Map< Joueur, Map<Joueur, Integer> > matriceDesRencontres;
 	
 	public TableDesRencontres() {
 		

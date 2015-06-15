@@ -25,16 +25,17 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 		Tournoi tournoi = (Tournoi) state.get( ModeleUndoable.CLE_TOURNOI );
 		
 		if( tournoi != null ) this.tournoi = tournoi;
-		
-		
+				
 		this.setChanged();
 		this.notifyObservers();
+		
 	}
 
 	@Override
 	public void storeState( Hashtable<Object, Object> state ) {
 
 		state.put( ModeleUndoable.CLE_TOURNOI, this.tournoi.clone() );
+		
 	}
 	
 	
@@ -65,7 +66,7 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 		nouvelEtat.end();
 		
 		this.undoManager.ajouterEtat(nouvelEtat);
-	
+		
 	}
 	
 	public void supprimerJoueur( Joueur joueur ) {
@@ -77,6 +78,7 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 		nouvelEtat.end();
 		
 		this.undoManager.ajouterEtat(nouvelEtat);
+		
 	}
 	
 	
@@ -92,6 +94,7 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 		nouvelEtat.end();
 		
 		this.undoManager.ajouterEtat(nouvelEtat);
+		
 	}
 	
 	public void annulerMatchs( Joueur joueur ) {
@@ -103,6 +106,7 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 		nouvelEtat.end();
 		
 		this.undoManager.ajouterEtat(nouvelEtat);
+		
 	}
 	
 	public void annulerMatchs() {
@@ -114,6 +118,7 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 		nouvelEtat.end();
 		
 		this.undoManager.ajouterEtat(nouvelEtat);
+		
 	}
 	
 	
@@ -130,6 +135,7 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 		nouvelEtat.end();
 		
 		this.undoManager.ajouterEtat(nouvelEtat);
+		
 	}
 	
 	public void supprimerMatch( Match match ) {
@@ -157,6 +163,7 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 		nouvelEtat.end();
 		
 		this.undoManager.ajouterEtat(nouvelEtat);
+		
 	}
 	
 	public void resoudreMatchParAbandon( Match match, Joueur joueurAbandonne ) throws MatchException {
