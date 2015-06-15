@@ -36,7 +36,24 @@ public class Constantes {
 	public static final String ABANDONNE = "ABANDONNE";
 	public static final String MATCH_NULL = "MATCH_NULL";
 	public static final String SUPPRIMER_LE_MATCH = "SUPPRIMER_LE_MATCH";
-		
+	
+	
+	public static final String TITRE_POPUP_ATTENTION = "TITRE_POPUP_ATTENTION";
+	public static final String TITRE_POPUP_ERREUR = "TITRE_POPUP_ERREUR";
+	
+	public static final String TITRE_POPUP_ERREUR_LECTURE_FICHIER = "TITRE_POPUP_ERREUR_LECTURE_FICHIER";
+	public static final String MESSAGE_ERREUR_LECTURE_FICHIER = "MESSAGE_ERREUR_LECTURE_FICHIER";
+	
+	public static final String TITRE_POPUP_ERREUR_ECRITURE_FICHIER = "TITRE_POPUP_ERREUR_ECRITURE_FICHIER";
+	public static final String MESSAGE_ERREUR_ECRITURE_FICHIER = "MESSAGE_ERREUR_ECRITURE_FICHIER";
+	
+	public static final String MESSAGE_ERREUR_RESOLUTION_MATCH = "MESSAGE_ERREUR_RESOLUTION_MATCH";
+	
+	public static final String TITRE_POPUP_FICHIER_MODIFIER = "TITRE_POPUP_FICHIER_MODIFIER";
+	public static final String MESSAGE_QUESTION_ENREGISTRER_MODIFICATIONS = "MESSAGE_QUESTION_ENREGISTRER_MODIFICATIONS";
+	
+	public static final String CHAINE_EN_MATCH = "CHAINE_EN_MATCH";
+	public static final String CHAINE_ATTEND = "CHAINE_ATTEND";
 	
 	public static final Locale LOCALE = Locale.getDefault();
 	

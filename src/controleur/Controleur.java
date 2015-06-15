@@ -9,7 +9,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.AbstractAction;
-import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -173,7 +172,7 @@ public class Controleur {
 			} 
 			catch( JoueurDejaExistantException e ) {
 				String message = Constantes.getString( Constantes.MESSAGE_JOUEUR_EXISTE_DEJA ) + " : " + nomJoueur;
-				JOptionPane.showMessageDialog( vue, message );
+				vue.afficherMessage(message);
 			}
 			
 		}
@@ -201,7 +200,7 @@ public class Controleur {
 			if( ligneSelectionnee == -1 ) return;	// pas de ligne sélectionnée
 
 			// on demande confirmation
-			int reponse = JOptionPane.showConfirmDialog( vue, Constantes.getString(Constantes.MESSAGE_CONFIRMATION_SUPPRESSION_JOUEUR), "An Inane Question", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE );
+			int reponse = vue.afficherDialogueAvertissement( Constantes.getString(Constantes.MESSAGE_CONFIRMATION_SUPPRESSION_JOUEUR) );
 			if( reponse != 0 ) return;
 			
 			TableModelJoueur modelTableau = (TableModelJoueur) vue.tableauJoueurs.getModel();
@@ -211,7 +210,7 @@ public class Controleur {
 		}
 
 		@Override
-		public void update(Observable arg0, Object arg1) {
+		public void update( Observable observable, Object args ) {
 			this.setEnabled( modele.isJoueurSelectionne() );
 		}
 		
@@ -240,7 +239,7 @@ public class Controleur {
 		}
 
 		@Override
-		public void update(Observable arg0, Object arg1) {
+		public void update( Observable observable, Object args ) {
 			//this.setEnabled( modele.isJoueursDisponibles() );
 			this.setEnabled(false);		//--------------------------------------------------------- ancre
 		}
@@ -265,7 +264,7 @@ public class Controleur {
 		}
 
 		@Override
-		public void update(Observable arg0, Object arg1) {
+		public void update( Observable observable, Object args ) {
 			this.setEnabled( modele.isJoueursDisponibles() );
 		}
 		
@@ -320,13 +319,11 @@ public class Controleur {
 			Joueur gagnant = ( this.concerneJoueur1 ) ? matchSelectionne.getJoueur1() : matchSelectionne.getJoueur2();
 			
 			try {
-				
 				modele.resoudreMatchNormal( matchSelectionne, gagnant );
-				
 			} 
 			catch( MatchException e ) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				vue.afficherMessageErreur( Constantes.getString(Constantes.MESSAGE_ERREUR_RESOLUTION_MATCH) );
 			}
 			
 		}
@@ -378,8 +375,8 @@ public class Controleur {
 				modele.resoudreMatchParAbandon( matchSelectionne, abandonne );
 			} 
 			catch( MatchException e ) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				vue.afficherMessageErreur( Constantes.getString(Constantes.MESSAGE_ERREUR_RESOLUTION_MATCH) );
 			}
 			
 		}

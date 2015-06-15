@@ -60,8 +60,8 @@ public class TableModelJoueur extends AbstractTableModel {
 			case 1:		// le nombre de points du joueur
 				return this.joueurs.get(rowIndex).getNbPoints();
 				
-			case 2:
-				return ( this.joueurs.get(rowIndex).estEnMatch() ) ? "En match" : "Attend";
+			case 2:		// retourne "en match" ou "attend"
+				return ( this.joueurs.get(rowIndex).estEnMatch() ) ? Constantes.getString(Constantes.CHAINE_EN_MATCH) : Constantes.getString(Constantes.CHAINE_ATTEND);
 				
 			default:
 				throw new IllegalArgumentException();

@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -31,11 +32,7 @@ public class Vue extends JFrame {
 	
 	private static final long serialVersionUID = -219340788187650081L;
 	
-	// la barre de menu.
-	
-	
-	
-	
+		
 	// le panneau des joueurs
 	public JTable tableauJoueurs;
 	public JTextField champAjoutJoueur;
@@ -215,6 +212,54 @@ public class Vue extends JFrame {
 		gridBagContraints.weighty = wy;
 		gridBagContraints.fill = constraint;
 	}
+	
+	
+	
+	
+	
+	
+	public void afficherMessage( String message ) {
+		JOptionPane.showMessageDialog( this, message );
+	}
+	
+	public void afficherMessage( String titrePopup, String message, int typeMessage ) {
+		JOptionPane.showMessageDialog( this, message, titrePopup, typeMessage );
+	}
+	
+	public void afficherMessageErreur( String titrePopup, String message ) {
+		this.afficherMessage( titrePopup, message, JOptionPane.ERROR_MESSAGE );
+	}
+	
+	public void afficherMessageErreur( String message ) {
+		this.afficherMessage( Constantes.getString(Constantes.TITRE_POPUP_ERREUR), message, JOptionPane.ERROR_MESSAGE );
+	}
+	
+	public void afficherMessageAvertissement( String titrePopup, String message ) {
+		this.afficherMessage( titrePopup, message, JOptionPane.WARNING_MESSAGE );
+	}
+	
+	public void afficherMessageAvertissement( String message ) {
+		this.afficherMessage( Constantes.getString(Constantes.TITRE_POPUP_ATTENTION), message, JOptionPane.WARNING_MESSAGE );
+	}
+	
+	
+	
+	public int afficherDialogue( String titrePopup, String message ) {
+		return JOptionPane.showConfirmDialog( this, message, titrePopup, JOptionPane.YES_NO_CANCEL_OPTION );
+	}
+	
+	public int afficherDialogue( String titrePopup, String message, int typeMessage ) {
+		return JOptionPane.showConfirmDialog( this, message, titrePopup, JOptionPane.YES_NO_CANCEL_OPTION, typeMessage );
+	}
+	
+	public int afficherDialogueAvertissement( String titrePopup, String message ) {
+		return this.afficherDialogue( titrePopup, message, JOptionPane.WARNING_MESSAGE );
+	}
+	
+	public int afficherDialogueAvertissement( String message ) {
+		return this.afficherDialogue( Constantes.getString(Constantes.TITRE_POPUP_ATTENTION), message, JOptionPane.WARNING_MESSAGE );
+	}
+	
 	
 	
 	

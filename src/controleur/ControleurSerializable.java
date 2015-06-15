@@ -59,7 +59,7 @@ public class ControleurSerializable extends Controleur {
 				enregistrerSiModifie();
 			} 
 			catch( ChoixAnnulerException e ) {
-				// on ne fait rien
+				// l'utilisateur a annuler la sauvegarde, on ne fait rien.
 			}
 						
 			event.getWindow().dispose();
@@ -134,9 +134,9 @@ public class ControleurSerializable extends Controleur {
 			catch( IOException | ClassNotFoundException e ) {
 				// erreur, impossible de lire le fichier sélectionné.
 				
-				String titrePopup = "Erreur de lecture";
-				String message = "Impossible de lire le fichier sélectionné.";//Constantes.getString( Constantes.MESSAGE_JOUEUR_EXISTE_DEJA ) + " : " + nomJoueur;
-				JOptionPane.showMessageDialog( vue, message, titrePopup, JOptionPane.ERROR_MESSAGE );
+				String titrePopup = Constantes.getString( Constantes.TITRE_POPUP_ERREUR_LECTURE_FICHIER );
+				String message = Constantes.getString( Constantes.MESSAGE_ERREUR_LECTURE_FICHIER );
+				vue.afficherMessageErreur( titrePopup, message );
 			}
 						
 		}
@@ -215,8 +215,9 @@ public class ControleurSerializable extends Controleur {
 		
 		if( ! modeleSerializable.isModifie() ) return;
 		
-		
-		int resultat = JOptionPane.showConfirmDialog( vue, "Voulez vous enregistrer les modification ?", "Fichié modifié", JOptionPane.YES_NO_CANCEL_OPTION );
+		String titrePopup = Constantes.getString( Constantes.TITRE_POPUP_FICHIER_MODIFIER );
+		String message = Constantes.getString( Constantes.MESSAGE_QUESTION_ENREGISTRER_MODIFICATIONS );
+		int resultat = this.vue.afficherDialogue( titrePopup, message ); //JOptionPane.showConfirmDialog( vue, "Voulez vous enregistrer les modification ?", "Fichié modifié", JOptionPane.YES_NO_CANCEL_OPTION );
 		
 		if( resultat == JOptionPane.CANCEL_OPTION || resultat == JOptionPane.CLOSED_OPTION ) throw new ChoixAnnulerException("action annulée par l'utilisateur");
 		
@@ -242,6 +243,9 @@ public class ControleurSerializable extends Controleur {
 		catch( IOException e ) {
 			// erreur d'écriture
 			e.printStackTrace();
+			String titrePopup = Constantes.getString( Constantes.TITRE_POPUP_ERREUR_ECRITURE_FICHIER );
+			String message = Constantes.getString( Constantes.MESSAGE_ERREUR_ECRITURE_FICHIER );
+			vue.afficherMessageErreur( titrePopup, message );
 		}
 		
 	}
@@ -262,6 +266,9 @@ public class ControleurSerializable extends Controleur {
 		catch( IOException e ) {
 			// erreur d'écriture.
 			e.printStackTrace();
+			String titrePopup = Constantes.getString( Constantes.TITRE_POPUP_ERREUR_ECRITURE_FICHIER );
+			String message = Constantes.getString( Constantes.MESSAGE_ERREUR_ECRITURE_FICHIER );
+			vue.afficherMessageErreur( titrePopup, message );
 		}
 		
 	}

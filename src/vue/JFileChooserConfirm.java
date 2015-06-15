@@ -9,6 +9,11 @@ public class JFileChooserConfirm extends JFileChooser {
 	
 	private static final long serialVersionUID = 61185538418586982L;
 	
+	public JFileChooserConfirm() {
+		super();
+		
+	}
+	
 	@Override
     public void approveSelection() {
 		

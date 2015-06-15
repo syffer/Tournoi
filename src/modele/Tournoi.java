@@ -1,8 +1,5 @@
 package modele;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,7 +15,6 @@ public class Tournoi implements Cloneable, Serializable {
 	private List<Joueur> joueursPerdants;
 	private List<Match> matchs;
 	
-	private Aleatoire aleatoire;
 		
 	public Tournoi() {
 		
@@ -27,9 +23,7 @@ public class Tournoi implements Cloneable, Serializable {
 		this.joueursGagnants = new ArrayList<Joueur>();
 		this.joueursPerdants = new ArrayList<Joueur>();
 		this.matchs = new ArrayList<Match>();
-		
-		this.aleatoire = new Aleatoire();
-		
+				
 	}
 	
 	
@@ -67,7 +61,9 @@ public class Tournoi implements Cloneable, Serializable {
 		}
 	}
 	
-	
+	// par défaut, le fait bien automatiquement.
+	// si l'un des attribut n'est pas sérializable, il est à "null", ce qui génère des erreurs.
+	/*	
 	private void writeObject( ObjectOutputStream out ) throws IOException {
 		
 		out.writeObject( this.tableDesRencontres );
@@ -85,7 +81,7 @@ public class Tournoi implements Cloneable, Serializable {
 		this.matchs = (List<Match>) in.readObject();
 		
 	}
-	
+	*/
 	
 		
 	public void ajouterJoueur( String nomJoueur ) throws JoueurDejaExistantException {
@@ -137,14 +133,14 @@ public class Tournoi implements Cloneable, Serializable {
 			int nbJoueurs = listejoueurs.size();
 			if( nbJoueurs < 2 ) break;
 			
-			int indiceJoueur = this.aleatoire.getNombreAleatoire( nbJoueurs - 1 );
+			int indiceJoueur = Aleatoire.getNombreAleatoire( nbJoueurs - 1 );
 			Joueur joueur = listejoueurs.get(indiceJoueur);
 			listejoueurs.remove(joueur);
 			
 			List<Joueur> adversairesPotentiels = this.tableDesRencontres.getAdversairesPotentiel( joueur, listejoueurs ); 
 			
 			int nbAdversaires = adversairesPotentiels.size();
-			int indiceAdversairePotentiel = this.aleatoire.getNombreAleatoire( nbAdversaires - 1 );
+			int indiceAdversairePotentiel = Aleatoire.getNombreAleatoire( nbAdversaires - 1 );
 			Joueur adversaire = adversairesPotentiels.get(indiceAdversairePotentiel);
 			listejoueurs.remove(adversaire);
 								
