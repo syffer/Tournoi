@@ -14,7 +14,7 @@ public class ModeleSerializable extends Modele implements Serializable {
 	private static final long serialVersionUID = 4839704101091397361L;
 	
 	private boolean modifie;
-	private File fichierDeSauvegarde;
+	private File fichierDeSauvegarde;	// null si aucun fichier
 	
 	public ModeleSerializable() {
 		super();

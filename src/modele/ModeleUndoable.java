@@ -25,7 +25,8 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 		Tournoi tournoi = (Tournoi) state.get( ModeleUndoable.CLE_TOURNOI );
 		
 		if( tournoi != null ) this.tournoi = tournoi;
-				
+		
+		// on viens de charger un nouveau tournoi, il faut prévenir les actions / la vue
 		this.setChanged();
 		this.notifyObservers();
 		
@@ -46,8 +47,10 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 	
 	public void reinitialiserTournoi() {
 		
+		// on réinitialise le tournoi
 		super.reinitialiserTournoi();
 		
+		// on vide la pile des états undo/redo
 		this.undoManager.vider();
 		
 	}

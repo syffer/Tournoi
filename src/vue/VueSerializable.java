@@ -38,6 +38,7 @@ public class VueSerializable extends Vue {
 		this.fileChooserOpen = new JFileChooser();
 		this.fileChooserSave = new JFileChooserConfirm();
 		
+		// permet de ne sélectionner que les fichier "*.tournoi" et "*.TOURNOI" dans les JFileChooser
 		FileFilter filter = new FileNameExtensionFilter( Constantes.getString(Constantes.EXTENSION_FICHIER_TOURNOI), "tournoi", "TOURNOI" );
 		
 		this.fileChooserOpen.setFileFilter(filter);

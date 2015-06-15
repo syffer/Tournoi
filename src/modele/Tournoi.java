@@ -263,6 +263,9 @@ public class Tournoi implements Cloneable, Serializable {
 		return this.matchs;
 	}
 	
+	public boolean possedeMatchsGeneres() {
+		return ! this.matchs.isEmpty();
+	}
 	
 	
 	

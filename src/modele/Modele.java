@@ -131,7 +131,9 @@ public class Modele extends Observable {
 		return this.tournoi.getMatchs();
 	}
 	
-	
+	public boolean possedeMatchsGeneres() {
+		return this.tournoi.possedeMatchsGeneres();
+	}
 	
 	
 	public void resoudreMatchNormal( Match match, Joueur gagnant ) throws MatchException {

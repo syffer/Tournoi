@@ -9,7 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.AbstractAction;
-import javax.swing.ListSelectionModel;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -53,7 +53,8 @@ public class Controleur {
 		this.vue.tableauJoueurs.getSelectionModel().addListSelectionListener(actionSelectionnerTableau);
 		this.vue.boutonAjoutJoueur.setAction(actionAjouterJoueur);
 		this.vue.boutonSupprimerJoueur.setAction(actionSupprimerJoueur);
-				
+		
+		
 		this.vue.boutonCreerMatch.setAction(actionCreerMatch);
 		this.vue.boutonGenererMatchs.setAction(actionGenererMatchs);
 		this.vue.boutonAnnulerLesMatchs.setAction(actionAnnulerMatchs);
@@ -84,21 +85,25 @@ public class Controleur {
 		@Override
 		public void update( Observable observable, Object args ) {
 			
-			// on ne met pas à jour le tableau et la liste si l'argument passé en paramètre est un booléen à faux.
+			// on ne met pas à jour les listes si on sélectionne l'un de leurs items
 			if( args instanceof Boolean && (boolean) args == false ) return;
+			// on ne met pas à jour le tableau et la liste si l'argument passé en paramètre est un booléen à faux.
+			// permet d'éviter la déselection après avoir modifier les listes    (on sélectionne, modifie le model, qui modifie la liste, qui déselectionne ses items)
 			
+			// mise à jour du tableau des joueurs
 			List<Joueur> joueurs = modele.getJoueurs();
 			Collections.sort( joueurs, Collections.reverseOrder() );
 			TableModelJoueur modelTableau = (TableModelJoueur) vue.tableauJoueurs.getModel();
 			modelTableau.setJoueurs(joueurs);
 			
-			
+			// mise à jour de la liste des matchs
 			List<Match> matchs = modele.getMatchs();
 			ListModelMatch modelListe = (ListModelMatch) vue.listeMatchs.getModel();
 			modelListe.setMatchs(matchs);
 			
+			// on ne sélectionne rien dans la nouvelle liste
 			vue.listeMatchs.setSelectedIndex(-1);
-			vue.listeMatchs.setSelectedIndices( new int[0] );	// on ne sélectionne rien dans la nouvelle liste
+			vue.listeMatchs.setSelectedIndices( new int[0] );	
 			
 		}
 		
@@ -118,12 +123,11 @@ public class Controleur {
 		public void valueChanged( ListSelectionEvent event ) {
 			
 			if ( event.getValueIsAdjusting() ) return;
-						
-			ListSelectionModel lsm = (ListSelectionModel) event.getSource();
-			boolean joueurSelectionne = ! lsm.isSelectionEmpty();
 			
+			// on indique au modele quel élément a été sélectionné.
+			boolean joueurSelectionne = ! vue.tableauJoueurs.getSelectionModel().isSelectionEmpty();			
 			modele.setJoueurSelectionne(joueurSelectionne);
-						
+					
 		}
 		
 	}
@@ -140,7 +144,6 @@ public class Controleur {
 			if ( event.getValueIsAdjusting() ) return;
 			
 			boolean matchSelectionne = ! vue.listeMatchs.isSelectionEmpty();
-			
 			modele.setMatchSelectionne(matchSelectionne);
 			
 		}
@@ -167,8 +170,9 @@ public class Controleur {
 			if( nomJoueur.equals("") ) return;
 			
 			try {
-				modele.ajouterJoueur(nomJoueur);
+				modele.ajouterJoueur(nomJoueur);	// lance une exception si le joueur existe déjà
 				vue.champAjoutJoueur.setText("");
+				
 			} 
 			catch( JoueurDejaExistantException e ) {
 				String message = Constantes.getString( Constantes.MESSAGE_JOUEUR_EXISTE_DEJA ) + " : " + nomJoueur;
@@ -201,7 +205,7 @@ public class Controleur {
 
 			// on demande confirmation
 			int reponse = vue.afficherDialogueAvertissement( Constantes.getString(Constantes.MESSAGE_QUESTION_SUPPRESSION_JOUEUR) );
-			if( reponse != 0 ) return;
+			if( reponse != JOptionPane.YES_OPTION ) return;
 			
 			TableModelJoueur modelTableau = (TableModelJoueur) vue.tableauJoueurs.getModel();
 			Joueur joueurSelectionne = modelTableau.getJoueur(ligneSelectionnee);
@@ -289,7 +293,7 @@ public class Controleur {
 
 		@Override
 		public void update( Observable observable, Object args ) {
-			this.setEnabled( ! modele.getMatchs().isEmpty() );
+			this.setEnabled( modele.possedeMatchsGeneres() );
 		}
 	
 	}

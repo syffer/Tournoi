@@ -121,9 +121,7 @@ public class ControleurSerializable extends Controleur {
 				
 				VueSerializable vueSerializable = (VueSerializable) vue;
 				File fichierCharge = vueSerializable.getFichierCharge();
-				
-				System.out.println( fichierCharge.getAbsolutePath() );
-				
+								
 				ModeleSerializable modeleSerializable = (ModeleSerializable) modele;
 				modeleSerializable.chargerTournoi(fichierCharge);
 				
@@ -217,7 +215,7 @@ public class ControleurSerializable extends Controleur {
 		
 		String titrePopup = Constantes.getString( Constantes.TITRE_POPUP_FICHIER_MODIFIER );
 		String message = Constantes.getString( Constantes.MESSAGE_QUESTION_ENREGISTRER_MODIFICATIONS );
-		int resultat = this.vue.afficherDialogue( titrePopup, message ); //JOptionPane.showConfirmDialog( vue, "Voulez vous enregistrer les modification ?", "Fichié modifié", JOptionPane.YES_NO_CANCEL_OPTION );
+		int resultat = this.vue.afficherDialogue( titrePopup, message ); 
 		
 		if( resultat == JOptionPane.CANCEL_OPTION || resultat == JOptionPane.CLOSED_OPTION ) throw new ChoixAnnulerException("action annulée par l'utilisateur");
 		
@@ -233,7 +231,6 @@ public class ControleurSerializable extends Controleur {
 		ModeleSerializable modeleSerializable = (ModeleSerializable) this.modele;
 		
 		try {
-			
 			modeleSerializable.sauvegarderTournoi();
 		} 
 		catch( ModeleSerializableException e ) {
@@ -257,11 +254,8 @@ public class ControleurSerializable extends Controleur {
 		VueSerializable vueSerializable = (VueSerializable) this.vue;
 		
 		try {
-			
 			File fichierSauvegarde = vueSerializable.getFichierSauvegarde();
-			
 			modeleSerializable.sauvegarderTournoi(fichierSauvegarde);
-			
 		}
 		catch( IOException e ) {
 			// erreur d'écriture.
