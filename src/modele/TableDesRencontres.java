@@ -71,6 +71,7 @@ public class TableDesRencontres implements Cloneable, Serializable {
 		this.matriceDesRencontres.get(joueur1).put( joueur2, nbRencontreDuJoueur1 );
 		this.matriceDesRencontres.get(joueur2).put( joueur1, nbRencontreDuJoueur2 );
 		
+		System.out.println( this.matriceDesRencontres );
 	}
 	
 	
@@ -96,7 +97,7 @@ public class TableDesRencontres implements Cloneable, Serializable {
 			return adversairesPotentiels;
 		}
 		
-		Integer nbRencontresMin = ligneJoueur.values().iterator().next(); 	// permet de récupérer la 1ère valeur
+		Integer nbRencontresMin = null; //ligneJoueur.values().iterator().next(); 	// permet de récupérer la 1ère valeur
 		
 		System.out.println( "---------------- joueur : " + joueur );
 		
@@ -114,7 +115,7 @@ public class TableDesRencontres implements Cloneable, Serializable {
 			Integer nbRencontres = ligneJoueur.get(adversaire);
 			System.out.println(" LE MIN ACTUEL : " + nbRencontresMin );
 			
-			if( nbRencontres < nbRencontresMin ) {
+			if( nbRencontresMin == null || nbRencontres < nbRencontresMin ) {
 				System.out.println("IL Y A PLUS PETIT : " + nbRencontres );
 				nbRencontresMin = nbRencontres;	
 				adversairesPotentiels.removeAll(adversairesPotentiels);		// on supprime les anciens adversaires potentiels
