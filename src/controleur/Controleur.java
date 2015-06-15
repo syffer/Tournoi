@@ -171,7 +171,7 @@ public class Controleur {
 				modele.ajouterJoueur(nomJoueur);
 				vue.champAjoutJoueur.setText("");
 			} 
-			catch (JoueurDejaExistantException e) {
+			catch( JoueurDejaExistantException e ) {
 				String message = Constantes.getString( Constantes.MESSAGE_JOUEUR_EXISTE_DEJA ) + " : " + nomJoueur;
 				JOptionPane.showMessageDialog( vue, message );
 			}

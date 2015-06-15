@@ -67,7 +67,7 @@ public class ModeleSerializable extends Modele implements Serializable {
 		
 		FileOutputStream fos = new FileOutputStream(fichier);
 		ObjectOutputStream out = new ObjectOutputStream(fos);
-		
+				
 		out.writeObject( this.tournoi );
 		
 		out.close();
@@ -75,7 +75,9 @@ public class ModeleSerializable extends Modele implements Serializable {
 		
 		this.modifie = false;
 		this.fichierDeSauvegarde = fichier;
-		
+				
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	public void sauvegarderTournoi() throws ModeleSerializableException, IOException {

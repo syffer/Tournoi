@@ -12,6 +12,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import vue.ChoixAnnulerException;
@@ -53,13 +54,16 @@ public class ControleurSerializable extends Controleur {
 		
 		@Override
         public void windowClosing( WindowEvent event ) {
-            
-			/*
-			System.out.println("Closed");
-            event.getWindow().dispose();
-            */
-            
-            
+
+			try {
+				enregistrerSiModifie();
+			} 
+			catch( ChoixAnnulerException e ) {
+				// on ne fait rien
+			}
+						
+			event.getWindow().dispose();
+			
         }
 		
 	}
@@ -80,19 +84,18 @@ public class ControleurSerializable extends Controleur {
 		@Override
 		public void actionPerformed( ActionEvent event ) {
 			
-			
-			/*
-			ModeleSerializable modeleSerializable = (ModeleSerializable) modele;
-			
-			if( modeleSerializable.isModifie() ) {
+			try {
 				
+				enregistrerSiModifie();
 				
+				ModeleSerializable modeleSerializable = (ModeleSerializable) modele;			
+				modeleSerializable.reinitialiserTournoi();
 				
+			} 
+			catch( ChoixAnnulerException e ) {
+				// action annulée, on en fait rien.
 			}
 			
-			modeleSerializable.reinitialiserTournoi();
-			*/
-		
 		}
 		
 	}
@@ -111,21 +114,31 @@ public class ControleurSerializable extends Controleur {
 		
 		@Override
 		public void actionPerformed( ActionEvent event ) {
-			
-			
+					
 			try {
+				
+				enregistrerSiModifie();
 				
 				VueSerializable vueSerializable = (VueSerializable) vue;
 				File fichierCharge = vueSerializable.getFichierCharge();
 				
-				System.out.println( fichierCharge.getPath() );
+				System.out.println( fichierCharge.getAbsolutePath() );
+				
+				ModeleSerializable modeleSerializable = (ModeleSerializable) modele;
+				modeleSerializable.chargerTournoi(fichierCharge);
 				
 			} 
 			catch( ChoixAnnulerException e ) {
 				// on ne fait rien si l'utilisateur a annulé.
 			}
-			
-			
+			catch( IOException | ClassNotFoundException e ) {
+				// erreur, impossible de lire le fichier sélectionné.
+				
+				String titrePopup = "Erreur de lecture";
+				String message = "Impossible de lire le fichier sélectionné.";//Constantes.getString( Constantes.MESSAGE_JOUEUR_EXISTE_DEJA ) + " : " + nomJoueur;
+				JOptionPane.showMessageDialog( vue, message, titrePopup, JOptionPane.ERROR_MESSAGE );
+			}
+						
 		}
 		
 	}
@@ -150,6 +163,12 @@ public class ControleurSerializable extends Controleur {
 		@Override
 		public void actionPerformed( ActionEvent event ) {
 			
+			try {
+				enregistrer();
+			} 
+			catch( ChoixAnnulerException e ) {
+				// on ne fait rien
+			}
 			
 			/*
 			ModeleSerializable modeleSerializable = (ModeleSerializable) modele;
@@ -187,6 +206,12 @@ public class ControleurSerializable extends Controleur {
 		@Override
 		public void actionPerformed( ActionEvent event ) {
 			
+			try {
+				enregistrerSous();
+			} 
+			catch( ChoixAnnulerException e ) {
+				// on ne fait rien
+			}
 			
 			/*
 			try {
@@ -210,42 +235,62 @@ public class ControleurSerializable extends Controleur {
 	}
 	
 	
-	public void enregistrerTournoi() {
+	private void enregistrerSiModifie() throws ChoixAnnulerException {
+		
+		ModeleSerializable modeleSerializable = (ModeleSerializable) this.modele;
+		
+		if( ! modeleSerializable.isModifie() ) return;
+		
+		
+		int resultat = JOptionPane.showConfirmDialog( vue, "Voulez vous enregistrer les modification ?", "Fichié modifié", JOptionPane.YES_NO_CANCEL_OPTION );
+		
+		if( resultat == JOptionPane.CANCEL_OPTION || resultat == JOptionPane.CLOSED_OPTION ) throw new ChoixAnnulerException("action annulée par l'utilisateur");
+		
+		if( resultat != JOptionPane.YES_OPTION ) return;
+		
+		this.enregistrer();
+		
+	}
+	
+	
+	private void enregistrer() throws ChoixAnnulerException {
 		
 		ModeleSerializable modeleSerializable = (ModeleSerializable) this.modele;
 		
 		try {
 			
 			modeleSerializable.sauvegarderTournoi();
-			
-			
-			
 		} 
 		catch( ModeleSerializableException e ) {
-			
-			VueSerializable vueSerializable = (VueSerializable) this.vue;
-			
-			try {
-				
-				File fichier = vueSerializable.getFichierSauvegarde();
-				
-			} 
-			catch( ChoixAnnulerException e1 ) {
-
-				
-				
-			}
-			
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			//
+			this.enregistrerSous();
+		} 
+		catch( IOException e ) {
+			// erreur d'écriture
 			e.printStackTrace();
 		}
-		
 		
 	}
 	
 	
+	private void enregistrerSous() throws ChoixAnnulerException {
+		
+		ModeleSerializable modeleSerializable = (ModeleSerializable) this.modele;
+		VueSerializable vueSerializable = (VueSerializable) this.vue;
+		
+		try {
+			
+			File fichierSauvegarde = vueSerializable.getFichierSauvegarde();
+			
+			modeleSerializable.sauvegarderTournoi(fichierSauvegarde);
+			
+		}
+		catch( IOException e ) {
+			// erreur d'écriture.
+			
+		}
+		
+	}
 	
 
 }

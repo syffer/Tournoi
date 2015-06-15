@@ -67,7 +67,7 @@ public class Tournoi implements Cloneable, Serializable {
 		}
 	}
 	
-	/*
+	
 	private void writeObject( ObjectOutputStream out ) throws IOException {
 		
 	}
@@ -75,7 +75,7 @@ public class Tournoi implements Cloneable, Serializable {
 	private void readObject( ObjectInputStream in ) throws IOException, ClassNotFoundException {
 		
 	}
-	*/
+	
 	
 		
 	public void ajouterJoueur( String nomJoueur ) throws JoueurDejaExistantException {
@@ -106,7 +106,7 @@ public class Tournoi implements Cloneable, Serializable {
 	
 	
 	public List<Joueur> getJoueurs() {	
-		return this.tableDesRencontres.getJoueurs();		
+		return this.tableDesRencontres.getJoueurs();
 	}
 	
 	
