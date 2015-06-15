@@ -38,7 +38,7 @@ public class VueSerializable extends Vue {
 		this.fileChooserOpen = new JFileChooser();
 		this.fileChooserSave = new JFileChooserConfirm();
 		
-		FileFilter filter = new FileNameExtensionFilter( Constantes.getString(Constantes.MESSAGE_FICHIER_TOURNOI), "tournoi", "TOURNOI" );
+		FileFilter filter = new FileNameExtensionFilter( Constantes.getString(Constantes.EXTENSION_FICHIER_TOURNOI), "tournoi", "TOURNOI" );
 		
 		this.fileChooserOpen.setFileFilter(filter);
 		this.fileChooserSave.setFileFilter(filter);

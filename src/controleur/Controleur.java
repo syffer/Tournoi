@@ -200,7 +200,7 @@ public class Controleur {
 			if( ligneSelectionnee == -1 ) return;	// pas de ligne sélectionnée
 
 			// on demande confirmation
-			int reponse = vue.afficherDialogueAvertissement( Constantes.getString(Constantes.MESSAGE_CONFIRMATION_SUPPRESSION_JOUEUR) );
+			int reponse = vue.afficherDialogueAvertissement( Constantes.getString(Constantes.MESSAGE_QUESTION_SUPPRESSION_JOUEUR) );
 			if( reponse != 0 ) return;
 			
 			TableModelJoueur modelTableau = (TableModelJoueur) vue.tableauJoueurs.getModel();
