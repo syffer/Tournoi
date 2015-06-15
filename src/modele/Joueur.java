@@ -102,16 +102,19 @@ public class Joueur implements Comparable<Joueur>, Cloneable, Serializable {
 
 	@Override
 	public int compareTo( Joueur joueur ) {
-		/* 
-		 * this > joueur : -1 (negatif integer)
-		 * this = joueur : 0
-		 * this < joueur : 1  (positif integer)
+		/* a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object.
+		 * this > joueur :  1 (positif integer)
+		 * this = joueur :  0
+		 * this < joueur : -1 (negatif integer)
 		 */
 		
+		return this.getNom().compareTo( joueur.getNom() );
+		
+		/*
 		if( this.nbPoints == joueur.getNbPoints() ) return 0;
 		else if( this.nbPoints > joueur.getNbPoints() ) return 1;
 		else return -1;
-		
+		*/
 	}
 	
 	

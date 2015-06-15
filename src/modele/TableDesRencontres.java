@@ -103,6 +103,8 @@ public class TableDesRencontres implements Cloneable, Serializable {
 		
 		for( Joueur adversaire : adversairesPossibles ) {
 			
+			System.out.println( "ADVERSAIRE : " + adversaire.getNom() );
+			
 			// aucune colonne concernant cet adversaire 
 			if( ! ligneJoueur.containsKey(adversaire) ) {
 				System.out.println(" ne contient pas : " + adversaire);

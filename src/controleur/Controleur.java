@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import modele.ComparateurJoueurNbPoints;
 import modele.Joueur;
 import modele.JoueurDejaExistantException;
 import modele.Match;
@@ -92,7 +93,7 @@ public class Controleur {
 			
 			// mise à jour du tableau des joueurs
 			List<Joueur> joueurs = modele.getJoueurs();
-			Collections.sort( joueurs, Collections.reverseOrder() );
+			Collections.sort( joueurs, Collections.reverseOrder( ComparateurJoueurNbPoints.getComparateur() ) );
 			TableModelJoueur modelTableau = (TableModelJoueur) vue.tableauJoueurs.getModel();
 			modelTableau.setJoueurs(joueurs);
 			
