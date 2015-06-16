@@ -33,7 +33,17 @@ public class Controleur {
 
 	protected Modele modele;
 	protected Vue vue;
-		
+	
+	private ActionSupprimerJoueur actionSupprimerJoueur;
+	
+	private ActionResoudreMatchGagnant actionResoudreMatchJoueur1;
+	private ActionResoudreMatchGagnant actionResoudreMatchJoueur2;
+	private ActionResoudreMatchAbandon actionResoudreMatchAbandonJoueur1;
+	private ActionResoudreMatchAbandon actionResoudreMatchAbandonJoueur2;		
+	private ActionMatchNull actionMatchNull;
+	private ActionSupprimerMatch actionSupprimerMatch;
+	
+	
 	public Controleur( Modele modele, Vue vue ) {
 		
 		this.modele = modele;
@@ -43,7 +53,7 @@ public class Controleur {
 		
 		ActionSelectionnerTableauJoueurs actionSelectionnerTableau = new ActionSelectionnerTableauJoueurs();
 		ActionAjouterJoueur actionAjouterJoueur = new ActionAjouterJoueur();
-		ActionSupprimerJoueur actionSupprimerJoueur = new ActionSupprimerJoueur();
+		this.actionSupprimerJoueur = new ActionSupprimerJoueur();
 		ActionChampTexteEntrer actionChampTexteEntrer = new ActionChampTexteEntrer();
 		
 		ActionCreerMatch actionCreerMatch = new ActionCreerMatch();
@@ -51,12 +61,12 @@ public class Controleur {
 		ActionAnnulerMatchs actionAnnulerMatchs = new ActionAnnulerMatchs();
 		
 		ActionSelectionListeMatch actionSelectionListe = new ActionSelectionListeMatch();
-		ActionResoudreMatchGagnant actionResoudreMatchJoueur1 = new ActionResoudreMatchGagnant(true);
-		ActionResoudreMatchGagnant actionResoudreMatchJoueur2 = new ActionResoudreMatchGagnant(false);
-		ActionResoudreMatchAbandon actionResoudreMatchAbandonJoueur1 = new ActionResoudreMatchAbandon(true);
-		ActionResoudreMatchAbandon actionResoudreMatchAbandonJoueur2 = new ActionResoudreMatchAbandon(false);		
-		ActionMatchNull actionMatchNull = new ActionMatchNull();
-		ActionSupprimerMatch actionSupprimerMatch = new ActionSupprimerMatch();
+		this.actionResoudreMatchJoueur1 = new ActionResoudreMatchGagnant(true);
+		this.actionResoudreMatchJoueur2 = new ActionResoudreMatchGagnant(false);
+		this.actionResoudreMatchAbandonJoueur1 = new ActionResoudreMatchAbandon(true);
+		this.actionResoudreMatchAbandonJoueur2 = new ActionResoudreMatchAbandon(false);		
+		this.actionMatchNull = new ActionMatchNull();
+		this.actionSupprimerMatch = new ActionSupprimerMatch();
 		
 		
 		this.vue.tableauJoueurs.getSelectionModel().addListSelectionListener(actionSelectionnerTableau);
@@ -153,8 +163,9 @@ public class Controleur {
 			
 			// on indique au modele quel élément a été sélectionné.
 			boolean joueurSelectionne = ! vue.tableauJoueurs.getSelectionModel().isSelectionEmpty();			
-			modele.setJoueurSelectionne(joueurSelectionne);
-					
+			
+			actionSupprimerJoueur.setEnabled(joueurSelectionne);
+			
 		}
 		
 	}
@@ -171,7 +182,26 @@ public class Controleur {
 			if ( event.getValueIsAdjusting() ) return;
 			
 			boolean matchSelectionne = ! vue.listeMatchs.isSelectionEmpty();
-			modele.setMatchSelectionne(matchSelectionne);
+			
+			actionResoudreMatchJoueur1.setEnabled(matchSelectionne);
+			actionResoudreMatchJoueur2.setEnabled(matchSelectionne);
+			actionResoudreMatchAbandonJoueur1.setEnabled(matchSelectionne);
+			actionResoudreMatchAbandonJoueur2.setEnabled(matchSelectionne);
+			actionMatchNull.setEnabled(matchSelectionne);
+			actionSupprimerMatch.setEnabled(matchSelectionne);
+			
+			String nomActionJoueur1 = "J1";
+			String nomActionJoueur2 = "J2";
+			if( matchSelectionne ) {
+				Match match = vue.listeMatchs.getSelectedValue();
+				nomActionJoueur1 = match.getJoueur1().getNom();
+				nomActionJoueur2 = match.getJoueur2().getNom();
+			}
+			
+			actionResoudreMatchJoueur1.putValue( AbstractAction.NAME, nomActionJoueur1 + " " + Constantes.getString(Constantes.GAGNE) );
+			actionResoudreMatchJoueur2.putValue( AbstractAction.NAME, nomActionJoueur2 + " " + Constantes.getString(Constantes.GAGNE) );
+			actionResoudreMatchAbandonJoueur1.putValue( AbstractAction.NAME, nomActionJoueur1 + " " + Constantes.getString(Constantes.ABANDONNE) );
+			actionResoudreMatchAbandonJoueur2.putValue( AbstractAction.NAME, nomActionJoueur2 + " " + Constantes.getString(Constantes.ABANDONNE) );
 			
 		}
 		
@@ -187,7 +217,6 @@ public class Controleur {
 			super( Constantes.getString(Constantes.AJOUTER_UN_JOUEUR) );
 			
 			this.putValue( NAME, Constantes.getString(Constantes.AJOUTER_UN_JOUEUR) );
-			
 		}
 		
 		@Override
@@ -225,17 +254,15 @@ public class Controleur {
 		
 	}
 	
-	public class ActionSupprimerJoueur extends AbstractAction implements Observer {
+	public class ActionSupprimerJoueur extends AbstractAction {
 		
 		private static final long serialVersionUID = 7385240649004707996L;
 
 		public ActionSupprimerJoueur() {
 			super( Constantes.getString(Constantes.SUPPRIMER_UN_JOUEUR) );
 			
-			modele.addObserver(this);
-			
+			this.setEnabled(false);			
 			this.putValue( NAME, Constantes.getString(Constantes.SUPPRIMER_UN_JOUEUR) );
-			
 		}
 		
 		@Override
@@ -252,11 +279,6 @@ public class Controleur {
 			Joueur joueurSelectionne = modelTableau.getJoueur(ligneSelectionnee);
 			modele.supprimerJoueur(joueurSelectionne);
 			
-		}
-
-		@Override
-		public void update( Observable observable, Object args ) {
-			this.setEnabled( modele.isJoueurSelectionne() );
 		}
 		
 	}
@@ -343,7 +365,7 @@ public class Controleur {
 	
 	
 	
-	public class ActionResoudreMatchGagnant extends AbstractAction implements Observer {
+	public class ActionResoudreMatchGagnant extends AbstractAction {
 		
 		private static final long serialVersionUID = 6091986863951471213L;
 		
@@ -353,8 +375,8 @@ public class Controleur {
 			super( ( (concerneJoueur1) ? "J1 " : "J2 " ) + Constantes.getString(Constantes.GAGNE) );
 			
 			this.concerneJoueur1 = concerneJoueur1;
-			modele.addObserver(this);
 			
+			this.setEnabled(false);
 			this.putValue( NAME, ( (concerneJoueur1) ? "J1 " : "J2 " ) + Constantes.getString(Constantes.GAGNE) );
 		}
 		
@@ -373,30 +395,11 @@ public class Controleur {
 			}
 			
 		}
-
-		@Override
-		public void update( Observable observer, Object args ) {
-			
-			String nomBouton = null;
-			if( modele.isMatchSelectionne() ) {
-				
-				Match match = vue.listeMatchs.getSelectedValue();
-				Joueur joueur = ( this.concerneJoueur1 ) ? match.getJoueur1() : match.getJoueur2();
-				nomBouton = joueur.getNom() + " " + Constantes.getString(Constantes.GAGNE);
-			
-			}
-			else nomBouton = ( ( this.concerneJoueur1 ) ? "J1 " : "J2 " ) + Constantes.getString(Constantes.GAGNE);
-			
-			
-			this.setEnabled( modele.isMatchSelectionne() );
-			this.putValue( NAME, nomBouton );
-			
-		}
 		
 	}
 	
 	
-	public class ActionResoudreMatchAbandon extends AbstractAction implements Observer {
+	public class ActionResoudreMatchAbandon extends AbstractAction {
 		
 		private static final long serialVersionUID = 6091986863951471213L;
 		
@@ -406,8 +409,8 @@ public class Controleur {
 			super( ( (concerneJoueur1) ? "J1 " : "J2 " ) + Constantes.getString(Constantes.ABANDONNE) );
 			
 			this.concerneJoueur1 = concerneJoueur1;
-			modele.addObserver(this);
 			
+			this.setEnabled(false);
 			this.putValue( NAME, ( (concerneJoueur1) ? "J1 " : "J2 " ) + Constantes.getString(Constantes.ABANDONNE) );
 		}
 		
@@ -426,83 +429,47 @@ public class Controleur {
 			}
 			
 		}
-
-		@Override
-		public void update( Observable observer, Object args ) {
-			
-			String nomBouton = null;
-			if( modele.isMatchSelectionne() ) {
-								
-				Match match = vue.listeMatchs.getSelectedValue();
-				Joueur joueur = ( this.concerneJoueur1 ) ? match.getJoueur1() : match.getJoueur2();
-				nomBouton = joueur.getNom() + " " + Constantes.getString(Constantes.ABANDONNE);
-			
-			}
-			else nomBouton = ( ( this.concerneJoueur1 ) ? "J1 " : "J2 " ) + Constantes.getString(Constantes.ABANDONNE);
-			
-			
-			this.setEnabled( modele.isMatchSelectionne() );
-			this.putValue( NAME, nomBouton );
-			
-		}
 		
 	}
 	
 	
 	
-	public class ActionMatchNull extends AbstractAction implements Observer {
+	public class ActionMatchNull extends AbstractAction {
 
 		private static final long serialVersionUID = 838869417950214551L;
 
 		public ActionMatchNull() {
 			super( Constantes.getString(Constantes.MATCH_NULL) );
 			
-			modele.addObserver(this);
-			
+			this.setEnabled(false);
 			this.putValue( NAME, Constantes.getString(Constantes.MATCH_NULL) );
 		}
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			
 			Match match = vue.listeMatchs.getSelectedValue();
 			modele.resoudreMatchNull(match);
-			
 		}
-
-		@Override
-		public void update(Observable arg0, Object arg1) {
-			this.setEnabled( modele.isMatchSelectionne() );
-		}
-		
 		
 	}
 	
 	
 
-	public class ActionSupprimerMatch extends AbstractAction implements Observer {
+	public class ActionSupprimerMatch extends AbstractAction {
 		
 		private static final long serialVersionUID = -3586680284444075521L;
 
 		public ActionSupprimerMatch() {
 			super( Constantes.getString(Constantes.SUPPRIMER_LE_MATCH) );
 			
-			modele.addObserver(this);
-			
+			this.setEnabled(false);
 			this.putValue( NAME, Constantes.getString(Constantes.SUPPRIMER_LE_MATCH) );
 		}
 		
 		@Override
 		public void actionPerformed( ActionEvent event ) {
-			
 			Match match = vue.listeMatchs.getSelectedValue();
-			modele.supprimerMatch(match);
-			
-		}
-
-		@Override
-		public void update( Observable observable, Object args ) {
-			this.setEnabled( modele.isMatchSelectionne() );
+			modele.supprimerMatch(match);	
 		}
 	
 	}

@@ -6,16 +6,11 @@ import java.util.Observable;
 public class Modele extends Observable {
 
 	protected Tournoi tournoi;
-	
-	private boolean joueurSelectionne;
-	private boolean matchSelectionne;
-	
+		
 	public Modele() {
 		
 		this.tournoi = new Tournoi();
 		
-		this.joueurSelectionne = false;
-		this.matchSelectionne = false;
 	}
 	
 
@@ -24,30 +19,6 @@ public class Modele extends Observable {
 		this.notifyObservers();
 	}
 	
-	
-	
-	
-	public boolean isJoueurSelectionne() {
-		return this.joueurSelectionne;
-	}
-	
-	public boolean isMatchSelectionne() {
-		return this.matchSelectionne;
-	}
-	
-	public void setJoueurSelectionne( boolean joueurSelectionne ) {
-		this.joueurSelectionne = joueurSelectionne;
-	
-		this.setChanged();
-		this.notifyObservers(false);
-	}
-	
-	public void setMatchSelectionne( boolean matchSelectionne ) {
-		this.matchSelectionne = matchSelectionne;
-		
-		this.setChanged();
-		this.notifyObservers(false);
-	}
 	
 	
 	

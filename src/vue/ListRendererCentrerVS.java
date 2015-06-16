@@ -16,8 +16,6 @@ public class ListRendererCentrerVS extends JPanel implements ListCellRenderer<Ma
 	private static final long serialVersionUID = -192683187875319933L;
 	
 	private static final Color HIGHLIGHT_COLOR = new Color( 184, 207, 229);
-	//private static final int dimension_x = 150;
-	//private static final int dimension_y = 20;
 	private static final Dimension dimensionLabelsNoms = new Dimension( 122, 20 );
 	
 	private JLabel labelNomJoueurGauche;
