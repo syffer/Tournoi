@@ -130,7 +130,6 @@ public class Tournoi implements Cloneable, Serializable {
 	
 	
 	
-	
 	public List<Joueur> getJoueurs() {	
 		return this.joueurs;
 	}

@@ -3,6 +3,8 @@ package controleur;
 import internationalisation.Constantes;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
@@ -10,6 +12,7 @@ import java.util.Observer;
 
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -38,6 +41,7 @@ public class Controleur {
 		ActionSelectionnerTableauJoueurs actionSelectionnerTableau = new ActionSelectionnerTableauJoueurs();
 		ActionAjouterJoueur actionAjouterJoueur = new ActionAjouterJoueur();
 		ActionSupprimerJoueur actionSupprimerJoueur = new ActionSupprimerJoueur();
+		ActionChampTexteEntrer actionChampTexteEntrer = new ActionChampTexteEntrer();
 		
 		ActionCreerMatch actionCreerMatch = new ActionCreerMatch();
 		ActionGenererMatchs actionGenererMatchs = new ActionGenererMatchs();
@@ -54,7 +58,7 @@ public class Controleur {
 		this.vue.tableauJoueurs.getSelectionModel().addListSelectionListener(actionSelectionnerTableau);
 		this.vue.boutonAjoutJoueur.setAction(actionAjouterJoueur);
 		this.vue.boutonSupprimerJoueur.setAction(actionSupprimerJoueur);
-		
+		this.vue.champAjoutJoueur.addActionListener(actionChampTexteEntrer);
 		
 		this.vue.boutonCreerMatch.setAction(actionCreerMatch);
 		this.vue.boutonGenererMatchs.setAction(actionGenererMatchs);
@@ -166,23 +170,37 @@ public class Controleur {
 		
 		@Override
 		public void actionPerformed( ActionEvent event ) {
-			
-			String nomJoueur = vue.champAjoutJoueur.getText();
-			if( nomJoueur.equals("") ) return;
-			
-			try {
-				modele.ajouterJoueur(nomJoueur);	// lance une exception si le joueur existe déjà
-				vue.champAjoutJoueur.setText("");
-			} 
-			catch( JoueurDejaExistantException e ) {
-				String message = Constantes.getString( Constantes.MESSAGE_JOUEUR_EXISTE_DEJA ) + " : " + nomJoueur;
-				vue.afficherMessage(message);
-			}
-			
+			ajouterJoueur();			
+		}
+		
+	}
+	
+	
+	public class ActionChampTexteEntrer implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			ajouterJoueur();
 		}
 		
 	}
 
+	
+	private void ajouterJoueur() {
+		
+		String nomJoueur = vue.champAjoutJoueur.getText();
+		if( nomJoueur.equals("") ) return;
+		
+		try {
+			modele.ajouterJoueur(nomJoueur);	// lance une exception si le joueur existe déjà
+			vue.champAjoutJoueur.setText("");
+		} 
+		catch( JoueurDejaExistantException e ) {
+			String message = Constantes.getString( Constantes.MESSAGE_JOUEUR_EXISTE_DEJA ) + " : " + nomJoueur;
+			vue.afficherMessage(message);
+		}
+		
+	}
 	
 	public class ActionSupprimerJoueur extends AbstractAction implements Observer {
 		
