@@ -232,11 +232,7 @@ public class Vue extends JFrame {
 		
 		this.listeMatchs = new JList<Match>( new ListModelMatch() );
 		this.listeMatchs.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );	// selection multiple impossible
-		//this.listeMatchs.setCellRenderer( new ListRendererCentrerVS() );
-		/*
-		DefaultListCellRenderer renderer =  (DefaultListCellRenderer) this.listeMatchs.getCellRenderer();  // centrer les éléments
-		renderer.setHorizontalAlignment( JLabel.CENTER );  
-		*/
+		this.listeMatchs.setCellRenderer( new ListRendererCentrerVS() );	// comment l'on affiche chaque élément de la JList
 		JScrollPane scrollPane = new JScrollPane( this.listeMatchs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
 		panneauListeMatchs.add( scrollPane, BorderLayout.CENTER );
 		
