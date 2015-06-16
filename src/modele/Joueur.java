@@ -72,7 +72,7 @@ public class Joueur implements Comparable<Joueur>, Cloneable, Serializable {
 	
 	@Override
 	public String toString() {
-		return this.nom;
+		return super.toString() + " " + this.nom + " " + this.nbPoints + " " + this.etat + " " + this.enMatch;
 	}
 	
 	@Override

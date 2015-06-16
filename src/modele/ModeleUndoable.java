@@ -34,7 +34,7 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 
 	@Override
 	public void storeState( Hashtable<Object, Object> state ) {
-
+		
 		state.put( ModeleUndoable.CLE_TOURNOI, this.tournoi.clone() );
 		
 	}

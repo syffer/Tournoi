@@ -104,7 +104,7 @@ public class Controleur {
 			
 			// on ne sélectionne rien dans la nouvelle liste
 			vue.listeMatchs.setSelectedIndex(-1);
-			vue.listeMatchs.setSelectedIndices( new int[0] );	
+			vue.listeMatchs.setSelectedIndices( new int[0] );
 			
 		}
 		

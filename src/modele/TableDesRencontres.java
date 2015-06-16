@@ -61,7 +61,7 @@ public class TableDesRencontres implements Cloneable, Serializable {
 	
 	
 	public void rencontreJoueurs( Joueur joueur1, Joueur joueur2 ) {
-		
+				
 		int nbRencontreDuJoueur1 = this.matriceDesRencontres.get(joueur1).get(joueur2);
 		int nbRencontreDuJoueur2 = this.matriceDesRencontres.get(joueur2).get(joueur1);
 		
@@ -70,8 +70,7 @@ public class TableDesRencontres implements Cloneable, Serializable {
 		
 		this.matriceDesRencontres.get(joueur1).put( joueur2, nbRencontreDuJoueur1 );
 		this.matriceDesRencontres.get(joueur2).put( joueur1, nbRencontreDuJoueur2 );
-		
-		System.out.println( this.matriceDesRencontres );
+
 	}
 	
 	
@@ -101,10 +100,8 @@ public class TableDesRencontres implements Cloneable, Serializable {
 		if( ligneJoueur.isEmpty() )	return adversairesPotentiels;
 		
 		
-		Integer nbRencontresMin = null; //ligneJoueur.values().iterator().next(); 	// permet de récupérer la 1ère valeur
-		
-		
-		
+		Integer nbRencontresMin = null;
+				
 		for( Joueur adversaire : adversairesPossibles ) {
 						
 			// aucune colonne concernant cet adversaire 
@@ -154,7 +151,7 @@ public class TableDesRencontres implements Cloneable, Serializable {
 				tableDesRencontres.matriceDesRencontres.put( joueur.clone(), copieLigne );
 				
 			}
-			
+						
 			return tableDesRencontres;
 			
 		}
