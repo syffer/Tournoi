@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.io.File;
+import java.util.List;
 
 import internationalisation.Constantes;
 
@@ -30,6 +31,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import modele.Joueur;
 import modele.Match;
 
 
@@ -354,6 +356,11 @@ public class Vue extends JFrame {
 		return this.afficherDialogue( Constantes.getString(Constantes.TITRE_POPUP_ATTENTION), message, JOptionPane.WARNING_MESSAGE );
 	}
 	
+	
+	
+	public Match afficherDialogueCreerMatch( List<Joueur> joueursDisponibles ) throws ChoixAnnulerException {
+		return JDialogCreerMatch.afficherDialogueCreerMatch( this, joueursDisponibles );
+	}
 	
 	
 	

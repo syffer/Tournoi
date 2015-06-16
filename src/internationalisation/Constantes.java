@@ -59,6 +59,10 @@ public class Constantes {
 	public static final String MESSAGE_QUESTION_ENREGISTRER_MODIFICATIONS = "MESSAGE_QUESTION_ENREGISTRER_MODIFICATIONS";
 	public static final String MESSAGE_QUESTION_REMPLACER_FICHIER_EXISTANT = "MESSAGE_QUESTION_REMPLACER_FICHIER_EXISTANT";
 	
+	public static final String MESSAGE_DIALOGUE_CREER_MATCH_CHOISIR_JOUEUR = "MESSAGE_DIALOGUE_CREER_MATCH_CHOISIR_JOUEUR";
+	public static final String CREER = "CREER";
+	public static final String ANNULER = "ANNULER";
+	
 	
 	
 	public static final Locale LOCALE = Locale.getDefault();

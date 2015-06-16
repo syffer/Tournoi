@@ -25,6 +25,7 @@ import modele.JoueurDejaExistantException;
 import modele.Match;
 import modele.MatchException;
 import modele.Modele;
+import vue.ChoixAnnulerException;
 import vue.ListModelMatch;
 import vue.TableModelJoueur;
 import vue.Vue;
@@ -152,10 +153,6 @@ public class Controleur {
 	
 	public class ActionSelectionnerTableauJoueurs implements ListSelectionListener {
 		
-		public ActionSelectionnerTableauJoueurs() {
-			
-		}
-		
 		@Override
 		public void valueChanged( ListSelectionEvent event ) {
 			
@@ -171,10 +168,6 @@ public class Controleur {
 	}
 	
 	public class ActionSelectionListeMatch implements ListSelectionListener {
-				
-		public ActionSelectionListeMatch() {
-			
-		}
 		
 		@Override
 		public void valueChanged( ListSelectionEvent event ) {
@@ -230,9 +223,8 @@ public class Controleur {
 	public class ActionChampTexteEntrer implements ActionListener {
 
 		@Override
-		public void actionPerformed( ActionEvent event ) {
-			// déclancher lors de l'appui sur la touche "ENTRER"
-			ajouterJoueur();
+		public void actionPerformed( ActionEvent event ) {	// déclancher lors de l'appui sur la touche "ENTRER"
+			ajouterJoueur();	
 		}
 		
 	}
@@ -302,13 +294,21 @@ public class Controleur {
 		
 		@Override
 		public void actionPerformed( ActionEvent event ) {
-			throw new RuntimeException("NON IMPLEMENTE!!!");
+			
+			try {
+				List<Joueur> joueursDisponibles = modele.getJoueursDisponibles();
+				Match match = vue.afficherDialogueCreerMatch(joueursDisponibles);
+				modele.ajouterMatch( match.getJoueur1(), match.getJoueur2() );
+			} 
+			catch( ChoixAnnulerException e ) {
+				// l'utilisateur a annuler la sauvegarde, on ne fait rien.
+			}
+			
 		}
 
 		@Override
 		public void update( Observable observable, Object args ) {
-			//this.setEnabled( modele.isJoueursDisponibles() );
-			this.setEnabled(false);		//--------------------------------------------------------- ancre
+			this.setEnabled( modele.isJoueursDisponibles() );
 		}
 		
 	}
