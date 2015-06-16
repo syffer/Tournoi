@@ -7,14 +7,18 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.io.File;
 
 import internationalisation.Constantes;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,6 +27,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import modele.Match;
 
@@ -32,6 +38,9 @@ public class Vue extends JFrame {
 	
 	private static final long serialVersionUID = -219340788187650081L;
 	
+	// dimensions des panneaux joueurs et matchs
+	private static int LARGEUR_PANNEAU = 600;
+	private static int HAUTEUR_PANNEAU = 250;
 		
 	// le panneau des joueurs
 	public JTable tableauJoueurs;
@@ -39,7 +48,7 @@ public class Vue extends JFrame {
 	public JButton boutonAjoutJoueur;
 	public JButton boutonSupprimerJoueur;
 	
-	//
+	// le panneau centrale
 	public JButton boutonCreerMatch;
 	public JButton boutonGenererMatchs;
 	public JButton boutonAnnulerLesMatchs;
@@ -53,13 +62,27 @@ public class Vue extends JFrame {
 	public JButton boutonMatchNull;
 	public JButton boutonAnnulerMatch;
 	
-	private static int LARGEUR_PANNEAU = 600;
-	private static int HAUTEUR_PANNEAU = 250;
+	// la barre des menus
+	public JMenuItem menuNouveauFichier;
+	public JMenuItem menuOuvrirFichier;
+	public JMenuItem menuSauvegarder;
+	public JMenuItem menuSauvegarderSous;
+	
+	public JMenuItem menuAnnuler;
+	public JMenuItem menuRefaire;
+	public JMenuItem menuGenererMatchs;
+	
+	// les fenêtres de sélection de fichier
+	public JFileChooser fileChooserOpen;
+	public JFileChooserConfirm fileChooserSave;
+	
 	
 	public Vue() {
 		super( Constantes.getString(Constantes.TITRE_FENETRE) );
 		
 		this.ajouterBarreDesMenus();
+		this.ajouterFenettreSelectionFichier();
+		
 		this.ajouterPanneauJoueurs();
 		this.ajouterPanneauIntermediaire();
 		this.ajouterPanneauMatchs();
@@ -74,12 +97,48 @@ public class Vue extends JFrame {
 
 	
 	private void ajouterBarreDesMenus() {
+				
+		JMenu menuFichier = new JMenu( Constantes.getString(Constantes.TITRE_MENU_FICHIER) );
+		this.menuNouveauFichier = new JMenuItem( Constantes.getString(Constantes.NOUVEAU_TOURNOI) );
+		this.menuOuvrirFichier = new JMenuItem( Constantes.getString(Constantes.CHARGER_TOURNOI) );
+		this.menuSauvegarder = new JMenuItem( Constantes.getString(Constantes.SAUVEGARDER_TOURNOI) );
+		this.menuSauvegarderSous = new JMenuItem( Constantes.getString(Constantes.SAUVEGARDER_TOURNOI_SOUS) );
+		menuFichier.add( this.menuNouveauFichier );
+		menuFichier.add( this.menuOuvrirFichier );
+		menuFichier.add( this.menuSauvegarder );
+		menuFichier.add( this.menuSauvegarderSous );
+		
+		JMenu menuEditer = new JMenu( Constantes.getString(Constantes.TITRE_MENU_EDITION) );
+		this.menuAnnuler = new JMenuItem( Constantes.getString(Constantes.UNDO) );
+		this.menuRefaire = new JMenuItem( Constantes.getString(Constantes.REDO) );
+		this.menuGenererMatchs = new JMenuItem( Constantes.getString(Constantes.GENERER_LES_MATCHS) ); 
+		menuEditer.add( this.menuAnnuler );
+		menuEditer.add( this.menuRefaire );
+		menuEditer.add( this.menuGenererMatchs );
 		
 		JMenuBar menuBar = new JMenuBar();
-		this.setJMenuBar(menuBar);		
+		menuBar.add(menuFichier);
+		menuBar.add(menuEditer);
+		this.setJMenuBar(menuBar);
 		
 	}
+	
+	private void ajouterFenettreSelectionFichier() {
 		
+		this.fileChooserOpen = new JFileChooser();
+		this.fileChooserSave = new JFileChooserConfirm();
+		
+		// permet de ne sélectionner que les fichier "*.tournoi" et "*.TOURNOI" dans les JFileChooser
+		FileFilter filter = new FileNameExtensionFilter( Constantes.getString(Constantes.EXTENSION_FICHIER_TOURNOI), "tournoi", "TOURNOI" );
+		
+		this.fileChooserOpen.setFileFilter(filter);
+		this.fileChooserSave.setFileFilter(filter);
+		
+		this.fileChooserOpen.setLocale( Constantes.LOCALE );
+		this.fileChooserSave.setLocale( Constantes.LOCALE );
+		
+	}
+
 	
 	private void ajouterPanneauJoueurs() {
 		
@@ -173,6 +232,7 @@ public class Vue extends JFrame {
 		
 		this.listeMatchs = new JList<Match>( new ListModelMatch() );
 		this.listeMatchs.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );	// selection multiple impossible
+		//this.listeMatchs.setCellRenderer( new ListRendererCentrerVS() );
 		/*
 		DefaultListCellRenderer renderer =  (DefaultListCellRenderer) this.listeMatchs.getCellRenderer();  // centrer les éléments
 		renderer.setHorizontalAlignment( JLabel.CENTER );  
@@ -218,6 +278,40 @@ public class Vue extends JFrame {
 	}
 	
 	
+	
+	
+	
+
+	public File getFichierCharge() throws ChoixAnnulerException {
+		
+		int resultat = this.fileChooserOpen.showOpenDialog(this);
+		
+		if( resultat != JFileChooser.APPROVE_OPTION ) throw new ChoixAnnulerException("changement annulé");
+		
+		File fichier = this.fileChooserOpen.getSelectedFile();
+				
+		return fichier;
+		
+	}
+	
+	
+	public File getFichierSauvegarde() throws ChoixAnnulerException {
+		
+		int resultat = this.fileChooserSave.showSaveDialog(this);
+		
+		if( resultat != JFileChooser.APPROVE_OPTION ) throw new ChoixAnnulerException("sauvegarde annulée");
+		
+		File fichier = this.fileChooserSave.getSelectedFile();
+		
+		// on ajoute l'extention ".tournoi" si elle n'y est pas
+		String cheminFichier = fichier.getAbsolutePath();
+		if( ! cheminFichier.endsWith(".tournoi") && ! cheminFichier.endsWith(".TOURNOI") ) {
+			fichier = new File( fichier.getAbsoluteFile() + ".tournoi" );
+		}
+				
+		return fichier;
+		
+	}
 	
 	
 	

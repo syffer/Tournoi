@@ -11,7 +11,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -55,14 +58,17 @@ public class Controleur {
 		ActionMatchNull actionMatchNull = new ActionMatchNull();
 		ActionSupprimerMatch actionSupprimerMatch = new ActionSupprimerMatch();
 		
+		
 		this.vue.tableauJoueurs.getSelectionModel().addListSelectionListener(actionSelectionnerTableau);
 		this.vue.boutonAjoutJoueur.setAction(actionAjouterJoueur);
 		this.vue.boutonSupprimerJoueur.setAction(actionSupprimerJoueur);
 		this.vue.champAjoutJoueur.addActionListener(actionChampTexteEntrer);
+					
 		
 		this.vue.boutonCreerMatch.setAction(actionCreerMatch);
 		this.vue.boutonGenererMatchs.setAction(actionGenererMatchs);
 		this.vue.boutonAnnulerLesMatchs.setAction(actionAnnulerMatchs);
+		this.vue.menuGenererMatchs.setAction(actionGenererMatchs);
 		
 		this.vue.listeMatchs.addListSelectionListener(actionSelectionListe);
 		this.vue.boutonJoueur1Gagne.setAction(actionResoudreMatchJoueur1);
@@ -71,6 +77,22 @@ public class Controleur {
 		this.vue.boutonJoueur2Abandonne.setAction(actionResoudreMatchAbandonJoueur2);
 		this.vue.boutonMatchNull.setAction(actionMatchNull);
 		this.vue.boutonAnnulerMatch.setAction(actionSupprimerMatch);
+		
+		
+		// raccourci supprimer joueur sélectionné
+        InputMap inputMap = this.vue.tableauJoueurs.getInputMap( JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT );
+        ActionMap actionMap = this.vue.tableauJoueurs.getActionMap();
+        KeyStroke enterKey = KeyStroke.getKeyStroke( KeyEvent.VK_DELETE, 0 );
+        inputMap.put( enterKey, "Action.delete" );
+        actionMap.put( "Action.delete", actionSupprimerJoueur );
+		
+		// raccourci supprimer match sélectionné
+		inputMap = this.vue.listeMatchs.getInputMap( JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT );
+        actionMap = this.vue.listeMatchs.getActionMap();
+        enterKey = KeyStroke.getKeyStroke( KeyEvent.VK_DELETE, 0 );
+        inputMap.put( enterKey, "Action.delete" );
+        actionMap.put( "Action.delete", actionSupprimerMatch );
+		
 		
 		this.modele.addObserver(update);
 		
@@ -179,7 +201,8 @@ public class Controleur {
 	public class ActionChampTexteEntrer implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent arg0) {
+		public void actionPerformed( ActionEvent event ) {
+			// déclancher lors de l'appui sur la touche "ENTRER"
 			ajouterJoueur();
 		}
 		
@@ -278,6 +301,7 @@ public class Controleur {
 			modele.addObserver(this);
 			
 			this.putValue( NAME, Constantes.getString(Constantes.GENERER_LES_MATCHS) );
+			this.putValue( AbstractAction.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_G, KeyEvent.CTRL_DOWN_MASK) );	// Ctrl + G
 		}
 		
 		@Override

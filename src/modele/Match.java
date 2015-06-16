@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Match implements Cloneable, Serializable {
+public class Match implements Serializable {
 	
 	private static final long serialVersionUID = -1929689348083618910L;
 	
@@ -65,6 +65,7 @@ public class Match implements Cloneable, Serializable {
 		return this.joueur1.getNom() + " VS " + this.joueur2.getNom();
 	}
 	
+	/*
 	@Override
 	public Match clone() {
 		
@@ -82,5 +83,6 @@ public class Match implements Cloneable, Serializable {
 		}
 		
 	}
+	*/
 	
 }

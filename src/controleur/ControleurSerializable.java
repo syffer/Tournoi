@@ -16,27 +16,27 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import vue.ChoixAnnulerException;
-import vue.VueSerializable;
+import vue.Vue;
 import modele.ModeleSerializable;
 import modele.ModeleSerializableException;
 
 public class ControleurSerializable extends Controleur {
 
 		
-	public ControleurSerializable( ModeleSerializable modeleSerializable, VueSerializable vueSerializable ) {
-		super( modeleSerializable, vueSerializable );
+	public ControleurSerializable( ModeleSerializable modeleSerializable, Vue vue ) {
+		super( modeleSerializable, vue );
 		
 		ActionNouveauTournoi actionNouveauTournoi = new ActionNouveauTournoi();
 		ActionChargerTournoi actionChargerTournoi = new ActionChargerTournoi();
 		ActionSauvegarderTournoi actionSauvegarderTournoi = new ActionSauvegarderTournoi();
 		ActionSauvegarderTournoiSous actionSauvegarderTournoiSous = new ActionSauvegarderTournoiSous();
 		
-		vueSerializable.menuNouveauFichier.setAction(actionNouveauTournoi);
-		vueSerializable.menuOuvrirFichier.setAction(actionChargerTournoi);
-		vueSerializable.menuSauvegarder.setAction(actionSauvegarderTournoi);
-		vueSerializable.menuSauvegarderSous.setAction(actionSauvegarderTournoiSous);
+		vue.menuNouveauFichier.setAction(actionNouveauTournoi);
+		vue.menuOuvrirFichier.setAction(actionChargerTournoi);
+		vue.menuSauvegarder.setAction(actionSauvegarderTournoi);
+		vue.menuSauvegarderSous.setAction(actionSauvegarderTournoiSous);
 		
-		vueSerializable.addWindowListener( new ActionFermetureFenetre() );
+		vue.addWindowListener( new ActionFermetureFenetre() );
 		
 		modeleSerializable.initialiser();
 		
@@ -44,7 +44,7 @@ public class ControleurSerializable extends Controleur {
 	
 	
 	public ControleurSerializable( ModeleSerializable modeleSerializable ) {
-		this( modeleSerializable, new VueSerializable() );		
+		this( modeleSerializable, new Vue() );		
 	}
 	
 	
@@ -119,8 +119,7 @@ public class ControleurSerializable extends Controleur {
 				
 				enregistrerSiModifie();
 				
-				VueSerializable vueSerializable = (VueSerializable) vue;
-				File fichierCharge = vueSerializable.getFichierCharge();
+				File fichierCharge = vue.getFichierCharge();
 								
 				ModeleSerializable modeleSerializable = (ModeleSerializable) modele;
 				modeleSerializable.chargerTournoi(fichierCharge);
@@ -251,10 +250,9 @@ public class ControleurSerializable extends Controleur {
 	private void enregistrerSous() throws ChoixAnnulerException {
 		
 		ModeleSerializable modeleSerializable = (ModeleSerializable) this.modele;
-		VueSerializable vueSerializable = (VueSerializable) this.vue;
 		
 		try {
-			File fichierSauvegarde = vueSerializable.getFichierSauvegarde();
+			File fichierSauvegarde = this.vue.getFichierSauvegarde();
 			modeleSerializable.sauvegarderTournoi(fichierSauvegarde);
 		}
 		catch( IOException e ) {

@@ -10,26 +10,26 @@ import java.util.Observer;
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
-import vue.VueUndoable;
+import vue.Vue;
 import modele.ModeleUndoManager;
 import modele.ModeleUndoable;
 
 public class ControleurUndoable extends ControleurSerializable {
 
-	public ControleurUndoable( ModeleUndoable modeleUndoable, VueUndoable vueUndoable ) {
-		super( modeleUndoable, vueUndoable );
+	public ControleurUndoable( ModeleUndoable modeleUndoable, Vue vue ) {
+		super( modeleUndoable, vue );
 		
 		ActionUndo actionUndo = new ActionUndo();
 		ActionRedo actionRedo = new ActionRedo();
 				
-		vueUndoable.menuAnnuler.setAction(actionUndo);
-		vueUndoable.menuRefaire.setAction(actionRedo);
+		vue.menuAnnuler.setAction(actionUndo);
+		vue.menuRefaire.setAction(actionRedo);
 		
 		modeleUndoable.getModeleUndoManager().initialiser();
 	}
 	
 	public ControleurUndoable( ModeleUndoable modeleUndoable ) {
-		this( modeleUndoable, new VueUndoable() );		
+		this( modeleUndoable, new Vue() );		
 	}
 	
 	
