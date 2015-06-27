@@ -28,6 +28,7 @@ public abstract class Strategie implements Cloneable, Serializable {
 	}
 	
 	
+	// création et résolution de match
 	public abstract List<Match> genererMatchs();
 	public abstract void retirerJoueursDisponibles( Joueur... joueurs );
 	public abstract void resoudreMatchNormal( Joueur joueurGagnant, Joueur joueurPerdant );
@@ -35,7 +36,7 @@ public abstract class Strategie implements Cloneable, Serializable {
 	public abstract void resoudreMatchNull( Joueur joueur1, Joueur joueur2 );
 	public abstract void resoudreMatchSupprime( Joueur joueur1, Joueur joueur2 );
 	
-	
+	// les nombres de points accordés suite à une victoire / défaite
 	public abstract int getNbPointsGagnantMatchNormal();
 	public abstract int getNbPointsPerdantMatchNormal();
 	public abstract int getNbPointsGagnantMatchAbandon();

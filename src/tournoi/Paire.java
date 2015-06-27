@@ -1,7 +1,11 @@
 package tournoi;
 
-public class Paire<U, V> {
+import java.io.Serializable;
 
+public class Paire<U, V> implements Serializable {
+	
+	private static final long serialVersionUID = -3184589629775586892L;
+	
 	public U u;
 	public V v;
 	
