@@ -20,6 +20,12 @@ public class Constantes {
 	public static final String UNDO = "UNDO";
 	public static final String REDO = "REDO";
 	
+	public static final String TITRE_MENU_MODE = "TITRE_MENU_MODE";
+	public static final String MATCHS_ALEATOIRE = "MATCHS_ALEATOIRE";
+	public static final String MATCHS_GAGNANT_PERDANT = "MATCHS_GAGNANT_PERDANT";
+	public static final String MATCHS_POULE = "MATCHS_POULE";
+	
+	
 	// panneau joueurs
 	public static final String TITRE_PANNEAU_JOUEURS = "TITRE_PANNEAU_JOUEURS";
 	public static final String TITRE_TABLEAU_COLONNE_NOM = "TITRE_TABLEAU_COLONNE_NOM";

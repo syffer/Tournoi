@@ -1,4 +1,4 @@
-package modele;
+package tournoi;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,15 +8,8 @@ public class Match implements Serializable {
 	
 	private static final long serialVersionUID = -1929689348083618910L;
 	
-	public static final int POINTS_GAGNANT = 3;
-	public static final int POINTS_PERDANT = 1;
-	public static final int POINTS_GAGNANT_PAR_ABANDON = 3;
-	public static final int POINTS_PERDANT_PAR_ABANDON = 0;
-	public static final int POINTS_MATCH_NULL = 2;
-	
 	private Joueur joueur1;
 	private Joueur joueur2;
-	
 	
 	public Match( Joueur joueur1, Joueur joueur2 ) {
 		this.joueur1 = joueur1;
@@ -53,11 +46,14 @@ public class Match implements Serializable {
 	}
 	
 	
-	public boolean joueAuMatch( Joueur joueur ) {
+	public boolean joueurJoueAuMatch( Joueur joueur ) {
 		return this.joueur1 == joueur || this.joueur2 == joueur;
 	}
 	
-	
+	public void finir() {
+		this.joueur1.setEnMatch(false);
+		this.joueur2.setEnMatch(false);
+	}
 	
 	
 	@Override
@@ -72,8 +68,8 @@ public class Match implements Serializable {
 		try {
 			
 			Match match = (Match) super.clone();
-			match.joueur1 = (Joueur) this.joueur1.clone();
-			match.joueur2 = (Joueur) this.joueur2.clone();
+			//match.joueur1 = (Joueur) this.joueur1.clone();
+			//match.joueur2 = (Joueur) this.joueur2.clone();
 			
 			return match;
 			

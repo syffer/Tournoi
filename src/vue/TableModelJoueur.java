@@ -7,7 +7,8 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import modele.Joueur;
+import tournoi.Joueur;
+
 
 public class TableModelJoueur extends AbstractTableModel {
 

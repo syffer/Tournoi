@@ -1,4 +1,4 @@
-package modele;
+package tournoi;
 
 import java.io.Serializable;
 
@@ -9,19 +9,12 @@ public class Joueur implements Comparable<Joueur>, Cloneable, Serializable {
 	private String nom;
 	private int nbPoints;
 	
-	private enum Etat {
-		Gagnant,
-		Perdant,
-	}
-	
-	private Etat etat;
 	private boolean enMatch;
 	
 	public Joueur( String nom, int nbPoints ) {
 		this.nom = nom;
 		this.nbPoints = nbPoints;
 		
-		this.etat = Etat.Perdant;
 		this.enMatch = false;
 	}
 	
@@ -33,25 +26,7 @@ public class Joueur implements Comparable<Joueur>, Cloneable, Serializable {
 	public void incrementerNbPoints( int nbPoints ) {
 		this.nbPoints += nbPoints;
 	}
-	
-	
-	public void gagne() {
-		this.etat = Etat.Gagnant;
-	}
-	
-	public void perd() {
-		this.etat = Etat.Perdant;
-	}
-	
-	
-	public boolean aGagne() {
-		return this.etat == Etat.Gagnant;
-	}
-	
-	public boolean aPerdu() {
-		return this.etat == Etat.Perdant;
-	}
-	
+		
 	
 	public boolean estEnMatch() {
 		return this.enMatch;
@@ -118,8 +93,8 @@ public class Joueur implements Comparable<Joueur>, Cloneable, Serializable {
 		try {
 			
 			Joueur joueur = (Joueur) super.clone();
-			
 			return joueur;	
+		
 		}
 		catch( CloneNotSupportedException e ) {
 			throw new InternalError("clonage impossible");

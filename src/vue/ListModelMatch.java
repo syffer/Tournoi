@@ -5,7 +5,8 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-import modele.Match;
+import tournoi.Match;
+
 
 public class ListModelMatch extends AbstractListModel<Match> {
 	

@@ -1,4 +1,4 @@
-package modele;
+package tournoi;
 
 public class JoueurDejaExistantException extends Exception {
 	

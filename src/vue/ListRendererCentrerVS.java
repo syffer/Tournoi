@@ -9,7 +9,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
-import modele.Match;
+import tournoi.Match;
+
 
 public class ListRendererCentrerVS extends JPanel implements ListCellRenderer<Match> {
 	

@@ -5,6 +5,8 @@ import internationalisation.Constantes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
@@ -19,12 +21,11 @@ import javax.swing.KeyStroke;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import modele.ComparateurJoueurNbPoints;
-import modele.Joueur;
-import modele.JoueurDejaExistantException;
-import modele.Match;
-import modele.MatchException;
 import modele.Modele;
+import tournoi.ComparateurJoueurNbPoints;
+import tournoi.Joueur;
+import tournoi.JoueurDejaExistantException;
+import tournoi.Match;
 import vue.ChoixAnnulerException;
 import vue.ListModelMatch;
 import vue.TableModelJoueur;
@@ -129,7 +130,7 @@ public class Controleur {
 			// permet d'éviter la déselection après avoir modifier les listes    (on sélectionne, modifie le model, qui modifie la liste, qui déselectionne ses items)
 			
 			// mise à jour du tableau des joueurs
-			List<Joueur> joueurs = modele.getJoueurs();
+			List<Joueur> joueurs = new ArrayList<Joueur>( modele.getJoueurs() );
 			Collections.sort( joueurs, Collections.reverseOrder( ComparateurJoueurNbPoints.getComparateur() ) );
 			TableModelJoueur modelTableau = (TableModelJoueur) vue.tableauJoueurs.getModel();
 			modelTableau.setJoueurs(joueurs);
@@ -296,7 +297,7 @@ public class Controleur {
 		public void actionPerformed( ActionEvent event ) {
 			
 			try {
-				List<Joueur> joueursDisponibles = modele.getJoueursDisponibles();
+				Collection<Joueur> joueursDisponibles = modele.getJoueursDisponibles();
 				Match match = vue.afficherDialogueCreerMatch(joueursDisponibles);
 				modele.ajouterMatch( match.getJoueur1(), match.getJoueur2() );
 			} 
@@ -384,16 +385,10 @@ public class Controleur {
 		public void actionPerformed( ActionEvent event ) {
 			
 			Match matchSelectionne = vue.listeMatchs.getSelectedValue();		
-			Joueur gagnant = ( this.concerneJoueur1 ) ? matchSelectionne.getJoueur1() : matchSelectionne.getJoueur2();
 			
-			try {
-				modele.resoudreMatchNormal( matchSelectionne, gagnant );
-			} 
-			catch( MatchException e ) {
-				e.printStackTrace();
-				vue.afficherMessageErreur( Constantes.getString(Constantes.MESSAGE_ERREUR_RESOLUTION_MATCH) );
-			}
-			
+			if( this.concerneJoueur1 ) modele.resoudreMatchNormalGagnantJoueur1(matchSelectionne);
+			else modele.resoudreMatchNormalGagnantJoueur2(matchSelectionne);
+						
 		}
 		
 	}
@@ -418,15 +413,9 @@ public class Controleur {
 		public void actionPerformed( ActionEvent event ) {
 			
 			Match matchSelectionne = vue.listeMatchs.getSelectedValue();			
-			Joueur abandonne = ( this.concerneJoueur1 ) ? matchSelectionne.getJoueur1() : matchSelectionne.getJoueur2();
-			
-			try {
-				modele.resoudreMatchParAbandon( matchSelectionne, abandonne );
-			} 
-			catch( MatchException e ) {
-				e.printStackTrace();
-				vue.afficherMessageErreur( Constantes.getString(Constantes.MESSAGE_ERREUR_RESOLUTION_MATCH) );
-			}
+
+			if( this.concerneJoueur1 ) modele.resoudreMatchNormalGagnantJoueur1(matchSelectionne);
+			else modele.resoudreMatchNormalGagnantJoueur2(matchSelectionne);
 			
 		}
 		

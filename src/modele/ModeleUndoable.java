@@ -5,6 +5,11 @@ import java.util.Hashtable;
 import javax.swing.undo.StateEdit;
 import javax.swing.undo.StateEditable;
 
+import tournoi.Joueur;
+import tournoi.JoueurDejaExistantException;
+import tournoi.Match;
+import tournoi.Tournoi;
+
 public class ModeleUndoable extends ModeleSerializable implements StateEditable {
 	
 	private static final long serialVersionUID = 996735530260433305L;
@@ -157,11 +162,11 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 	
 	
 	
-	public void resoudreMatchNormal( Match match, Joueur gagnant ) throws MatchException {
+	public void resoudreMatchNormalGagnantJoueur1( Match match ) {
 
 		StateEdit nouvelEtat = new StateEdit(this);
 		
-		super.resoudreMatchNormal( match, gagnant );
+		super.resoudreMatchNormalGagnantJoueur1(match);
 		
 		nouvelEtat.end();
 		
@@ -169,11 +174,35 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 		
 	}
 	
-	public void resoudreMatchParAbandon( Match match, Joueur joueurAbandonne ) throws MatchException {
+	public void resoudreMatchNormalGagnantJoueur2( Match match ) {
 
 		StateEdit nouvelEtat = new StateEdit(this);
 		
-		super.resoudreMatchParAbandon( match, joueurAbandonne );
+		super.resoudreMatchNormalGagnantJoueur2(match);
+		
+		nouvelEtat.end();
+		
+		this.undoManager.ajouterEtat(nouvelEtat);
+		
+	}
+
+	public void resoudreMatchAbandonJoueur1( Match match ) {
+
+		StateEdit nouvelEtat = new StateEdit(this);
+		
+		super.resoudreMatchAbandonJoueur1(match);
+		
+		nouvelEtat.end();
+		
+		this.undoManager.ajouterEtat(nouvelEtat);
+				
+	}
+	
+	public void resoudreMatchAbandonJoueur2( Match match ) {
+
+		StateEdit nouvelEtat = new StateEdit(this);
+		
+		super.resoudreMatchAbandonJoueur2(match);
 		
 		nouvelEtat.end();
 		

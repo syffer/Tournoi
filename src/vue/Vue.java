@@ -8,7 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.io.File;
-import java.util.List;
+import java.util.Collection;
 
 import internationalisation.Constantes;
 
@@ -31,8 +31,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import modele.Joueur;
-import modele.Match;
+import tournoi.Joueur;
+import tournoi.Match;
+
 
 
 
@@ -73,6 +74,12 @@ public class Vue extends JFrame {
 	public JMenuItem menuAnnuler;
 	public JMenuItem menuRefaire;
 	public JMenuItem menuGenererMatchs;
+	
+	public JMenuItem menuModeAleatoire;
+	public JMenuItem menuModeGagnantPerdant;
+	public JMenuItem menuModePoule;
+	
+	
 	
 	// les fenêtres de sélection de fichier
 	public JFileChooser fileChooserOpen;
@@ -118,9 +125,18 @@ public class Vue extends JFrame {
 		menuEditer.add( this.menuRefaire );
 		menuEditer.add( this.menuGenererMatchs );
 		
+		JMenu menuMode = new JMenu( Constantes.getString(Constantes.TITRE_MENU_MODE) );
+		this.menuModeAleatoire = new JMenuItem( Constantes.getString(Constantes.MATCHS_ALEATOIRE) );
+		this.menuModeGagnantPerdant = new JMenuItem( Constantes.getString(Constantes.MATCHS_GAGNANT_PERDANT) );
+		this.menuModePoule = new JMenuItem( Constantes.getString(Constantes.MATCHS_POULE) ); 
+		menuMode.add( this.menuModeAleatoire );
+		menuMode.add( this.menuModeGagnantPerdant );
+		menuMode.add( this.menuModePoule );
+		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(menuFichier);
 		menuBar.add(menuEditer);
+		menuBar.add(menuMode);
 		this.setJMenuBar(menuBar);
 		
 	}
@@ -358,7 +374,7 @@ public class Vue extends JFrame {
 	
 	
 	
-	public Match afficherDialogueCreerMatch( List<Joueur> joueursDisponibles ) throws ChoixAnnulerException {
+	public Match afficherDialogueCreerMatch( Collection<Joueur> joueursDisponibles ) throws ChoixAnnulerException {
 		return JDialogCreerMatch.afficherDialogueCreerMatch( this, joueursDisponibles );
 	}
 	

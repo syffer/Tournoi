@@ -1,4 +1,4 @@
-package modele;
+package tournoi;
 
 import java.util.Comparator;
 

@@ -1,7 +1,13 @@
 package modele;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Observable;
+
+import tournoi.Joueur;
+import tournoi.JoueurDejaExistantException;
+import tournoi.Match;
+import tournoi.Tournoi;
 
 public class Modele extends Observable {
 
@@ -44,11 +50,11 @@ public class Modele extends Observable {
 	
 	
 	
-	public List<Joueur> getJoueurs() {	
+	public Collection<Joueur> getJoueurs() {	
 		return this.tournoi.getJoueurs();		
 	}
 		
-	public List<Joueur> getJoueursDisponibles() {
+	public Collection<Joueur> getJoueursDisponibles() {
 		return this.tournoi.getJoueursDisponibles();
 	}
 	
@@ -107,15 +113,31 @@ public class Modele extends Observable {
 	}
 	
 	
-	public void resoudreMatchNormal( Match match, Joueur gagnant ) throws MatchException {
-		this.tournoi.resoudreMatchNormal( match, gagnant );
+	
+	
+	public void resoudreMatchNormalGagnantJoueur1( Match match ) {
+		this.tournoi.resoudreMatchNormalGagnantJoueur1(match);
 		
 		this.setChanged();
 		this.notifyObservers();
 	}
 	
-	public void resoudreMatchParAbandon( Match match, Joueur joueurAbandonne ) throws MatchException {
-		this.tournoi.resoudreMatchParAbandon( match, joueurAbandonne );
+	public void resoudreMatchNormalGagnantJoueur2( Match match ) {
+		this.tournoi.resoudreMatchNormalGagnantJoueur2(match);
+		
+		this.setChanged();
+		this.notifyObservers();
+	}
+
+	public void resoudreMatchAbandonJoueur1( Match match ) {
+		this.tournoi.resoudreMatchAbandonJoueur1(match);
+		
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
+	public void resoudreMatchAbandonJoueur2( Match match ) {
+		this.tournoi.resoudreMatchAbandonJoueur2(match);
 		
 		this.setChanged();
 		this.notifyObservers();

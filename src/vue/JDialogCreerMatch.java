@@ -5,8 +5,9 @@ import internationalisation.Constantes;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.AbstractAction;
@@ -18,8 +19,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import modele.Joueur;
-import modele.Match;
+import tournoi.Joueur;
+import tournoi.Match;
+
 
 public class JDialogCreerMatch extends JDialog {
 	
@@ -38,7 +40,7 @@ public class JDialogCreerMatch extends JDialog {
 	private JButton boutonAnnuler;
 		
 	
-	public JDialogCreerMatch( JFrame parent, List<Joueur> joueursDisponibles ) {
+	public JDialogCreerMatch( JFrame parent, Collection<Joueur> joueursDisponibles ) {
 		super( parent, Constantes.getString(Constantes.CREER_UN_MATCH), true );	// true : indique que le dialogue est modal (on attend que la fenêtre se ferme)
 		
 		this.joueursDisponibles = new Vector<Joueur>(joueursDisponibles);
@@ -179,7 +181,7 @@ public class JDialogCreerMatch extends JDialog {
 	}
 	
 	
-	public static Match afficherDialogueCreerMatch( JFrame parent, List<Joueur> joueursDisponibles ) throws ChoixAnnulerException {
+	public static Match afficherDialogueCreerMatch( JFrame parent, Collection<Joueur> joueursDisponibles ) throws ChoixAnnulerException {
 		
 		JDialogCreerMatch dialog = new JDialogCreerMatch( parent, joueursDisponibles );
 		dialog.setVisible(true);
@@ -196,7 +198,7 @@ public class JDialogCreerMatch extends JDialog {
 		public static void main( String[] args ) {
 			
 			String[] noms = { "vall", "vincent", "noémie", "quentin" };
-			ArrayList<Joueur> joueursDisponibles = new ArrayList<Joueur>();
+			Set<Joueur> joueursDisponibles = new HashSet<Joueur>();
 			for( String nom : noms ) {
 				joueursDisponibles.add( new Joueur(nom) );
 			}

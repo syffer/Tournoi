@@ -8,6 +8,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import tournoi.Joueur;
+import tournoi.JoueurDejaExistantException;
+import tournoi.Match;
+import tournoi.Tournoi;
+
 
 public class ModeleSerializable extends Modele implements Serializable {
 	
@@ -154,16 +159,29 @@ public class ModeleSerializable extends Modele implements Serializable {
 	}
 	
 	
-	public void resoudreMatchNormal( Match match, Joueur gagnant ) throws MatchException {
+	
+	
+	
+	public void resoudreMatchNormalGagnantJoueur1( Match match ) {
 		this.modifie = true;
-		super.resoudreMatchNormal( match, gagnant );
+		super.resoudreMatchNormalGagnantJoueur1(match);
 	}
 	
-	public void resoudreMatchParAbandon( Match match, Joueur joueurAbandonne ) throws MatchException {
-		this.modifie = true;	
-		super.resoudreMatchParAbandon( match, joueurAbandonne );
+	public void resoudreMatchNormalGagnantJoueur2( Match match ) {
+		this.modifie = true;
+		super.resoudreMatchNormalGagnantJoueur2(match);
+	}
+
+	public void resoudreMatchAbandonJoueur1( Match match ) {
+		this.modifie = true;
+		super.resoudreMatchAbandonJoueur1(match);
 	}
 	
+	public void resoudreMatchAbandonJoueur2( Match match ) {
+		this.modifie = true;
+		super.resoudreMatchAbandonJoueur2(match);
+	}
+		
 	public void resoudreMatchNull( Match match ) {
 		this.modifie = true;
 		super.resoudreMatchNull(match);
