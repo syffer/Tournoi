@@ -4,17 +4,16 @@ import java.io.Serializable;
 
 public class Joueur implements Comparable<Joueur>, Cloneable, Serializable {
 	
-	private static final long serialVersionUID = 6879263410820631136L;
+	private static final long serialVersionUID = 6879263417920631136L;
 	
 	private String nom;
 	private int nbPoints;
-	
 	private boolean enMatch;
+	
 	
 	public Joueur( String nom, int nbPoints ) {
 		this.nom = nom;
-		this.nbPoints = nbPoints;
-		
+		this.nbPoints = nbPoints;	
 		this.enMatch = false;
 	}
 	
@@ -35,7 +34,7 @@ public class Joueur implements Comparable<Joueur>, Cloneable, Serializable {
 	public void setEnMatch( boolean enMatch ) {
 		this.enMatch = enMatch;
 	}
-	
+		
 	public String getNom() {
 		return this.nom;
 	}
@@ -43,6 +42,8 @@ public class Joueur implements Comparable<Joueur>, Cloneable, Serializable {
 	public int getNbPoints() {
 		return this.nbPoints;
 	}
+	
+	
 	
 	
 	@Override

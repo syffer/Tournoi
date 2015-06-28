@@ -191,6 +191,8 @@ public class StrategieGagnantPerdant extends Strategie {
 		this.tableGagnantsPerdants.put( joueurGagnant, true );
 		this.tableGagnantsPerdants.put( joueurPerdant, false );
 		
+		this.gagnants.add(joueurGagnant);
+		this.perdants.add(joueurPerdant);
 		
 	}
 
@@ -200,13 +202,19 @@ public class StrategieGagnantPerdant extends Strategie {
 		this.tableGagnantsPerdants.put( joueurGagnant, true );
 		this.tableGagnantsPerdants.put( joueurPerdant, false );
 		
+		this.gagnants.add(joueurGagnant);
+		this.perdants.add(joueurPerdant);
+		
 	}
 
 	@Override
 	public void resoudreMatchNull( Joueur joueur1, Joueur joueur2 ) {
 
+		this.tableGagnantsPerdants.put( joueur1, false );
+		this.tableGagnantsPerdants.put( joueur2, false );
 		
-		
+		this.perdants.add(joueur1);
+		this.perdants.add(joueur2);
 		
 	}
 

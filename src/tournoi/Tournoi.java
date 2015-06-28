@@ -331,6 +331,9 @@ public class Tournoi implements Cloneable, Serializable {
 		
 		match.finir();
 		
+		gagnantTournoi.setEnMatch(false);
+		perdantTournoi.setEnMatch(false);
+		
 		this.supprimerMatch(match);
 		
 	}

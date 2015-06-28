@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 
@@ -50,11 +51,12 @@ public class TableDesRencontres implements Cloneable, Serializable {
 		String nomJoueur = joueur.getNom();
 		this.joueurs.remove(nomJoueur);
 		
-		Iterator< Paire<String, String> > iterateur = this.matrice.keySet().iterator();
+		Iterator< Entry<Paire<String, String>, Integer> > iterateur = this.matrice.entrySet().iterator();
 		while( iterateur.hasNext() ) {
 			
-			Paire<String, String> paire = iterateur.next();
-			if( nomJoueur.equals( paire.u ) || nomJoueur.equals( paire.v ) ) this.matrice.remove(paire);
+			Entry< Paire<String, String>, Integer> entry = iterateur.next();
+			Paire<String, String> paire = entry.getKey();
+			if( nomJoueur.equals( paire.u ) || nomJoueur.equals( paire.v ) ) iterateur.remove();
 			
 		}
 		
