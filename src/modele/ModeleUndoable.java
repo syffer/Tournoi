@@ -29,7 +29,7 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 
 		Tournoi tournoi = (Tournoi) state.get( ModeleUndoable.CLE_TOURNOI );
 		
-		if( tournoi != null ) this.tournoi = tournoi;
+		this.tournoi = tournoi;
 		
 		// on viens de charger un nouveau tournoi, il faut prévenir les actions / la vue
 		this.setChanged();
@@ -146,17 +146,7 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 		
 	}
 	
-	public void supprimerMatch( Match match ) {
-		
-		StateEdit nouvelEtat = new StateEdit(this);
-		
-		super.supprimerMatch(match);
-		
-		nouvelEtat.end();
-		
-		this.undoManager.ajouterEtat(nouvelEtat);
-		
-	}
+	
 	
 	
 	
@@ -222,5 +212,16 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 		
 	}
 	
+	public void resoudreMatchSupprime( Match match ) {
+		
+		StateEdit nouvelEtat = new StateEdit(this);
+		
+		super.resoudreMatchSupprime(match);
+		
+		nouvelEtat.end();
+		
+		this.undoManager.ajouterEtat(nouvelEtat);
+		
+	}
 
 }

@@ -153,12 +153,6 @@ public class ModeleSerializable extends Modele implements Serializable {
 		super.ajouterMatch( joueur1, joueur2 );
 	}
 	
-	public void supprimerMatch( Match match ) {
-		this.modifie = true;
-		super.supprimerMatch(match);
-	}
-	
-	
 	
 	
 	
@@ -185,6 +179,11 @@ public class ModeleSerializable extends Modele implements Serializable {
 	public void resoudreMatchNull( Match match ) {
 		this.modifie = true;
 		super.resoudreMatchNull(match);
+	}
+	
+	public void resoudreMatchSupprime( Match match ) {
+		this.modifie = true;
+		super.resoudreMatchSupprime(match);
 	}
 	
 }

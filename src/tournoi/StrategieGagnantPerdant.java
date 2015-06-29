@@ -3,10 +3,8 @@ package tournoi;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class StrategieGagnantPerdant extends Strategie {
 	
@@ -30,42 +28,38 @@ public class StrategieGagnantPerdant extends Strategie {
 	
 	
 	@Override
-	public StrategieGagnantPerdant clone() {
+	public StrategieGagnantPerdant getClone( Map<String, Joueur> cloneJoueurs ) throws CloneNotSupportedException {
 		
-		try {
+		StrategieGagnantPerdant strategie = (StrategieGagnantPerdant) this.clone();
+		
+		strategie.tableDesRencontres = this.tableDesRencontres.clone();
+		strategie.tableGagnantsPerdants = new HashMap<Joueur, Boolean>( this.tableGagnantsPerdants.size() );
+		strategie.gagnants = new ArrayList<Joueur>( this.gagnants.size() );
+		strategie.perdants = new ArrayList<Joueur>( this.perdants.size() );
+		
+		for( Joueur joueur : this.tableGagnantsPerdants.keySet() ) {
 			
-			StrategieGagnantPerdant strategie = (StrategieGagnantPerdant) super.clone();
+			Joueur clone = cloneJoueurs.get( joueur.getNom() );
+			if( clone == null ) throw new CloneNotSupportedException();
 			
-			strategie.tableDesRencontres = this.tableDesRencontres.clone();
-			strategie.tableGagnantsPerdants = new HashMap<Joueur, Boolean>( this.tableGagnantsPerdants.size() );
-			strategie.gagnants = new ArrayList<Joueur>( this.gagnants.size() );
-			strategie.perdants = new ArrayList<Joueur>( this.perdants.size() );
-			
-			for( Joueur joueur : this.tableGagnantsPerdants.keySet() ) {
-				
-				Joueur clone = joueur.clone();
-				boolean aPrecedemmentGagne = this.tableGagnantsPerdants.get(joueur);
-				strategie.tableGagnantsPerdants.put( clone, aPrecedemmentGagne );
-								
-			}
-			
-			for( Joueur gagnant : this.gagnants ) {
-				Joueur clone = gagnant.clone();
-				strategie.gagnants.add(clone);
-			}
-			
-			for( Joueur perdant : this.perdants ) {
-				Joueur clone = perdant.clone();
-				strategie.perdants.add(clone);
-			}
-			
-			return strategie;
-			
-		}
-		catch( CloneNotSupportedException e ) {
-			throw new InternalError("clonage impossible");
+			boolean aPrecedemmentGagne = this.tableGagnantsPerdants.get(joueur);
+			strategie.tableGagnantsPerdants.put( clone, aPrecedemmentGagne );
+							
 		}
 		
+		for( Joueur gagnant : this.gagnants ) {
+			Joueur clone = cloneJoueurs.get( gagnant.getNom() );
+			if( clone == null ) throw new CloneNotSupportedException();
+			strategie.gagnants.add(clone);
+		}
+		
+		for( Joueur perdant : this.perdants ) {
+			Joueur clone = cloneJoueurs.get( perdant.getNom() );
+			if( clone == null ) throw new CloneNotSupportedException();
+			strategie.perdants.add(clone);
+		}
+		
+		return strategie;
 	}
 	
 	
@@ -113,11 +107,11 @@ public class StrategieGagnantPerdant extends Strategie {
 	
 	@Override
 	public List<Match> genererMatchs() {
-		
+				
 		List<Match> matchs = this.genererMatchsGagnants();
-		
+				
 		matchs.addAll( this.genererMatchsPerdants() );
-		
+				
 		if( this.gagnants.size() > 0 && this.perdants.size() > 0 ) {
 			
 			Joueur joueurGagnant = this.gagnants.get(0);
@@ -145,7 +139,7 @@ public class StrategieGagnantPerdant extends Strategie {
 	private List<Match> genererMatchsPourJoueurs( List<Joueur> listejoueurs ) {
 		
 		List<Match> matchs = new ArrayList<Match>();
-		
+				
 		while(true) {
 			
 			int nbJoueurs = listejoueurs.size();
@@ -166,7 +160,7 @@ public class StrategieGagnantPerdant extends Strategie {
 			matchs.add(match);
 			
 		}
-		
+				
 		return matchs;
 	}
 	
@@ -187,13 +181,14 @@ public class StrategieGagnantPerdant extends Strategie {
 	
 	@Override
 	public void resoudreMatchNormal( Joueur joueurGagnant, Joueur joueurPerdant ) {
-
+				
 		this.tableGagnantsPerdants.put( joueurGagnant, true );
 		this.tableGagnantsPerdants.put( joueurPerdant, false );
 		
 		this.gagnants.add(joueurGagnant);
 		this.perdants.add(joueurPerdant);
 		
+		this.tableDesRencontres.rencontreJoueurs( joueurGagnant, joueurPerdant ); 
 	}
 
 	@Override
@@ -205,6 +200,8 @@ public class StrategieGagnantPerdant extends Strategie {
 		this.gagnants.add(joueurGagnant);
 		this.perdants.add(joueurPerdant);
 		
+		this.tableDesRencontres.rencontreJoueurs( joueurGagnant, joueurPerdant ); 
+		
 	}
 
 	@Override
@@ -215,6 +212,8 @@ public class StrategieGagnantPerdant extends Strategie {
 		
 		this.perdants.add(joueur1);
 		this.perdants.add(joueur2);
+		
+		this.tableDesRencontres.rencontreJoueurs( joueur1, joueur2 ); 
 		
 	}
 
@@ -259,5 +258,5 @@ public class StrategieGagnantPerdant extends Strategie {
 	public int getNbPointsMatchNull() {
 		return 2;
 	}
-
+	
 }

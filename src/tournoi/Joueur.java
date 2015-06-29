@@ -51,6 +51,7 @@ public class Joueur implements Comparable<Joueur>, Cloneable, Serializable {
 		return this.nom;
 	}
 	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -75,6 +76,7 @@ public class Joueur implements Comparable<Joueur>, Cloneable, Serializable {
 			return false;
 		return true;
 	}
+	
 
 	@Override
 	public int compareTo( Joueur joueur ) {
@@ -93,7 +95,7 @@ public class Joueur implements Comparable<Joueur>, Cloneable, Serializable {
 		
 		try {
 			
-			Joueur joueur = (Joueur) super.clone();
+			Joueur joueur = (Joueur) super.clone();			
 			return joueur;	
 		
 		}

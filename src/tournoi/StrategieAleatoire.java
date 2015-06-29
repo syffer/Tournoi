@@ -3,50 +3,47 @@ package tournoi;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 public class StrategieAleatoire extends Strategie {
 	
 	private static final long serialVersionUID = -8515687357847290736L;
 	
-	private Set<Joueur> joueursDisponibles;
+	private List<Joueur> joueursDisponibles;
 	
 	
-	public StrategieAleatoire( Set<Joueur> joueursDisponibles ) {		
+	public StrategieAleatoire( List<Joueur> joueursDisponibles ) {
 		this.joueursDisponibles = joueursDisponibles;
 	}
 	
 	public StrategieAleatoire() {
-		this( new HashSet<Joueur>() );
+		this( new ArrayList<Joueur>() );
 	}
 	
-
+	
 	@Override
-	public StrategieAleatoire clone() {
+	public StrategieAleatoire getClone( Map<String, Joueur> cloneJoueurs ) throws CloneNotSupportedException {
 		
-		try {
+		StrategieAleatoire strategie = (StrategieAleatoire) this.clone();
+		
+		strategie.joueursDisponibles = new ArrayList<Joueur>();
+		
+		for( Joueur joueur : this.joueursDisponibles ) {
 			
-			StrategieAleatoire strategie = (StrategieAleatoire) super.clone();
+			String nomJoueur = joueur.getNom();
+			Joueur clone = cloneJoueurs.get(nomJoueur);
 			
-			strategie.joueursDisponibles = new HashSet<Joueur>( this.joueursDisponibles.size() );
+			if( clone == null ) throw new CloneNotSupportedException();
 			
-			for( Joueur joueur : this.joueursDisponibles ) {
-				
-				Joueur clone = joueur.clone();
-				strategie.joueursDisponibles.add(clone);
-				
-			}
-			
-			return strategie;
+			strategie.joueursDisponibles.add(clone);
 			
 		}
-		catch( CloneNotSupportedException e ) {
-			throw new InternalError("clonage impossible");
-		}
 		
+		return strategie;
 	}
+	
+	
 	
 	
 	@Override
@@ -78,7 +75,6 @@ public class StrategieAleatoire extends Strategie {
 	public List<Match> genererMatchs() {
 		
 		List<Match> matchs = new ArrayList<Match>();
-		List<Joueur> joueurs = new ArrayList<Joueur>( this.joueursDisponibles );
 		
 		while(true) {
 						
@@ -86,19 +82,17 @@ public class StrategieAleatoire extends Strategie {
 			if( nbJoueurs < 2 ) break;
 			
 			int indiceJoueur = Aleatoire.getNombreAleatoire( nbJoueurs - 1 );
-			Joueur joueur = joueurs.get(indiceJoueur);
-			joueurs.remove(indiceJoueur);
+			Joueur joueur = this.joueursDisponibles.get(indiceJoueur);
+			this.joueursDisponibles.remove(indiceJoueur);
 			
 			
 			int indiceAdversairePotentiel = Aleatoire.getNombreAleatoire( nbJoueurs - 2 );	// on a retiré un joueur (donc -2)
-			Joueur adversaire = joueurs.get(indiceAdversairePotentiel);
-			joueurs.remove(indiceAdversairePotentiel);
+			Joueur adversaire = this.joueursDisponibles.get(indiceAdversairePotentiel);
+			this.joueursDisponibles.remove(indiceAdversairePotentiel);
 			
 			Match match = new Match( joueur, adversaire );
 			matchs.add(match);
 			
-			this.joueursDisponibles.remove(joueur);
-			this.joueursDisponibles.remove(adversaire);
 		}
 				
 		return matchs;
@@ -165,6 +159,8 @@ public class StrategieAleatoire extends Strategie {
 	public int getNbPointsMatchNull() {
 		return 2;
 	}
+
+	
 	
 	
 	

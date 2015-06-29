@@ -3,18 +3,15 @@ package tournoi;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Strategie implements Cloneable, Serializable {
 	
 	private static final long serialVersionUID = 7429957283780152493L;
 	
-	@Override
-	public Strategie clone() throws CloneNotSupportedException {
-		
-		Strategie strategie = (Strategie) super.clone();			
-		return strategie;
-		
-	}
+
+	public abstract Strategie getClone( Map<String, Joueur> cloneJoueurs ) throws CloneNotSupportedException;
+	
 	
 	public abstract void ajouterJoueur( Joueur joueur ) throws JoueurDejaExistantException;
 	public abstract void supprimerJoueur( Joueur joueur );

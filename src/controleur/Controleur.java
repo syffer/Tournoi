@@ -458,7 +458,7 @@ public class Controleur {
 		@Override
 		public void actionPerformed( ActionEvent event ) {
 			Match match = vue.listeMatchs.getSelectedValue();
-			modele.supprimerMatch(match);	
+			modele.resoudreMatchSupprime(match);	
 		}
 	
 	}

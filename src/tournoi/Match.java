@@ -58,7 +58,40 @@ public class Match implements Serializable {
 	
 	@Override
 	public String toString() {
-		return this.joueur1.getNom() + " VS " + this.joueur2.getNom();
+		return this.joueur1 + " VS " + this.joueur2;
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((joueur1 == null) ? 0 : joueur1.hashCode());
+		result = prime * result + ((joueur2 == null) ? 0 : joueur2.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Match other = (Match) obj;
+		if (joueur1 == null) {
+			if (other.joueur1 != null)
+				return false;
+		} else if (!joueur1.equals(other.joueur1))
+			return false;
+		if (joueur2 == null) {
+			if (other.joueur2 != null)
+				return false;
+		} else if (!joueur2.equals(other.joueur2))
+			return false;
+		return true;
 	}
 	
 	/*

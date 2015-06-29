@@ -96,14 +96,7 @@ public class Modele extends Observable {
 		this.setChanged();
 		this.notifyObservers();
 	}
-	
-	public void supprimerMatch( Match match ) {
-		this.tournoi.supprimerMatch(match);
 		
-		this.setChanged();
-		this.notifyObservers();
-	}
-	
 	public List<Match> getMatchs() {
 		return this.tournoi.getMatchs();
 	}
@@ -150,6 +143,11 @@ public class Modele extends Observable {
 		this.notifyObservers();
 	}
 	
-	
+	public void resoudreMatchSupprime( Match match ) {
+		this.tournoi.resoudreMatchSupprime(match);
+		
+		this.setChanged();
+		this.notifyObservers();
+	}
 	
 }

@@ -14,19 +14,17 @@ public class Tournoi implements Cloneable, Serializable {
 	
 	private Map<String, Joueur> joueurs;	
 	private List<Match> matchs;
-	
 	private Strategie strategie;
 			
 	public Tournoi() {
 		
 		this.joueurs = new HashMap<String, Joueur>();		
 		this.matchs = new ArrayList<Match>();
-		
+		//this.strategie = new StrategieGagnantPerdant();
 		this.strategie = new StrategieAleatoire();
 		
 	}
-	
-	
+		
 	
 	@Override
 	public Tournoi clone() {
@@ -37,8 +35,7 @@ public class Tournoi implements Cloneable, Serializable {
 			
 			tournoi.joueurs = new HashMap<String, Joueur>( this.joueurs.size() );
 			tournoi.matchs = new ArrayList<Match>( this.matchs.size() );
-			tournoi.strategie = this.strategie.clone();
-			
+						
 			for( String nomJoueur : this.joueurs.keySet() ) {
 				
 				Joueur joueur = this.joueurs.get(nomJoueur);
@@ -46,7 +43,7 @@ public class Tournoi implements Cloneable, Serializable {
 				tournoi.joueurs.put( nomJoueur, clone );
 								
 			}
-			
+					
 			for( Match match : this.matchs ) {
 				
 				Joueur joueur1 = match.getJoueur1();
@@ -59,6 +56,8 @@ public class Tournoi implements Cloneable, Serializable {
 				tournoi.matchs.add(clone);
 				
 			}
+
+			tournoi.strategie = this.strategie.getClone( tournoi.joueurs );
 									
 			return tournoi;
 			
@@ -134,70 +133,12 @@ public class Tournoi implements Cloneable, Serializable {
 	}
 	
 	
-	/*
-	private void genererMatchs( List<Joueur> listejoueurs ) {
 		
-		while(true) {
-			
-			int nbJoueurs = listejoueurs.size();
-			if( nbJoueurs < 2 ) break;
-			
-			int indiceJoueur = Aleatoire.getNombreAleatoire( nbJoueurs - 1 );
-			Joueur joueur = listejoueurs.get(indiceJoueur);
-			listejoueurs.remove(joueur);
-			
-			List<Joueur> adversairesPotentiels = this.tableDesRencontres.getAdversairesPotentiel( joueur, listejoueurs ); 
-			
-			int nbAdversaires = adversairesPotentiels.size();
-			int indiceAdversairePotentiel = Aleatoire.getNombreAleatoire( nbAdversaires - 1 );
-			Joueur adversaire = adversairesPotentiels.get(indiceAdversairePotentiel);
-			listejoueurs.remove(adversaire);
-								
-			Match match = new Match( joueur, adversaire );
-			this.matchs.add(match);
-			
-		}
-		
-	}
-	
-	private void genererMatchsGagnants() {
-		this.genererMatchs( this.joueursGagnants );
-	}
-	
-	private void genererMatchsPerdants() {
-		this.genererMatchs( this.joueursPerdants );
-	}
-	*/
-	
 	public void genererMatchs() {
 		
 		List<Match> matchsGeneres = this.strategie.genererMatchs();
 		
 		this.matchs.addAll(matchsGeneres);
-		
-		/*
-		this.genererMatchsGagnants();
-		
-		this.genererMatchsPerdants();
-		
-		if( this.joueursGagnants.size() > 0 && this.joueursPerdants.size() > 0 ) {
-			
-			Joueur joueurGagnant = this.joueursGagnants.get(0);
-			Joueur joueurPerdant = this.joueursPerdants.get(0);
-			
-			this.joueursGagnants.remove(joueurGagnant);
-			this.joueursPerdants.remove(joueurPerdant);
-			
-			Match match = new Match( joueurGagnant, joueurPerdant );
-			this.matchs.add(match);
-		}
-		*/
-		/*
-		else if( this.joueursGagnants.size() > 0 ) {
-			this.joueursPerdants.add( this.joueursGagnants.get(0) );
-			this.joueursGagnants.remove(0);
-		}
-		*/
 		
 	}
 	
@@ -210,6 +151,12 @@ public class Tournoi implements Cloneable, Serializable {
 			if( ! match.joueurJoueAuMatch(joueur) ) continue;
 			
 			match.finir();
+			
+			Joueur joueur1Tournoi = this.joueurs.get( match.getJoueur1().getNom() );
+			Joueur joueur2Tournoi = this.joueurs.get( match.getJoueur2().getNom() );
+			
+			joueur1Tournoi.setEnMatch(false);
+			joueur2Tournoi.setEnMatch(false);
 			
 			this.strategie.resoudreMatchSupprime( match.getJoueur1(), match.getJoueur2() );	
 						
@@ -227,6 +174,12 @@ public class Tournoi implements Cloneable, Serializable {
 			Match match = iterateur.next();
 
 			match.finir();
+			
+			Joueur joueur1Tournoi = this.joueurs.get( match.getJoueur1().getNom() );
+			Joueur joueur2Tournoi = this.joueurs.get( match.getJoueur2().getNom() );
+			
+			joueur1Tournoi.setEnMatch(false);
+			joueur2Tournoi.setEnMatch(false);
 			
 			this.strategie.resoudreMatchSupprime( match.getJoueur1(), match.getJoueur2() );	
 			
@@ -248,16 +201,6 @@ public class Tournoi implements Cloneable, Serializable {
 		
 	}
 		
-	public void supprimerMatch( Match match ) {
-		
-		match.finir();
-		
-		this.strategie.resoudreMatchSupprime( match.getJoueur1(), match.getJoueur2() );	
-		
-		this.matchs.remove(match);
-		
-	}
-	
 	public List<Match> getMatchs() {
 		return this.matchs;
 	}
@@ -316,16 +259,15 @@ public class Tournoi implements Cloneable, Serializable {
 		
 		this.strategie.resoudreMatchNull( joueur1, joueur2 );
 		
-		//this.tableDesRencontres.rencontreJoueurs( joueur1, joueur2 );
-
 	}
 	
 	
 	private void resoudreMatch( Match match, Joueur gagnant, Joueur perdant, int nbPointsGagnant, int nbPointsPerdant ) {
 		
+		
 		Joueur gagnantTournoi = this.joueurs.get( gagnant.getNom() );
 		Joueur perdantTournoi = this.joueurs.get( perdant.getNom() );
-		
+				
 		gagnantTournoi.incrementerNbPoints(nbPointsGagnant);
 		perdantTournoi.incrementerNbPoints(nbPointsPerdant);
 		
@@ -334,10 +276,20 @@ public class Tournoi implements Cloneable, Serializable {
 		gagnantTournoi.setEnMatch(false);
 		perdantTournoi.setEnMatch(false);
 		
-		this.supprimerMatch(match);
 		
+		this.matchs.remove(match);
+				
 	}
 	
+	public void resoudreMatchSupprime( Match match ) {
+		
+		match.finir();
+		
+		this.strategie.resoudreMatchSupprime( match.getJoueur1(), match.getJoueur2() );	
+		
+		this.matchs.remove(match);
+		
+	}
 	
 	
 	
