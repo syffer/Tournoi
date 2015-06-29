@@ -26,6 +26,11 @@ import tournoi.ComparateurJoueurNbPoints;
 import tournoi.Joueur;
 import tournoi.JoueurDejaExistantException;
 import tournoi.Match;
+import tournoi.Strategie;
+import tournoi.StrategieAleatoire;
+import tournoi.StrategieGagnantPerdant;
+import tournoi.StrategiePoule;
+import tournoi.StrategieType;
 import vue.ChoixAnnulerException;
 import vue.ListModelMatch;
 import vue.TableModelJoueur;
@@ -51,17 +56,21 @@ public class Controleur {
 		this.modele = modele;
 		this.vue = vue;
 		
+		
 		Update update = new Update();
 		
+		// actions panneau joueurs
 		ActionSelectionnerTableauJoueurs actionSelectionnerTableau = new ActionSelectionnerTableauJoueurs();
 		ActionAjouterJoueur actionAjouterJoueur = new ActionAjouterJoueur();
 		this.actionSupprimerJoueur = new ActionSupprimerJoueur();
 		ActionChampTexteEntrer actionChampTexteEntrer = new ActionChampTexteEntrer();
 		
+		// action panneau intermédiaire
 		ActionCreerMatch actionCreerMatch = new ActionCreerMatch();
 		ActionGenererMatchs actionGenererMatchs = new ActionGenererMatchs();
 		ActionAnnulerMatchs actionAnnulerMatchs = new ActionAnnulerMatchs();
 		
+		// action panneau matchs
 		ActionSelectionListeMatch actionSelectionListe = new ActionSelectionListeMatch();
 		this.actionResoudreMatchJoueur1 = new ActionResoudreMatchGagnant(true);
 		this.actionResoudreMatchJoueur2 = new ActionResoudreMatchGagnant(false);
@@ -70,18 +79,25 @@ public class Controleur {
 		this.actionMatchNull = new ActionMatchNull();
 		this.actionSupprimerMatch = new ActionSupprimerMatch();
 		
+		// action menu
+		ActionChangerStrategie actionChangerStrategieAleatoire = new ActionChangerStrategie( StrategieType.STRATEGIE_ALEATOIRE );
+		ActionChangerStrategie actionChangerStrategieGagnantPerdant = new ActionChangerStrategie( StrategieType.STRATEGIE_GAGNANTS_PERDANTS );
+		ActionChangerStrategie actionChangerStrategiePoule = new ActionChangerStrategie( StrategieType.STRATEGIE_POULE );
 		
+		
+		// panneau liste joueurs
 		this.vue.tableauJoueurs.getSelectionModel().addListSelectionListener(actionSelectionnerTableau);
 		this.vue.boutonAjoutJoueur.setAction(actionAjouterJoueur);
 		this.vue.boutonSupprimerJoueur.setAction(actionSupprimerJoueur);
 		this.vue.champAjoutJoueur.addActionListener(actionChampTexteEntrer);
 					
-		
+		// panneau intermédiaire 
 		this.vue.boutonCreerMatch.setAction(actionCreerMatch);
 		this.vue.boutonGenererMatchs.setAction(actionGenererMatchs);
 		this.vue.boutonAnnulerLesMatchs.setAction(actionAnnulerMatchs);
 		this.vue.menuGenererMatchs.setAction(actionGenererMatchs);
 		
+		// panneau liste matchs
 		this.vue.listeMatchs.addListSelectionListener(actionSelectionListe);
 		this.vue.boutonJoueur1Gagne.setAction(actionResoudreMatchJoueur1);
 		this.vue.boutonJoueur2Gagne.setAction(actionResoudreMatchJoueur2);
@@ -89,6 +105,11 @@ public class Controleur {
 		this.vue.boutonJoueur2Abandonne.setAction(actionResoudreMatchAbandonJoueur2);
 		this.vue.boutonMatchNull.setAction(actionMatchNull);
 		this.vue.boutonAnnulerMatch.setAction(actionSupprimerMatch);
+		
+		// menu
+		this.vue.menuModeAleatoire.setAction(actionChangerStrategieAleatoire);
+		this.vue.menuModeGagnantPerdant.setAction(actionChangerStrategieGagnantPerdant);
+		this.vue.menuModePoule.setAction(actionChangerStrategiePoule);
 		
 		
 		// raccourci supprimer joueur sélectionné
@@ -105,7 +126,7 @@ public class Controleur {
         inputMap.put( enterKey, "Action.delete" );
         actionMap.put( "Action.delete", actionSupprimerMatch );
 		
-		
+		// mise à jour de la vue
 		this.modele.addObserver(update);
 		
 		this.modele.initialiser();
@@ -144,6 +165,11 @@ public class Controleur {
 			vue.listeMatchs.setSelectedIndex(-1);
 			vue.listeMatchs.setSelectedIndices( new int[0] );
 			
+			
+			// mise à jour du nom de la stratégie
+			String nomStrategie = modele.getNomStrategie();
+			vue.labelNomStrategie.setText(nomStrategie);
+		
 		}
 		
 		
@@ -202,6 +228,43 @@ public class Controleur {
 	}
 	
 	
+	
+	public class ActionChangerStrategie extends AbstractAction {
+		
+		private static final long serialVersionUID = -7605685773514929421L;
+		
+		private StrategieType strategieType;
+		
+		public ActionChangerStrategie( StrategieType strategieType ) {
+			
+			this.strategieType = strategieType;
+						
+			String nomStrategie = "";
+			if( strategieType == StrategieType.STRATEGIE_ALEATOIRE ) nomStrategie = Constantes.getString( Constantes.MATCHS_ALEATOIRE );
+			else if( strategieType == StrategieType.STRATEGIE_GAGNANTS_PERDANTS ) nomStrategie = Constantes.getString( Constantes.MATCHS_GAGNANT_PERDANT );
+			else if( strategieType == StrategieType.STRATEGIE_POULE ) nomStrategie = Constantes.getString( Constantes.MATCHS_POULE );
+			else throw new InternalError("erreur lors du choix de la stratégie, cette stratégie n'est pas pris en charge...");
+			
+			this.putValue( NAME, nomStrategie );
+			
+		}
+		
+		@Override
+		public void actionPerformed( ActionEvent event ) {
+			
+			Strategie strategie;
+			
+			if( strategieType == StrategieType.STRATEGIE_ALEATOIRE ) strategie = new StrategieAleatoire();
+			else if( strategieType == StrategieType.STRATEGIE_GAGNANTS_PERDANTS ) strategie = new StrategieGagnantPerdant();
+			else if( strategieType == StrategieType.STRATEGIE_POULE ) strategie= new StrategiePoule();
+			else throw new InternalError("erreur lors du choix de la stratégie, cette stratégie n'est pas pris en charge...");
+						
+			modele.setStrategie(strategie);
+			
+		}
+				
+	}
+		
 		
 	public class ActionAjouterJoueur extends AbstractAction {
 		

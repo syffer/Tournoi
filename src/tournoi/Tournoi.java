@@ -20,8 +20,7 @@ public class Tournoi implements Cloneable, Serializable {
 		
 		this.joueurs = new HashMap<String, Joueur>();		
 		this.matchs = new ArrayList<Match>();
-		//this.strategie = new StrategieGagnantPerdant();
-		this.strategie = new StrategieAleatoire();
+		this.strategie = new StrategieGagnantPerdant();
 		
 	}
 		
@@ -299,8 +298,22 @@ public class Tournoi implements Cloneable, Serializable {
 		
 		this.strategie = strategie;
 		
+		for( Joueur joueur : this.joueurs.values() ) {
+			
+			try {
+				this.strategie.ajouterJoueur(joueur);
+			} 
+			catch( JoueurDejaExistantException e ) {
+				e.printStackTrace();
+			}
+			
+		}
+		
 	}
 	
+	public String getNomStrategie() {
+		return this.strategie.getNom();
+	}
 	
 	
 	public static class Test {

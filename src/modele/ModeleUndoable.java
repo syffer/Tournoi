@@ -8,6 +8,7 @@ import javax.swing.undo.StateEditable;
 import tournoi.Joueur;
 import tournoi.JoueurDejaExistantException;
 import tournoi.Match;
+import tournoi.Strategie;
 import tournoi.Tournoi;
 
 public class ModeleUndoable extends ModeleSerializable implements StateEditable {
@@ -223,5 +224,20 @@ public class ModeleUndoable extends ModeleSerializable implements StateEditable 
 		this.undoManager.ajouterEtat(nouvelEtat);
 		
 	}
+	
+	
+	public void setStrategie( Strategie strategie ) {
+		
+		StateEdit nouvelEtat = new StateEdit(this);
+		
+		super.setStrategie(strategie);
+		
+		nouvelEtat.end();
+		
+		this.undoManager.ajouterEtat(nouvelEtat);
+		
+	}
+	
+	
 
 }

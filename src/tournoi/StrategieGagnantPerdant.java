@@ -1,5 +1,7 @@
 package tournoi;
 
+import internationalisation.Constantes;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -26,6 +28,9 @@ public class StrategieGagnantPerdant extends Strategie {
 	
 	}
 	
+	public String getNom() {
+		return Constantes.getString( Constantes.MATCHS_GAGNANT_PERDANT );
+	}
 	
 	@Override
 	public StrategieGagnantPerdant getClone( Map<String, Joueur> cloneJoueurs ) throws CloneNotSupportedException {

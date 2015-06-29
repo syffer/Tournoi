@@ -1,5 +1,7 @@
 package tournoi;
 
+import internationalisation.Constantes;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +10,9 @@ public class StrategiePoule extends Strategie {
 	
 	private static final long serialVersionUID = -7005283247704605930L;
 	
+	public String getNom() {
+		return Constantes.getString( Constantes.MATCHS_POULE );
+	}
 	
 	@Override
 	public Strategie getClone( Map<String, Joueur> cloneJoueurs ) throws CloneNotSupportedException {

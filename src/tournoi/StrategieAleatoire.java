@@ -1,5 +1,7 @@
 package tournoi;
 
+import internationalisation.Constantes;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,6 +23,9 @@ public class StrategieAleatoire extends Strategie {
 		this( new ArrayList<Joueur>() );
 	}
 	
+	public String getNom() {
+		return Constantes.getString( Constantes.MATCHS_ALEATOIRE );
+	}
 	
 	@Override
 	public StrategieAleatoire getClone( Map<String, Joueur> cloneJoueurs ) throws CloneNotSupportedException {

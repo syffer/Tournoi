@@ -66,12 +66,12 @@ public class TableDesRencontres implements Cloneable, Serializable {
 	public void rencontreJoueurs( Joueur joueur1, Joueur joueur2 ) {
 		
 		Paire<String, String> paire = TableDesRencontres.getPaire( joueur1, joueur2 );
+		
+		int nbRencontres = this.matrice.get(paire);
 				
-		int nbRencontre = this.matrice.get(paire);
+		nbRencontres++;
 		
-		nbRencontre++;
-		
-		this.matrice.put( paire, nbRencontre );
+		this.matrice.put( paire, nbRencontres );
 		
 	}
 	

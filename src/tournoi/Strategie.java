@@ -9,14 +9,14 @@ public abstract class Strategie implements Cloneable, Serializable {
 	
 	private static final long serialVersionUID = 7429957283780152493L;
 	
-
+	
+	public abstract String getNom();
+	
 	public abstract Strategie getClone( Map<String, Joueur> cloneJoueurs ) throws CloneNotSupportedException;
 	
 	
 	public abstract void ajouterJoueur( Joueur joueur ) throws JoueurDejaExistantException;
 	public abstract void supprimerJoueur( Joueur joueur );
-	
-	
 	public abstract Collection<Joueur> getJoueursDisponibles();
 	public abstract int getNbJoueursDisponibles();
 	

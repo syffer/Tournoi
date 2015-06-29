@@ -12,6 +12,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.AbstractAction;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
@@ -37,6 +38,7 @@ public class ControleurSerializable extends Controleur {
 		vue.menuSauvegarderSous.setAction(actionSauvegarderTournoiSous);
 		
 		vue.addWindowListener( new ActionFermetureFenetre() );
+		vue.setDefaultCloseOperation( JFrame.DO_NOTHING_ON_CLOSE );
 		
 		modeleSerializable.initialiser();
 		
@@ -56,14 +58,16 @@ public class ControleurSerializable extends Controleur {
         public void windowClosing( WindowEvent event ) {
 
 			try {
+				
 				enregistrerSiModifie();
+				
+				event.getWindow().dispose();	// fermeture de la fenetre
+				
 			} 
 			catch( ChoixAnnulerException e ) {
 				// l'utilisateur a annuler la sauvegarde, on ne fait rien.
 			}
 						
-			event.getWindow().dispose();
-			
         }
 		
 	}

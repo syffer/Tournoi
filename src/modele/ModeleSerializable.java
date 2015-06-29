@@ -11,6 +11,7 @@ import java.io.Serializable;
 import tournoi.Joueur;
 import tournoi.JoueurDejaExistantException;
 import tournoi.Match;
+import tournoi.Strategie;
 import tournoi.Tournoi;
 
 
@@ -184,6 +185,13 @@ public class ModeleSerializable extends Modele implements Serializable {
 	public void resoudreMatchSupprime( Match match ) {
 		this.modifie = true;
 		super.resoudreMatchSupprime(match);
+	}
+	
+	
+	
+	public void setStrategie( Strategie strategie ) {
+		this.modifie = true;
+		super.setStrategie(strategie);
 	}
 	
 }

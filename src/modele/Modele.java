@@ -7,6 +7,7 @@ import java.util.Observable;
 import tournoi.Joueur;
 import tournoi.JoueurDejaExistantException;
 import tournoi.Match;
+import tournoi.Strategie;
 import tournoi.Tournoi;
 
 public class Modele extends Observable {
@@ -149,5 +150,19 @@ public class Modele extends Observable {
 		this.setChanged();
 		this.notifyObservers();
 	}
+	
+	
+	
+	public void setStrategie( Strategie strategie ) {
+		this.tournoi.setStrategie(strategie);
+		
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
+	public String getNomStrategie() {
+		return this.tournoi.getNomStrategie();
+	}
+	
 	
 }

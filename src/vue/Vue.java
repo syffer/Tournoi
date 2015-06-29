@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -52,6 +53,7 @@ public class Vue extends JFrame {
 	public JButton boutonSupprimerJoueur;
 	
 	// le panneau centrale
+	public JLabel labelNomStrategie;
 	public JButton boutonCreerMatch;
 	public JButton boutonGenererMatchs;
 	public JButton boutonAnnulerLesMatchs;
@@ -208,8 +210,11 @@ public class Vue extends JFrame {
 	private void ajouterPanneauIntermediaire() {
 		
 		JPanel panneauIntermediaire = new JPanel();
-		panneauIntermediaire.setLayout( new GridLayout(3, 1, 0, 10) ); 	// grille de 3 lignes 1 colonne
+		panneauIntermediaire.setLayout( new GridLayout(4, 1, 0, 10) ); 	// grille de 3 lignes 1 colonne
 		this.add(panneauIntermediaire);
+		
+		this.labelNomStrategie = new JLabel( "nom stratégie", JLabel.CENTER );
+		panneauIntermediaire.add( this.labelNomStrategie );
 		
 		this.boutonCreerMatch = new JButton( Constantes.getString(Constantes.CREER_UN_MATCH) );
 		panneauIntermediaire.add( this.boutonCreerMatch );

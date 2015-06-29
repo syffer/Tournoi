@@ -1,0 +1,7 @@
+package tournoi;
+
+public enum StrategieType {
+	STRATEGIE_ALEATOIRE,
+	STRATEGIE_GAGNANTS_PERDANTS,
+	STRATEGIE_POULE
+}
