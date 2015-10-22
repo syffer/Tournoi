@@ -12,7 +12,7 @@ public class StrategieAleatoire extends Strategie {
 	
 	private static final long serialVersionUID = -8515687357847290736L;
 	
-	private List<Joueur> joueursDisponibles;
+	protected List<Joueur> joueursDisponibles;
 	
 	
 	public StrategieAleatoire( List<Joueur> joueursDisponibles ) {
